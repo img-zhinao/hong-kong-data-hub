@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Tables } from '@/integrations/supabase/types';
 
@@ -63,5 +63,30 @@ export function useArticle(slug: string) {
       return data as Article | null;
     },
     enabled: !!slug,
+  });
+}
+
+export function useIncrementViewCount() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (articleId: string) => {
+      // 先获取当前阅读量，然后更新
+      const { data: article } = await supabase
+        .from('articles')
+        .select('view_count')
+        .eq('id', articleId)
+        .single();
+
+      if (article) {
+        await supabase
+          .from('articles')
+          .update({ view_count: (article.view_count || 0) + 1 })
+          .eq('id', articleId);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['articles'] });
+    },
   });
 }

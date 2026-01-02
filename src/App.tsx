@@ -11,6 +11,7 @@ import EventsPage from "./pages/EventsPage";
 import DataMerchantsPage from "./pages/DataMerchantsPage";
 import AboutPage from "./pages/AboutPage";
 import AdminPage from "./pages/AdminPage";
+import ArticleDetailPage from "./pages/ArticleDetailPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,9 +25,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/policy" element={<PolicyPage />} />
-          <Route path="/policy/:id" element={<PolicyPage />} />
+          <Route path="/policy/:slug" element={<ArticleDetailPage />} />
           <Route path="/news" element={<NewsPage />} />
-          <Route path="/news/:category" element={<NewsPage />} />
+          <Route path="/news/:slug" element={<ArticleDetailPage />} />
           <Route path="/insights" element={<InsightsPage />} />
           <Route path="/insights/:id" element={<InsightsPage />} />
           <Route path="/events" element={<EventsPage />} />
