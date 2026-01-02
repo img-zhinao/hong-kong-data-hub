@@ -197,6 +197,51 @@ export type Database = {
         }
         Relationships: []
       }
+      insights: {
+        Row: {
+          author_avatar_url: string | null
+          author_name: string
+          author_role: string | null
+          created_at: string | null
+          display_order: number | null
+          id: string
+          quote: string
+          status: string | null
+          tags: string[] | null
+          topic: string | null
+          updated_at: string | null
+          view_count: number | null
+        }
+        Insert: {
+          author_avatar_url?: string | null
+          author_name: string
+          author_role?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          quote: string
+          status?: string | null
+          tags?: string[] | null
+          topic?: string | null
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          author_avatar_url?: string | null
+          author_name?: string
+          author_role?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          id?: string
+          quote?: string
+          status?: string | null
+          tags?: string[] | null
+          topic?: string | null
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Relationships: []
+      }
       platform_stats: {
         Row: {
           id: number
