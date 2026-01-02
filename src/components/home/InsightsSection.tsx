@@ -1,35 +1,12 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-const insights = [
-  {
-    id: 1,
-    author: '李明教授',
-    role: '香港科技大学数据科学研究院院长',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
-    quote: '数据要素市场化配置是推动数字经济高质量发展的关键举措，香港凭借其独特的区位优势和制度优势，将在大湾区数据要素流通中发挥不可替代的作用。',
-    topic: '数据要素市场化',
-  },
-  {
-    id: 2,
-    author: '张伟博士',
-    role: '香港大数据协会会长',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
-    quote: 'AI大模型的发展离不开高质量数据集的支撑，香港作为国际数据枢纽，在跨境数据流动和数据合规方面具有天然优势。',
-    topic: 'AI与数据',
-  },
-  {
-    id: 3,
-    author: '王芳女士',
-    role: '数据资产评估专家',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
-    quote: '数据资产入表是企业数字化转型的重要里程碑，它不仅是财务处理的创新，更是对企业数据治理能力的全面检验。',
-    topic: '数据资产化',
-  },
-];
+import { useInsights } from '@/hooks/useInsights';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function InsightsSection() {
+  const { data: insights, isLoading } = useInsights({ limit: 3 });
+
   return (
     <section className="py-12 bg-muted/30">
       <div className="container">
@@ -43,39 +20,61 @@ export function InsightsSection() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {insights.map((insight, index) => (
-            <Link
-              key={insight.id}
-              to={`/insights/${insight.id}`}
-              className="bg-card rounded-xl p-6 border hover-lift group animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s`, opacity: 0, animationFillMode: 'forwards' }}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <img
-                  src={insight.avatar}
-                  alt={insight.author}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
-                <div>
-                  <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">
-                    {insight.author}
-                  </h4>
-                  <p className="text-xs text-muted-foreground">{insight.role}</p>
+          {isLoading ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="bg-card rounded-xl p-6 border">
+                <div className="flex items-center gap-3 mb-4">
+                  <Skeleton className="w-12 h-12 rounded-full" />
+                  <div className="flex-1">
+                    <Skeleton className="h-5 w-24 mb-1" />
+                    <Skeleton className="h-3 w-32" />
+                  </div>
+                </div>
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-5/6 mb-4" />
+                <div className="pt-4 border-t">
+                  <Skeleton className="h-5 w-20" />
                 </div>
               </div>
-              
-              <div className="relative">
-                <Quote className="absolute -left-1 -top-1 w-6 h-6 text-primary/20" />
-                <p className="text-sm text-muted-foreground leading-relaxed pl-4">
-                  {insight.quote}
-                </p>
-              </div>
+            ))
+          ) : insights && insights.length > 0 ? (
+            insights.map((insight, index) => (
+              <Link
+                key={insight.id}
+                to={`/insights/${insight.id}`}
+                className="bg-card rounded-xl p-6 border hover-lift group animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s`, opacity: 0, animationFillMode: 'forwards' }}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <img
+                    src={insight.author_avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'}
+                    alt={insight.author_name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                      {insight.author_name}
+                    </h4>
+                    <p className="text-xs text-muted-foreground">{insight.author_role}</p>
+                  </div>
+                </div>
+                
+                <div className="relative">
+                  <Quote className="absolute -left-1 -top-1 w-6 h-6 text-primary/20" />
+                  <p className="text-sm text-muted-foreground leading-relaxed pl-4 line-clamp-4">
+                    {insight.quote}
+                  </p>
+                </div>
 
-              <div className="mt-4 pt-4 border-t">
-                <span className="tag tag-insight">{insight.topic}</span>
-              </div>
-            </Link>
-          ))}
+                <div className="mt-4 pt-4 border-t">
+                  <span className="tag tag-insight">{insight.topic}</span>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className="col-span-3 text-center py-8 text-muted-foreground">暂无专家观点</div>
+          )}
         </div>
       </div>
     </section>
