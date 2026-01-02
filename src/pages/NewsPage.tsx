@@ -1,80 +1,57 @@
+import { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Clock, Eye, Newspaper, Search, TrendingUp } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-const newsData = {
-  exchange: [
-    {
-      id: 1,
-      title: '香港大数据交易所2024年度交易报告发布',
-      summary: '2024年度交易总额突破150亿港元，数据产品上架数量增长45%，数商入驻数量达到800家。',
-      date: '2024-12-28',
-      views: 3421,
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
-    },
-    {
-      id: 2,
-      title: '香港大数据交易所与深圳数据交易所签署战略合作协议',
-      summary: '双方将在数据产品互认、跨境数据流通、技术标准对接等方面开展深度合作。',
-      date: '2024-12-25',
-      views: 2567,
-      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=300&fit=crop',
-    },
-  ],
-  industry: [
-    {
-      id: 3,
-      title: '香港数字资产上市公司联合会成立 助香港发展数字金融',
-      summary: '香港数字资产上市公司联合会正式成立，旨在推动香港成为亚太区数字资产交易和金融科技创新中心。',
-      date: '2024-12-27',
-      views: 1856,
-      image: 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=400&h=300&fit=crop',
-    },
-    {
-      id: 4,
-      title: '2025中国国际大数据产业博览会"数据交易生态大会"在贵阳成功举办',
-      summary: '大会由北京国际大数据交易所、深圳数据交易所、贵阳大数据交易所联合主办。',
-      date: '2024-12-26',
-      views: 2341,
-      image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=300&fit=crop',
-    },
-    {
-      id: 5,
-      title: '中国高质量数据集产业基地揭牌 数据资产价值超千亿',
-      summary: '数据资产价值预计超过1100亿元，其中公共数据资源价值约900亿元。',
-      date: '2024-12-25',
-      views: 1534,
-      image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=400&h=300&fit=crop',
-    },
-  ],
-  enterprise: [
-    {
-      id: 6,
-      title: '某科技公司成功完成首笔数据资产质押融资',
-      summary: '通过数据知识产权质押从银行获取4000万元贷款支持，创下数据知识产权质押融资最高纪录。',
-      date: '2024-12-24',
-      views: 1234,
-      image: 'https://images.unsplash.com/photo-1504384764586-bb4cdc1707b0?w=400&h=300&fit=crop',
-    },
-    {
-      id: 7,
-      title: '完成首笔行政事业单位数据资产入账工作',
-      summary: '在数据资产全过程管理试点中迈出关键一步，为数据资产管理创新模式提供示范。',
-      date: '2024-12-23',
-      views: 987,
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
-    },
-  ],
-};
-
-const allNews = [...newsData.exchange, ...newsData.industry, ...newsData.enterprise];
+import { useArticles, type Article } from '@/hooks/useArticles';
+import { formatDate } from '@/lib/formatters';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function NewsPage() {
-  const { category } = useParams();
-  const currentTab = category || 'all';
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentTab, setCurrentTab] = useState('all');
+
+  const { data: allNews, isLoading: loadingAll } = useArticles({
+    category: 'news',
+    search: searchTerm || undefined,
+  });
+
+  const { data: exchangeNews, isLoading: loadingExchange } = useArticles({
+    category: 'news',
+    subCategory: 'exchange',
+    search: searchTerm || undefined,
+  });
+
+  const { data: industryNews, isLoading: loadingIndustry } = useArticles({
+    category: 'news',
+    subCategory: 'industry',
+    search: searchTerm || undefined,
+  });
+
+  const { data: enterpriseNews, isLoading: loadingEnterprise } = useArticles({
+    category: 'news',
+    subCategory: 'enterprise',
+    search: searchTerm || undefined,
+  });
+
+  const { data: hotNews } = useArticles({
+    category: 'news',
+    limit: 5,
+    orderBy: 'view_count',
+  });
+
+  const getNewsForTab = () => {
+    switch (currentTab) {
+      case 'exchange': return { data: exchangeNews, loading: loadingExchange };
+      case 'industry': return { data: industryNews, loading: loadingIndustry };
+      case 'enterprise': return { data: enterpriseNews, loading: loadingEnterprise };
+      default: return { data: allNews, loading: loadingAll };
+    }
+  };
+
+  const { data: currentNews, loading: currentLoading } = getNewsForTab();
 
   return (
     <Layout>
@@ -98,11 +75,16 @@ export default function NewsPage() {
             {/* Search */}
             <div className="relative mb-6">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input placeholder="搜索新闻资讯..." className="pl-10" />
+              <Input 
+                placeholder="搜索新闻资讯..." 
+                className="pl-10"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
 
             {/* Tabs */}
-            <Tabs defaultValue={currentTab} className="mb-6">
+            <Tabs value={currentTab} onValueChange={setCurrentTab} className="mb-6">
               <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="all">全部</TabsTrigger>
                 <TabsTrigger value="exchange">数交所动态</TabsTrigger>
@@ -110,37 +92,28 @@ export default function NewsPage() {
                 <TabsTrigger value="enterprise">企业快讯</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="all" className="mt-6">
-                <div className="space-y-4">
-                  {allNews.map((news, index) => (
+              <div className="mt-6 space-y-4">
+                {currentLoading ? (
+                  Array.from({ length: 5 }).map((_, i) => (
+                    <div key={i} className="news-card flex gap-4 p-4">
+                      <Skeleton className="hidden sm:block w-40 h-28 rounded-lg" />
+                      <div className="flex-1 space-y-3">
+                        <Skeleton className="h-6 w-full" />
+                        <Skeleton className="h-4 w-3/4" />
+                        <Skeleton className="h-3 w-32" />
+                      </div>
+                    </div>
+                  ))
+                ) : currentNews && currentNews.length > 0 ? (
+                  currentNews.map((news, index) => (
                     <NewsCard key={news.id} news={news} index={index} />
-                  ))}
-                </div>
-              </TabsContent>
-
-              <TabsContent value="exchange" className="mt-6">
-                <div className="space-y-4">
-                  {newsData.exchange.map((news, index) => (
-                    <NewsCard key={news.id} news={news} index={index} />
-                  ))}
-                </div>
-              </TabsContent>
-
-              <TabsContent value="industry" className="mt-6">
-                <div className="space-y-4">
-                  {newsData.industry.map((news, index) => (
-                    <NewsCard key={news.id} news={news} index={index} />
-                  ))}
-                </div>
-              </TabsContent>
-
-              <TabsContent value="enterprise" className="mt-6">
-                <div className="space-y-4">
-                  {newsData.enterprise.map((news, index) => (
-                    <NewsCard key={news.id} news={news} index={index} />
-                  ))}
-                </div>
-              </TabsContent>
+                  ))
+                ) : (
+                  <div className="text-center py-12 text-muted-foreground">
+                    暂无相关资讯
+                  </div>
+                )}
+              </div>
             </Tabs>
           </div>
 
@@ -153,10 +126,10 @@ export default function NewsPage() {
                 热门资讯
               </h3>
               <ul className="space-y-3">
-                {allNews.slice(0, 5).map((news, index) => (
+                {hotNews?.slice(0, 5).map((news, index) => (
                   <li key={news.id}>
                     <Link
-                      to={`/news/${news.id}`}
+                      to={`/news/${news.slug}`}
                       className="flex items-start gap-3 group"
                     >
                       <span className={`flex-shrink-0 w-5 h-5 rounded text-xs font-bold flex items-center justify-center ${
@@ -202,28 +175,21 @@ export default function NewsPage() {
 }
 
 interface NewsCardProps {
-  news: {
-    id: number;
-    title: string;
-    summary: string;
-    date: string;
-    views: number;
-    image?: string;
-  };
+  news: Article;
   index: number;
 }
 
 function NewsCard({ news, index }: NewsCardProps) {
   return (
     <Link
-      to={`/news/${news.id}`}
+      to={`/news/${news.slug}`}
       className="news-card flex gap-4 p-4 animate-fade-in"
       style={{ animationDelay: `${index * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}
     >
-      {news.image && (
+      {news.cover_image_url && (
         <div className="hidden sm:block w-40 h-28 flex-shrink-0 overflow-hidden rounded-lg">
           <img
-            src={news.image}
+            src={news.cover_image_url}
             alt={news.title}
             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
           />
@@ -239,11 +205,11 @@ function NewsCard({ news, index }: NewsCardProps) {
         <div className="flex items-center gap-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
             <Clock className="w-3 h-3" />
-            {news.date}
+            {formatDate(news.published_at)}
           </span>
           <span className="flex items-center gap-1">
             <Eye className="w-3 h-3" />
-            {news.views.toLocaleString()}
+            {(news.view_count || 0).toLocaleString()}
           </span>
         </div>
       </div>
