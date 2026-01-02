@@ -1,65 +1,12 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Shield, Star, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-const merchants = [
-  {
-    id: 1,
-    name: '香港金融数据科技有限公司',
-    logo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop',
-    category: '金融数据',
-    products: 156,
-    rating: 4.9,
-    verified: true,
-  },
-  {
-    id: 2,
-    name: '亚太医疗数据研究院',
-    logo: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=100&h=100&fit=crop',
-    category: '医疗健康',
-    products: 89,
-    rating: 4.8,
-    verified: true,
-  },
-  {
-    id: 3,
-    name: '智慧物流数据平台',
-    logo: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=100&h=100&fit=crop',
-    category: '物流运输',
-    products: 234,
-    rating: 4.7,
-    verified: true,
-  },
-  {
-    id: 4,
-    name: '粤港澳制造业大数据中心',
-    logo: 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=100&h=100&fit=crop',
-    category: '智能制造',
-    products: 178,
-    rating: 4.9,
-    verified: true,
-  },
-  {
-    id: 5,
-    name: '环球能源数据服务商',
-    logo: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=100&h=100&fit=crop',
-    category: '能源环保',
-    products: 67,
-    rating: 4.6,
-    verified: true,
-  },
-  {
-    id: 6,
-    name: '文旅产业数据智库',
-    logo: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=100&h=100&fit=crop',
-    category: '文化旅游',
-    products: 112,
-    rating: 4.8,
-    verified: true,
-  },
-];
+import { useDataMerchants } from '@/hooks/useDataMerchants';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function DataMerchantsSection() {
+  const { data: merchants, isLoading } = useDataMerchants({ limit: 6 });
+
   return (
     <section className="py-12 bg-muted/30">
       <div className="container">
@@ -78,41 +25,54 @@ export function DataMerchantsSection() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {merchants.map((merchant, index) => (
-            <Link
-              key={merchant.id}
-              to={`/data-merchants/${merchant.id}`}
-              className="bg-card rounded-xl p-4 border text-center hover-lift group animate-fade-in"
-              style={{ animationDelay: `${index * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}
-            >
-              <div className="relative inline-block mb-3">
-                <img
-                  src={merchant.logo}
-                  alt={merchant.name}
-                  className="w-16 h-16 rounded-xl object-cover mx-auto"
-                />
-                {merchant.verified && (
-                  <Shield className="absolute -right-1 -bottom-1 w-5 h-5 text-green-500 bg-card rounded-full p-0.5" />
-                )}
+          {isLoading ? (
+            Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="bg-card rounded-xl p-4 border text-center">
+                <Skeleton className="w-16 h-16 rounded-xl mx-auto mb-3" />
+                <Skeleton className="h-4 w-20 mx-auto mb-1" />
+                <Skeleton className="h-3 w-12 mx-auto mb-2" />
+                <Skeleton className="h-3 w-16 mx-auto" />
               </div>
-              <h4 className="font-medium text-sm text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-1">
-                {merchant.name}
-              </h4>
-              <span className="text-xs text-muted-foreground block mb-2">
-                {merchant.category}
-              </span>
-              <div className="flex items-center justify-center gap-3 text-xs">
-                <span className="flex items-center gap-1 text-primary">
-                  <Star className="w-3 h-3 fill-current" />
-                  {merchant.rating}
+            ))
+          ) : merchants && merchants.length > 0 ? (
+            merchants.map((merchant, index) => (
+              <Link
+                key={merchant.id}
+                to={`/data-merchants/${merchant.id}`}
+                className="bg-card rounded-xl p-4 border text-center hover-lift group animate-fade-in"
+                style={{ animationDelay: `${index * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}
+              >
+                <div className="relative inline-block mb-3">
+                  <img
+                    src={merchant.logo_url || 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop'}
+                    alt={merchant.name}
+                    className="w-16 h-16 rounded-xl object-cover mx-auto"
+                  />
+                  {merchant.verification_status && (
+                    <Shield className="absolute -right-1 -bottom-1 w-5 h-5 text-green-500 bg-card rounded-full p-0.5" />
+                  )}
+                </div>
+                <h4 className="font-medium text-sm text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-1">
+                  {merchant.name}
+                </h4>
+                <span className="text-xs text-muted-foreground block mb-2">
+                  {merchant.service_type || '数据服务'}
                 </span>
-                <span className="flex items-center gap-1 text-muted-foreground">
-                  <TrendingUp className="w-3 h-3" />
-                  {merchant.products}款
-                </span>
-              </div>
-            </Link>
-          ))}
+                <div className="flex items-center justify-center gap-3 text-xs">
+                  <span className="flex items-center gap-1 text-primary">
+                    <Star className="w-3 h-3 fill-current" />
+                    {merchant.rating || 5.0}
+                  </span>
+                  <span className="flex items-center gap-1 text-muted-foreground">
+                    <TrendingUp className="w-3 h-3" />
+                    {merchant.product_count || 0}款
+                  </span>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className="col-span-6 text-center py-8 text-muted-foreground">暂无数商</div>
+          )}
         </div>
 
         {/* CTA */}

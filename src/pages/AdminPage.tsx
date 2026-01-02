@@ -7,6 +7,11 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useArticles } from '@/hooks/useArticles';
+import { usePlatformStats } from '@/hooks/usePlatformStats';
+import { useDataMerchants } from '@/hooks/useDataMerchants';
+import { formatDate, formatStatValue } from '@/lib/formatters';
 import logo from '@/assets/hkbde-logo.png';
 
 const sidebarItems = [
@@ -21,23 +26,20 @@ const sidebarItems = [
   { icon: Settings, name: '系统设置', path: '/admin/settings' },
 ];
 
-const recentArticles = [
-  { id: 1, title: '新疆公共数据资源登记实施细则出台', type: '政策', status: '已发布', date: '2024-12-28' },
-  { id: 2, title: '香港数字资产上市公司联合会成立', type: '新闻', status: '已发布', date: '2024-12-27' },
-  { id: 3, title: '数据要素市场化配置深度解读', type: '观点', status: '审核中', date: '2024-12-26' },
-  { id: 4, title: '2025香港大数据产业博览会', type: '活动', status: '草稿', date: '2024-12-25' },
-];
-
-const stats = [
-  { label: '今日访问', value: '12,345', change: '+12%' },
-  { label: '文章总数', value: '1,234', change: '+5' },
-  { label: '注册用户', value: '8,901', change: '+128' },
-  { label: '入驻数商', value: '800', change: '+15' },
-];
-
 export default function AdminPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
+
+  const { data: recentArticles, isLoading: loadingArticles } = useArticles({ limit: 5 });
+  const { data: platformStats, isLoading: loadingStats } = usePlatformStats();
+  const { data: merchants } = useDataMerchants({ limit: 1 });
+
+  const stats = [
+    { label: '今日访问', value: '12,345', change: '+12%' },
+    { label: '文章总数', value: recentArticles?.length ? `${recentArticles.length}+` : '0', change: '+5' },
+    { label: '注册用户', value: '8,901', change: '+128' },
+    { label: '入驻数商', value: merchants?.length ? `${merchants.length}+` : '0', change: '+15' },
+  ];
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -118,13 +120,23 @@ export default function AdminPage() {
         <main className="p-6">
           {/* Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {stats.map((stat) => (
-              <div key={stat.label} className="bg-card rounded-xl border p-6">
-                <div className="text-sm text-muted-foreground mb-1">{stat.label}</div>
-                <div className="text-2xl font-bold">{stat.value}</div>
-                <div className="text-xs text-green-500">{stat.change}</div>
-              </div>
-            ))}
+            {loadingStats ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="bg-card rounded-xl border p-6">
+                  <Skeleton className="h-4 w-16 mb-2" />
+                  <Skeleton className="h-8 w-20 mb-1" />
+                  <Skeleton className="h-3 w-12" />
+                </div>
+              ))
+            ) : (
+              stats.map((stat) => (
+                <div key={stat.label} className="bg-card rounded-xl border p-6">
+                  <div className="text-sm text-muted-foreground mb-1">{stat.label}</div>
+                  <div className="text-2xl font-bold">{stat.value}</div>
+                  <div className="text-xs text-green-500">{stat.change}</div>
+                </div>
+              ))
+            )}
           </div>
 
           {/* Quick Actions */}
@@ -156,44 +168,62 @@ export default function AdminPage() {
                 <thead className="bg-muted/50">
                   <tr>
                     <th className="text-left px-6 py-3 text-sm font-medium text-muted-foreground">标题</th>
-                    <th className="text-left px-6 py-3 text-sm font-medium text-muted-foreground">类型</th>
+                    <th className="text-left px-6 py-3 text-sm font-medium text-muted-foreground">分类</th>
                     <th className="text-left px-6 py-3 text-sm font-medium text-muted-foreground">状态</th>
                     <th className="text-left px-6 py-3 text-sm font-medium text-muted-foreground">日期</th>
                     <th className="text-left px-6 py-3 text-sm font-medium text-muted-foreground">操作</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {recentArticles.map((article) => (
-                    <tr key={article.id} className="hover:bg-muted/30 transition-colors">
-                      <td className="px-6 py-4 font-medium">{article.title}</td>
-                      <td className="px-6 py-4">
-                        <span className="tag tag-policy">{article.type}</span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={`text-sm ${
-                          article.status === '已发布' ? 'text-green-500' :
-                          article.status === '审核中' ? 'text-yellow-500' :
-                          'text-muted-foreground'
-                        }`}>
-                          {article.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-muted-foreground">{article.date}</td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
-                          <button className="p-1 hover:text-primary transition-colors">
-                            <Eye className="w-4 h-4" />
-                          </button>
-                          <button className="p-1 hover:text-primary transition-colors">
-                            <Edit className="w-4 h-4" />
-                          </button>
-                          <button className="p-1 hover:text-destructive transition-colors">
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
+                  {loadingArticles ? (
+                    Array.from({ length: 4 }).map((_, i) => (
+                      <tr key={i}>
+                        <td className="px-6 py-4"><Skeleton className="h-4 w-48" /></td>
+                        <td className="px-6 py-4"><Skeleton className="h-5 w-12" /></td>
+                        <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                        <td className="px-6 py-4"><Skeleton className="h-4 w-20" /></td>
+                        <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                      </tr>
+                    ))
+                  ) : recentArticles && recentArticles.length > 0 ? (
+                    recentArticles.map((article) => (
+                      <tr key={article.id} className="hover:bg-muted/30 transition-colors">
+                        <td className="px-6 py-4 font-medium">{article.title}</td>
+                        <td className="px-6 py-4">
+                          <span className="tag tag-policy">{article.category === 'policy' ? '政策' : '新闻'}</span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`text-sm ${
+                            article.status === 'published' ? 'text-green-500' :
+                            article.status === 'pending' ? 'text-yellow-500' :
+                            'text-muted-foreground'
+                          }`}>
+                            {article.status === 'published' ? '已发布' : article.status === 'pending' ? '审核中' : '草稿'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-muted-foreground">{formatDate(article.published_at || article.created_at)}</td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-2">
+                            <button className="p-1 hover:text-primary transition-colors">
+                              <Eye className="w-4 h-4" />
+                            </button>
+                            <button className="p-1 hover:text-primary transition-colors">
+                              <Edit className="w-4 h-4" />
+                            </button>
+                            <button className="p-1 hover:text-destructive transition-colors">
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-8 text-center text-muted-foreground">
+                        暂无文章
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>

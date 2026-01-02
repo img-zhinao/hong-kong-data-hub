@@ -1,60 +1,31 @@
+import { useState } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Clock, Eye, FileText, Filter, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-
-const policies = [
-  {
-    id: 1,
-    title: '新疆公共数据资源登记实施细则出台',
-    summary: '为规范公共数据资源登记，构建全区一体化公共数据资源登记体系，促进公共数据资源合规高效开发利用，日前新疆维吾尔自治区数字化发展局制定了《新疆维吾尔自治区公共数据资源登记实施细则(试行)》，将于10月1日起正式施行。',
-    date: '2024-12-28',
-    source: '新疆维吾尔自治区数字化发展局',
-    views: 2341,
-    category: '地方政策',
-  },
-  {
-    id: 2,
-    title: '北京印发数据资产管理试点方案 激活数据要素价值赋能数字经济',
-    summary: '数据资产作为经济社会数字化转型进程中的新兴资产类型，正日益成为推动数字中国建设和加快数字经济发展的重要战略资源。为落实财政部关于数据资产全过程管理试点要求，健全本市数据资产管理基础制度、释放数据价值、保障数据安全。',
-    date: '2024-12-27',
-    source: '北京市财政局',
-    views: 1856,
-    category: '地方政策',
-  },
-  {
-    id: 3,
-    title: '国家数据局：加快印发梯次培育数字产业集群行动计划',
-    summary: '记者获悉，国家数据局近日会同有关部门召开数字中国建设工作推进会议，提出要加快印发梯次培育数字产业集群的行动计划，加强体系化促进平台经济健康发展政策研究。',
-    date: '2024-12-26',
-    source: '国家数据局',
-    views: 3421,
-    category: '国家政策',
-  },
-  {
-    id: 4,
-    title: '江苏：到2027年底建设不少于1000个高质量数据集',
-    summary: '着力打造3个数据标注基地，集中培育10个左右创新引领力强、要素集聚力强、行业影响力强的数据标注重点企业，建设1000个完整规范、准确实用的高质量数据集，遴选100个可复制、可推广的典型应用案例。',
-    date: '2024-12-25',
-    source: '江苏省数据局',
-    views: 1534,
-    category: '地方政策',
-  },
-  {
-    id: 5,
-    title: '工信部：分行业分区域培育一批深耕行业的制造业数字化转型促进中心',
-    summary: '工业和信息化部党组成员、副部长辛国斌出席培训班并作开班讲话，他指出，推进制造业数字化转型是构建现代化产业体系的重要路径，是扩大有效投资需求的重要手段，是打造产业国际竞争新优势的战略举措。',
-    date: '2024-12-24',
-    source: '工业和信息化部',
-    views: 2187,
-    category: '国家政策',
-  },
-];
+import { useArticles } from '@/hooks/useArticles';
+import { formatDate } from '@/lib/formatters';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const categories = ['全部', '国家政策', '地方政策', '香港政策', '行业标准'];
 
 export default function PolicyPage() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('全部');
+
+  const { data: policies, isLoading } = useArticles({
+    category: 'policy',
+    subCategory: selectedCategory === '全部' ? undefined : selectedCategory,
+    search: searchTerm || undefined,
+  });
+
+  const { data: hotPolicies } = useArticles({
+    category: 'policy',
+    limit: 5,
+    orderBy: 'view_count',
+  });
+
   return (
     <Layout>
       {/* Page Header */}
@@ -78,7 +49,12 @@ export default function PolicyPage() {
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input placeholder="搜索政策法规..." className="pl-10" />
+                <Input 
+                  placeholder="搜索政策法规..." 
+                  className="pl-10"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
               <Button variant="outline" className="gap-2">
                 <Filter className="w-4 h-4" />
@@ -88,11 +64,12 @@ export default function PolicyPage() {
 
             {/* Category Tabs */}
             <div className="flex flex-wrap gap-2 mb-6">
-              {categories.map((cat, index) => (
+              {categories.map((cat) => (
                 <Button
                   key={cat}
-                  variant={index === 0 ? 'default' : 'outline'}
+                  variant={selectedCategory === cat ? 'default' : 'outline'}
                   size="sm"
+                  onClick={() => setSelectedCategory(cat)}
                 >
                   {cat}
                 </Button>
@@ -101,35 +78,53 @@ export default function PolicyPage() {
 
             {/* Policy List */}
             <div className="space-y-4">
-              {policies.map((policy, index) => (
-                <Link
-                  key={policy.id}
-                  to={`/policy/${policy.id}`}
-                  className="news-card block p-6 animate-fade-in"
-                  style={{ animationDelay: `${index * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="tag tag-policy">{policy.category}</span>
-                    <span className="text-xs text-muted-foreground">{policy.source}</span>
+              {isLoading ? (
+                Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="news-card p-6">
+                    <div className="flex gap-2 mb-2">
+                      <Skeleton className="h-5 w-16" />
+                      <Skeleton className="h-5 w-24" />
+                    </div>
+                    <Skeleton className="h-6 w-full mb-2" />
+                    <Skeleton className="h-4 w-3/4 mb-4" />
+                    <Skeleton className="h-3 w-32" />
                   </div>
-                  <h3 className="font-semibold text-lg text-foreground hover:text-primary transition-colors mb-2">
-                    {policy.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-                    {policy.summary}
-                  </p>
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {policy.date}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Eye className="w-3 h-3" />
-                      {policy.views.toLocaleString()}
-                    </span>
-                  </div>
-                </Link>
-              ))}
+                ))
+              ) : policies && policies.length > 0 ? (
+                policies.map((policy, index) => (
+                  <Link
+                    key={policy.id}
+                    to={`/policy/${policy.slug}`}
+                    className="news-card block p-6 animate-fade-in"
+                    style={{ animationDelay: `${index * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="tag tag-policy">{policy.sub_category || '政策法规'}</span>
+                      <span className="text-xs text-muted-foreground">{policy.source_agency}</span>
+                    </div>
+                    <h3 className="font-semibold text-lg text-foreground hover:text-primary transition-colors mb-2">
+                      {policy.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+                      {policy.summary}
+                    </p>
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {formatDate(policy.published_at)}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Eye className="w-3 h-3" />
+                        {(policy.view_count || 0).toLocaleString()}
+                      </span>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <div className="text-center py-12 text-muted-foreground">
+                  暂无相关政策法规
+                </div>
+              )}
             </div>
           </div>
 
@@ -142,10 +137,10 @@ export default function PolicyPage() {
                 热门政策
               </h3>
               <ul className="space-y-3">
-                {policies.slice(0, 5).map((policy, index) => (
+                {hotPolicies?.slice(0, 5).map((policy, index) => (
                   <li key={policy.id}>
                     <Link
-                      to={`/policy/${policy.id}`}
+                      to={`/policy/${policy.slug}`}
                       className="flex items-start gap-3 group"
                     >
                       <span className={`flex-shrink-0 w-5 h-5 rounded text-xs font-bold flex items-center justify-center ${
