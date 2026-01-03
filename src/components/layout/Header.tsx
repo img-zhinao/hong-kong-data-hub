@@ -12,9 +12,9 @@ const navItems = [
     name: '行业动态', 
     path: '/news',
     children: [
-      { name: '数交所动态', path: '/news/exchange' },
-      { name: '行业资讯', path: '/news/industry' },
-      { name: '企业快讯', path: '/news/enterprise' },
+      { name: '数交所动态', path: '/news?tab=exchange' },
+      { name: '行业资讯', path: '/news?tab=industry' },
+      { name: '企业快讯', path: '/news?tab=enterprise' },
     ]
   },
   { name: '专家观点', path: '/insights' },
