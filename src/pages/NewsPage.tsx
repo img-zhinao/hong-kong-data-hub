@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Clock, Eye, Newspaper, Search, TrendingUp } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -10,8 +10,23 @@ import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function NewsPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentTab, setCurrentTab] = useState('all');
+  const tabFromUrl = searchParams.get('tab') || 'all';
+  const [currentTab, setCurrentTab] = useState(tabFromUrl);
+
+  useEffect(() => {
+    setCurrentTab(tabFromUrl);
+  }, [tabFromUrl]);
+
+  const handleTabChange = (value: string) => {
+    setCurrentTab(value);
+    if (value === 'all') {
+      setSearchParams({});
+    } else {
+      setSearchParams({ tab: value });
+    }
+  };
 
   const { data: allNews, isLoading: loadingAll } = useArticles({
     category: 'news',
@@ -84,7 +99,7 @@ export default function NewsPage() {
             </div>
 
             {/* Tabs */}
-            <Tabs value={currentTab} onValueChange={setCurrentTab} className="mb-6">
+            <Tabs value={currentTab} onValueChange={handleTabChange} className="mb-6">
               <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="all">全部</TabsTrigger>
                 <TabsTrigger value="exchange">数交所动态</TabsTrigger>

@@ -171,7 +171,7 @@ export type Database = {
           created_at?: string | null
           details?: string | null
           end_date?: string | null
-          event_date: string
+          event_date?: string
           event_type?: string | null
           id?: string
           location?: string | null
