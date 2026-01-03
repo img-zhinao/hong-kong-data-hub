@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Eye, Building2, Tag, Share2 } from 'lucide-react';
 import DOMPurify from 'dompurify';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useArticle, useIncrementViewCount } from '@/hooks/useArticles';
 import { formatDate } from '@/lib/formatters';
 import { Layout } from '@/components/layout/Layout';
@@ -201,10 +203,11 @@ export default function ArticleDetailPage() {
         )}
 
         {/* 正文内容 */}
-        <div 
-          className="prose prose-lg dark:prose-invert max-w-none mb-12"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(article.content || '') }}
-        />
+        <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {article.content || ''}
+          </ReactMarkdown>
+        </div>
 
         {/* 底部操作 */}
         <footer className="flex items-center justify-between pt-8 border-t">
