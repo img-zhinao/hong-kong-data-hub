@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Eye, Building2, Tag, Share2 } from 'lucide-react';
+import DOMPurify from 'dompurify';
 import { useArticle, useIncrementViewCount } from '@/hooks/useArticles';
 import { formatDate } from '@/lib/formatters';
 import { Layout } from '@/components/layout/Layout';
@@ -202,7 +203,7 @@ export default function ArticleDetailPage() {
         {/* 正文内容 */}
         <div 
           className="prose prose-lg dark:prose-invert max-w-none mb-12"
-          dangerouslySetInnerHTML={{ __html: article.content || '' }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(article.content || '') }}
         />
 
         {/* 底部操作 */}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, FileText, Newspaper, Lightbulb, Calendar, 
   Building2, Settings, Users, LogOut, Menu, X, BarChart3,
@@ -8,6 +8,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useAuth } from '@/hooks/useAuth';
 import { useArticles } from '@/hooks/useArticles';
 import { usePlatformStats } from '@/hooks/usePlatformStats';
 import { useDataMerchants } from '@/hooks/useDataMerchants';
@@ -29,7 +30,8 @@ const sidebarItems = [
 export default function AdminPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
-
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const { data: recentArticles, isLoading: loadingArticles } = useArticles({ limit: 5 });
   const { data: platformStats, isLoading: loadingStats } = usePlatformStats();
   const { data: merchants } = useDataMerchants({ limit: 1 });
@@ -78,7 +80,13 @@ export default function AdminPage() {
         </nav>
 
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-navy-light">
-          <button className="flex items-center gap-3 px-4 py-3 w-full text-primary-foreground/70 hover:text-primary-foreground transition-colors">
+          <button 
+            onClick={async () => {
+              await signOut();
+              navigate('/auth');
+            }}
+            className="flex items-center gap-3 px-4 py-3 w-full text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+          >
             <LogOut className="w-5 h-5" />
             <span>退出登录</span>
           </button>
@@ -105,12 +113,12 @@ export default function AdminPage() {
                 <Input placeholder="搜索..." className="pl-10 w-64" />
               </div>
               <div className="flex items-center gap-2">
-                <img
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face"
-                  alt="Admin"
-                  className="w-8 h-8 rounded-full"
-                />
-                <span className="hidden md:inline text-sm font-medium">管理员</span>
+                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-medium">
+                  {user?.email?.charAt(0).toUpperCase() || 'A'}
+                </div>
+                <span className="hidden md:inline text-sm font-medium truncate max-w-[120px]">
+                  {user?.email || '管理员'}
+                </span>
               </div>
             </div>
           </div>
