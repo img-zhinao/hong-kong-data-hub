@@ -15,6 +15,9 @@ import AboutPage from "./pages/AboutPage";
 import AdminPage from "./pages/AdminPage";
 import AuthPage from "./pages/AuthPage";
 import ArticleDetailPage from "./pages/ArticleDetailPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import TermsPage from "./pages/TermsPage";
+import SitemapPage from "./pages/SitemapPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +42,9 @@ const App = () => (
             <Route path="/data-merchants" element={<DataMerchantsPage />} />
             <Route path="/data-merchants/:id" element={<DataMerchantsPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/sitemap" element={<SitemapPage />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/admin/*" element={
               <ProtectedRoute>
