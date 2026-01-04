@@ -33,21 +33,6 @@ export function Header() {
     <header className="sticky top-0 z-50">
       {/* Market Ticker */}
       <MarketTicker />
-      
-      {/* Top Bar */}
-      <div className="bg-gradient-header text-primary-foreground">
-        <div className="container flex items-center justify-between h-10 text-xs">
-          <div className="hidden md:flex items-center gap-4 text-primary-foreground/70">
-            <span>香港大数据交易所 · 数据要素权威平台</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-primary-foreground/70">English</span>
-            <Link to="/admin" className="text-primary hover:text-primary/80 transition-colors">
-              管理后台
-            </Link>
-          </div>
-        </div>
-      </div>
 
       {/* Main Header */}
       <div className="bg-card border-b shadow-sm">
@@ -101,8 +86,8 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Search & Mobile Menu */}
-          <div className="flex items-center gap-2">
+          {/* Search, Language & Admin */}
+          <div className="flex items-center gap-1">
             {isSearchOpen ? (
               <div className="flex items-center gap-2 animate-fade-in">
                 <Input 
@@ -127,6 +112,16 @@ export function Header() {
                 <Search className="w-5 h-5" />
               </Button>
             )}
+
+            <span className="hidden md:inline-block text-sm text-muted-foreground px-3 py-2 hover:text-foreground cursor-pointer transition-colors">
+              English
+            </span>
+            <Link 
+              to="/admin" 
+              className="hidden md:inline-block text-sm text-primary hover:text-primary/80 px-3 py-2 transition-colors"
+            >
+              管理后台
+            </Link>
 
             <Button
               variant="ghost"
