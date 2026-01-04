@@ -244,6 +244,7 @@ export type Database = {
       }
       platform_stats: {
         Row: {
+          geo_metadata: Json | null
           id: number
           label: string | null
           metric_key: string
@@ -251,6 +252,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          geo_metadata?: Json | null
           id?: number
           label?: string | null
           metric_key: string
@@ -258,6 +260,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          geo_metadata?: Json | null
           id?: number
           label?: string | null
           metric_key?: string

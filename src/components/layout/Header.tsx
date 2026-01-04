@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Search, Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { MarketTicker } from './MarketTicker';
 import logo from '@/assets/hkbde-logo.png';
 
 const navItems = [
@@ -30,6 +31,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50">
+      {/* Market Ticker */}
+      <MarketTicker />
+      
       {/* Top Bar */}
       <div className="bg-gradient-header text-primary-foreground">
         <div className="container flex items-center justify-between h-10 text-xs">
