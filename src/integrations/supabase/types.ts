@@ -274,6 +274,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_admin_profile: {
+        Args: { full_name: string; new_role: string; user_id: string }
+        Returns: undefined
+      }
       is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
