@@ -11,6 +11,7 @@ import NewsPage from "./pages/NewsPage";
 import InsightsPage from "./pages/InsightsPage";
 import EventsPage from "./pages/EventsPage";
 import DataMerchantsPage from "./pages/DataMerchantsPage";
+import DataAssetPage from "./pages/DataAssetPage";
 import AboutPage from "./pages/AboutPage";
 import AdminPage from "./pages/AdminPage";
 import AuthPage from "./pages/AuthPage";
@@ -19,7 +20,6 @@ import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import SitemapPage from "./pages/SitemapPage";
 import NotFound from "./pages/NotFound";
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -31,6 +31,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/data-asset" element={<DataAssetPage />} />
             <Route path="/policy" element={<PolicyPage />} />
             <Route path="/policy/:slug" element={<ArticleDetailPage />} />
             <Route path="/news" element={<NewsPage />} />
