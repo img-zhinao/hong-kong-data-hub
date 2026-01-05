@@ -182,7 +182,7 @@ export default function AuthPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isSubmitting}
-                    className="bg-slate-800 border-slate-700 text-foreground placeholder:text-slate-500"
+                    className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-400"
                   />
                   {signInErrors.email && (
                     <p className="text-sm text-destructive">{signInErrors.email}</p>
@@ -197,7 +197,7 @@ export default function AuthPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={isSubmitting}
-                    className="bg-slate-800 border-slate-700 text-foreground placeholder:text-slate-500"
+                    className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-400"
                   />
                   {signInErrors.password && (
                     <p className="text-sm text-destructive">{signInErrors.password}</p>
@@ -227,7 +227,7 @@ export default function AuthPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isSubmitting}
-                    className="bg-slate-800 border-slate-700 text-foreground placeholder:text-slate-500"
+                    className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-400"
                   />
                   {signUpErrors.email && (
                     <p className="text-sm text-destructive">{signUpErrors.email}</p>
@@ -242,7 +242,7 @@ export default function AuthPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={isSubmitting}
-                    className="bg-slate-800 border-slate-700 text-foreground placeholder:text-slate-500"
+                    className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-400"
                   />
                   {signUpErrors.password && (
                     <p className="text-sm text-destructive">{signUpErrors.password}</p>
@@ -257,7 +257,7 @@ export default function AuthPage() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     disabled={isSubmitting}
-                    className="bg-slate-800 border-slate-700 text-foreground placeholder:text-slate-500"
+                    className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-400"
                   />
                   {signUpErrors.fullName && (
                     <p className="text-sm text-destructive">{signUpErrors.fullName}</p>
@@ -272,7 +272,7 @@ export default function AuthPage() {
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     disabled={isSubmitting}
-                    className="bg-slate-800 border-slate-700 text-foreground placeholder:text-slate-500"
+                    className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-400"
                   />
                   {signUpErrors.companyName && (
                     <p className="text-sm text-destructive">{signUpErrors.companyName}</p>
