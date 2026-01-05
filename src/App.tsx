@@ -15,11 +15,13 @@ import DataAssetPage from "./pages/DataAssetPage";
 import AboutPage from "./pages/AboutPage";
 import AdminPage from "./pages/AdminPage";
 import AuthPage from "./pages/AuthPage";
+import ProfilePage from "./pages/ProfilePage";
 import ArticleDetailPage from "./pages/ArticleDetailPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import SitemapPage from "./pages/SitemapPage";
 import NotFound from "./pages/NotFound";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -47,6 +49,8 @@ const App = () => (
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/sitemap" element={<SitemapPage />} />
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/my-assets" element={<NotFound />} />
             <Route path="/admin/*" element={
               <ProtectedRoute>
                 <AdminPage />

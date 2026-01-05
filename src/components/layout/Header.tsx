@@ -1,9 +1,19 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Search, Menu, X, ChevronDown } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Search, Menu, X, ChevronDown, User, LogOut, Database, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { MarketTicker } from './MarketTicker';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
 import logo from '@/assets/hkbde-logo.png';
 
 const navItems = [
@@ -29,6 +39,23 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, profile, loading, signOut } = useAuth();
+  const { toast } = useToast();
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast({
+      title: '已登出',
+      description: '您已成功退出登录',
+    });
+    navigate('/');
+  };
+
+  const getInitials = (name: string | null | undefined) => {
+    if (!name) return 'U';
+    return name.charAt(0).toUpperCase();
+  };
 
   return (
     <header className="sticky top-0 z-50">
@@ -87,7 +114,7 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Search, Language & Admin */}
+          {/* Search, Language & User */}
           <div className="flex items-center gap-1">
             {isSearchOpen ? (
               <div className="flex items-center gap-2 animate-fade-in">
@@ -117,12 +144,76 @@ export function Header() {
             <span className="hidden md:inline-block text-sm text-muted-foreground px-3 py-2 hover:text-foreground cursor-pointer transition-colors">
               English
             </span>
-            <Link 
-              to="/admin" 
-              className="hidden md:inline-block text-sm text-primary hover:text-primary/80 px-3 py-2 transition-colors"
-            >
-              管理后台
-            </Link>
+
+            {/* User Authentication State */}
+            {loading ? (
+              <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+            ) : user ? (
+              <>
+                {/* Admin Link for admins */}
+                {profile?.role === 'admin' || profile?.role === 'editor' ? (
+                  <Link 
+                    to="/admin" 
+                    className="hidden md:inline-block text-sm text-primary hover:text-primary/80 px-3 py-2 transition-colors"
+                  >
+                    管理后台
+                  </Link>
+                ) : null}
+                
+                {/* User Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-9 w-9 rounded-full">
+                      <Avatar className="h-9 w-9 border border-primary/30">
+                        <AvatarImage src={profile?.avatar_url || undefined} />
+                        <AvatarFallback className="bg-primary/20 text-primary text-sm">
+                          {getInitials(profile?.full_name)}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <div className="flex items-center justify-start gap-2 p-2">
+                      <div className="flex flex-col space-y-1 leading-none">
+                        <p className="font-medium text-foreground">
+                          {profile?.full_name || '未设置姓名'}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {profile?.email}
+                        </p>
+                      </div>
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to="/profile" className="flex items-center cursor-pointer">
+                        <User className="mr-2 h-4 w-4" />
+                        个人中心
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/my-assets" className="flex items-center cursor-pointer">
+                        <Database className="mr-2 h-4 w-4" />
+                        我的数据资产
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                      onClick={handleSignOut}
+                      className="text-destructive focus:text-destructive cursor-pointer"
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      登出
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) : (
+              <Link to="/auth">
+                <Button variant="outline" size="sm" className="hidden md:inline-flex border-primary/50 text-primary hover:bg-primary/10">
+                  登录 / 注册
+                </Button>
+              </Link>
+            )}
 
             <Button
               variant="ghost"
@@ -168,6 +259,54 @@ export function Header() {
                   )}
                 </div>
               ))}
+              
+              {/* Mobile Auth */}
+              <div className="pt-4 border-t border-border mt-4">
+                {user ? (
+                  <>
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-3 rounded-lg font-medium text-foreground hover:bg-accent"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      个人中心
+                    </Link>
+                    <Link
+                      to="/my-assets"
+                      className="block px-4 py-3 rounded-lg font-medium text-foreground hover:bg-accent"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      我的数据资产
+                    </Link>
+                    {(profile?.role === 'admin' || profile?.role === 'editor') && (
+                      <Link
+                        to="/admin"
+                        className="block px-4 py-3 rounded-lg font-medium text-primary hover:bg-accent"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        管理后台
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        handleSignOut();
+                        setIsMenuOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-3 rounded-lg font-medium text-destructive hover:bg-accent"
+                    >
+                      登出
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    to="/auth"
+                    className="block px-4 py-3 rounded-lg font-medium text-primary hover:bg-accent"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    登录 / 注册
+                  </Link>
+                )}
+              </div>
             </nav>
           </div>
         )}
