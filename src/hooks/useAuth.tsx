@@ -33,7 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchProfile = async (userId: string) => {
+  const fetchProfile = async (userId: string, userEmail?: string) => {
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
@@ -41,6 +41,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .single();
 
     if (error) {
+      // If profile doesn't exist, create one
+      if (error.code === 'PGRST116') {
+        const { data: newProfile, error: insertError } = await supabase
+          .from('profiles')
+          .insert({
+            id: userId,
+            email: userEmail || '',
+            full_name: '',
+            company_name: '',
+          })
+          .select()
+          .single();
+
+        if (insertError) {
+          console.error('Error creating profile:', insertError);
+          return null;
+        }
+        return newProfile as Profile;
+      }
       console.error('Error fetching profile:', error);
       return null;
     }
@@ -49,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshProfile = async () => {
     if (user) {
-      const profileData = await fetchProfile(user.id);
+      const profileData = await fetchProfile(user.id, user.email);
       setProfile(profileData);
     }
   };
@@ -64,7 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Defer profile fetching with setTimeout to avoid deadlock
         if (session?.user) {
           setTimeout(() => {
-            fetchProfile(session.user.id).then(setProfile);
+            fetchProfile(session.user.id, session.user.email).then(setProfile);
           }, 0);
         } else {
           setProfile(null);
@@ -80,7 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(session?.user ?? null);
       
       if (session?.user) {
-        fetchProfile(session.user.id).then(setProfile);
+        fetchProfile(session.user.id, session.user.email).then(setProfile);
       }
       
       setLoading(false);
