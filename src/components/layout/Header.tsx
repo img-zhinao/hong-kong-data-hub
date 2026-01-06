@@ -18,6 +18,7 @@ import logo from '@/assets/hkbde-logo.png';
 
 const navItems = [
   { name: '首页', path: '/' },
+  { name: '数据产品', path: '/products' },
   { name: '数据资产入表', path: '/data-asset' },
   { name: '政策法规', path: '/policy' },
   { 
