@@ -105,6 +105,7 @@ export type Database = {
           description: string | null
           display_order: number | null
           id: string
+          last_publish_at: string | null
           logo_url: string | null
           name: string
           product_count: number | null
@@ -112,6 +113,7 @@ export type Database = {
           service_type: string | null
           tags: string[] | null
           transaction_count: number | null
+          updated_at: string | null
           verification_status: boolean | null
           website_url: string | null
         }
@@ -121,6 +123,7 @@ export type Database = {
           description?: string | null
           display_order?: number | null
           id?: string
+          last_publish_at?: string | null
           logo_url?: string | null
           name: string
           product_count?: number | null
@@ -128,6 +131,7 @@ export type Database = {
           service_type?: string | null
           tags?: string[] | null
           transaction_count?: number | null
+          updated_at?: string | null
           verification_status?: boolean | null
           website_url?: string | null
         }
@@ -137,6 +141,7 @@ export type Database = {
           description?: string | null
           display_order?: number | null
           id?: string
+          last_publish_at?: string | null
           logo_url?: string | null
           name?: string
           product_count?: number | null
@@ -144,10 +149,94 @@ export type Database = {
           service_type?: string | null
           tags?: string[] | null
           transaction_count?: number | null
+          updated_at?: string | null
           verification_status?: boolean | null
           website_url?: string | null
         }
         Relationships: []
+      }
+      data_products: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          currency: string | null
+          data_format: string | null
+          data_volume: string | null
+          delivery_method: string | null
+          download_count: number | null
+          external_source_id: string | null
+          id: string
+          metadata: Json | null
+          price: number | null
+          provider_id: string
+          published_at: string | null
+          resource_url: string | null
+          slug: string
+          source_origin: string | null
+          status: string | null
+          summary: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+          view_count: number | null
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          currency?: string | null
+          data_format?: string | null
+          data_volume?: string | null
+          delivery_method?: string | null
+          download_count?: number | null
+          external_source_id?: string | null
+          id?: string
+          metadata?: Json | null
+          price?: number | null
+          provider_id: string
+          published_at?: string | null
+          resource_url?: string | null
+          slug: string
+          source_origin?: string | null
+          status?: string | null
+          summary?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          currency?: string | null
+          data_format?: string | null
+          data_volume?: string | null
+          delivery_method?: string | null
+          download_count?: number | null
+          external_source_id?: string | null
+          id?: string
+          metadata?: Json | null
+          price?: number | null
+          provider_id?: string
+          published_at?: string | null
+          resource_url?: string | null
+          slug?: string
+          source_origin?: string | null
+          status?: string | null
+          summary?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "data_products_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "data_merchants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       events: {
         Row: {
