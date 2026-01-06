@@ -34,10 +34,12 @@ interface UseDataProductsOptions {
   priceType?: 'all' | 'free' | 'paid';
   search?: string;
   limit?: number;
+  sortBy?: 'published_at' | 'price' | 'view_count';
+  sortOrder?: 'asc' | 'desc';
 }
 
 export function useDataProducts(options: UseDataProductsOptions = {}) {
-  const { tag, priceType, search, limit } = options;
+  const { tag, priceType, search, limit, sortBy = 'published_at', sortOrder = 'desc' } = options;
 
   return useQuery({
     queryKey: ['data_products', options],
@@ -52,8 +54,7 @@ export function useDataProducts(options: UseDataProductsOptions = {}) {
             logo_url
           )
         `)
-        .eq('status', 'published')
-        .order('published_at', { ascending: false });
+        .eq('status', 'published');
 
       if (tag && tag !== 'all') {
         query = query.contains('tags', [tag]);
@@ -68,6 +69,9 @@ export function useDataProducts(options: UseDataProductsOptions = {}) {
       if (search) {
         query = query.or(`title.ilike.%${search}%,summary.ilike.%${search}%`);
       }
+
+      // Apply sorting
+      query = query.order(sortBy, { ascending: sortOrder === 'asc' });
 
       if (limit) {
         query = query.limit(limit);
