@@ -119,9 +119,9 @@ export default function DataMerchantsPage() {
                     {merchant.description || '专业数据服务商，提供高质量数据产品与服务'}
                   </p>
 
-                  {merchant.tags && merchant.tags.length > 0 && (
+                  {merchant.merchant_tags && merchant.merchant_tags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-4">
-                      {merchant.tags.slice(0, 3).map(tag => (
+                      {merchant.merchant_tags.slice(0, 3).map(tag => (
                         <span key={tag} className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded">
                           {tag}
                         </span>

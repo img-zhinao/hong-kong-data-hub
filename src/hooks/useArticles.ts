@@ -71,18 +71,21 @@ export function useIncrementViewCount() {
 
   return useMutation({
     mutationFn: async (articleId: string) => {
-      // 先获取当前阅读量，然后更新
-      const { data: article } = await supabase
-        .from('articles')
-        .select('view_count')
-        .eq('id', articleId)
-        .single();
-
-      if (article) {
-        await supabase
-          .from('articles')
-          .update({ view_count: (article.view_count || 0) + 1 })
-          .eq('id', articleId);
+      // Validate UUID format to prevent injection
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      if (!uuidRegex.test(articleId)) {
+        throw new Error('Invalid article ID format');
+      }
+      
+      // Use SECURITY DEFINER RPC function to increment view count
+      // This allows all users (including anonymous) to increment view counts
+      const { error } = await supabase.rpc('increment_article_view_count', { 
+        article_id: articleId 
+      });
+      
+      if (error) {
+        console.error('View count increment failed:', error);
+        throw error;
       }
     },
     onSuccess: () => {
