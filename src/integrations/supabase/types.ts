@@ -100,6 +100,7 @@ export type Database = {
       }
       data_merchants: {
         Row: {
+          business_domains: string[] | null
           contact_email: string | null
           created_at: string | null
           description: string | null
@@ -107,17 +108,18 @@ export type Database = {
           id: string
           last_publish_at: string | null
           logo_url: string | null
+          merchant_tags: string[] | null
           name: string
           product_count: number | null
           rating: number | null
           service_type: string | null
-          tags: string[] | null
           transaction_count: number | null
           updated_at: string | null
           verification_status: boolean | null
           website_url: string | null
         }
         Insert: {
+          business_domains?: string[] | null
           contact_email?: string | null
           created_at?: string | null
           description?: string | null
@@ -125,17 +127,18 @@ export type Database = {
           id?: string
           last_publish_at?: string | null
           logo_url?: string | null
+          merchant_tags?: string[] | null
           name: string
           product_count?: number | null
           rating?: number | null
           service_type?: string | null
-          tags?: string[] | null
           transaction_count?: number | null
           updated_at?: string | null
           verification_status?: boolean | null
           website_url?: string | null
         }
         Update: {
+          business_domains?: string[] | null
           contact_email?: string | null
           created_at?: string | null
           description?: string | null
@@ -143,11 +146,11 @@ export type Database = {
           id?: string
           last_publish_at?: string | null
           logo_url?: string | null
+          merchant_tags?: string[] | null
           name?: string
           product_count?: number | null
           rating?: number | null
           service_type?: string | null
-          tags?: string[] | null
           transaction_count?: number | null
           updated_at?: string | null
           verification_status?: boolean | null
@@ -157,6 +160,7 @@ export type Database = {
       }
       data_products: {
         Row: {
+          category: string | null
           content: string | null
           created_at: string | null
           currency: string | null
@@ -181,6 +185,7 @@ export type Database = {
           view_count: number | null
         }
         Insert: {
+          category?: string | null
           content?: string | null
           created_at?: string | null
           currency?: string | null
@@ -205,6 +210,7 @@ export type Database = {
           view_count?: number | null
         }
         Update: {
+          category?: string | null
           content?: string | null
           created_at?: string | null
           currency?: string | null
@@ -396,8 +402,25 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      append_business_domain_by_id:
+        | {
+            Args: { _merchant_id: string; _new_domain: string }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              _manual_time: string
+              _merchant_id: string
+              _new_domain: string
+            }
+            Returns: undefined
+          }
       create_admin_profile: {
         Args: { full_name: string; new_role: string; user_id: string }
+        Returns: undefined
+      }
+      increment_article_view_count: {
+        Args: { article_id: string }
         Returns: undefined
       }
       is_admin: { Args: never; Returns: boolean }
