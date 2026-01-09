@@ -30,7 +30,7 @@ export interface DataProduct {
 }
 
 interface UseDataProductsOptions {
-  tag?: string;
+  category?: string;
   priceType?: 'all' | 'free' | 'paid';
   search?: string;
   limit?: number;
@@ -39,7 +39,7 @@ interface UseDataProductsOptions {
 }
 
 export function useDataProducts(options: UseDataProductsOptions = {}) {
-  const { tag, priceType, search, limit, sortBy = 'published_at', sortOrder = 'desc' } = options;
+  const { category, priceType, search, limit, sortBy = 'published_at', sortOrder = 'desc' } = options;
 
   return useQuery({
     queryKey: ['data_products', options],
@@ -56,8 +56,8 @@ export function useDataProducts(options: UseDataProductsOptions = {}) {
         `)
         .eq('status', 'published');
 
-      if (tag && tag !== 'all') {
-        query = query.contains('tags', [tag]);
+      if (category) {
+        query = query.eq('category', category);
       }
 
       if (priceType === 'free') {

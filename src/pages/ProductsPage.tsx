@@ -19,7 +19,7 @@ import { Search, Database, FileJson, Clock, Filter, X, ArrowUpDown, Eye, DollarS
 import { formatDistanceToNow } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
 
-const industryTags = [
+const industryCategories = [
   '工业制造',
   '现代农业',
   '商贸流通',
@@ -28,8 +28,6 @@ const industryTags = [
   '科技创新',
   '文化旅游',
   '医疗健康',
-  '应急管理',
-  '气象服务',
   '城市治理',
   '绿色低碳',
 ];
@@ -56,10 +54,10 @@ export default function ProductsPage() {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const [sortValue, setSortValue] = useState('published_at-desc');
 
-  const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 'view_count', 'asc' | 'desc'];
+const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 'view_count', 'asc' | 'desc'];
 
   const { data: products, isLoading, error } = useDataProducts({
-    tag: selectedTag,
+    category: selectedTag !== 'all' ? selectedTag : undefined,
     priceType,
     search: searchTerm,
     sortBy,
@@ -94,17 +92,17 @@ export default function ProductsPage() {
           >
             全部行业
           </button>
-          {industryTags.map((tag) => (
+          {industryCategories.map((category) => (
             <button
-              key={tag}
-              onClick={() => setSelectedTag(tag)}
+              key={category}
+              onClick={() => setSelectedTag(category)}
               className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                selectedTag === tag
+                selectedTag === category
                   ? 'bg-primary/10 text-primary font-medium'
                   : 'text-muted-foreground hover:bg-accent hover:text-foreground'
               }`}
             >
-              {tag}
+              {category}
             </button>
           ))}
         </div>
