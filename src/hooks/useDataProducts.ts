@@ -56,27 +56,18 @@ export function useDataProducts(options: UseDataProductsOptions = {}) {
         `)
         .eq('status', 'published');
 
-      // Build OR conditions for filters (category, priceType, search)
-      const orConditions: string[] = [];
-
       if (category) {
-        orConditions.push(`category.eq.${category}`);
+        query = query.eq('category', category);
       }
 
       if (priceType === 'free') {
-        orConditions.push('price.eq.0');
+        query = query.eq('price', 0);
       } else if (priceType === 'paid') {
-        orConditions.push('price.gt.0');
+        query = query.gt('price', 0);
       }
 
       if (search) {
-        orConditions.push(`title.ilike.%${search}%`);
-        orConditions.push(`summary.ilike.%${search}%`);
-      }
-
-      // Apply OR conditions if any exist
-      if (orConditions.length > 0) {
-        query = query.or(orConditions.join(','));
+        query = query.or(`title.ilike.%${search}%,summary.ilike.%${search}%`);
       }
 
       // Apply sorting
