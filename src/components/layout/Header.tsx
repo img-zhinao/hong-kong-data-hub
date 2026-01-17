@@ -31,7 +31,14 @@ const navItems = [
     ]
   },
   { name: '专家观点', path: '/insights' },
-  { name: '数商生态', path: '/data-merchants' },
+  { 
+    name: '数商生态', 
+    path: '/data-merchants',
+    children: [
+      { name: '数商生态', path: '/data-merchants' },
+      { name: '需求大厅', path: '/opportunities' },
+    ]
+  },
   { name: '活动会议', path: '/events' },
   { name: '关于我们', path: '/about' },
 ];
