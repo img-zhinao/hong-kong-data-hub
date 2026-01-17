@@ -22,6 +22,7 @@ import TermsPage from "./pages/TermsPage";
 import SitemapPage from "./pages/SitemapPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import OpportunitiesPage from "./pages/OpportunitiesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -52,6 +53,7 @@ const App = () => (
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/sitemap" element={<SitemapPage />} />
+            <Route path="/opportunities" element={<OpportunitiesPage />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/my-assets" element={<NotFound />} />
