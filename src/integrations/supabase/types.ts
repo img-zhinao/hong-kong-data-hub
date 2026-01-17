@@ -397,6 +397,48 @@ export type Database = {
         }
         Relationships: []
       }
+      project_tenders: {
+        Row: {
+          country: string | null
+          created_at: string
+          description: string | null
+          external_id: string
+          id: string
+          original_url: string | null
+          publish_date: string | null
+          source_platform: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          description?: string | null
+          external_id: string
+          id?: string
+          original_url?: string | null
+          publish_date?: string | null
+          source_platform?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          description?: string | null
+          external_id?: string
+          id?: string
+          original_url?: string | null
+          publish_date?: string | null
+          source_platform?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
