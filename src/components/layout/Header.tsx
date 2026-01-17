@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MarketTicker } from './MarketTicker';
 import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/toaster';
 import logo from '@/assets/hkbde-logo.png';
 
 const navItems = [
