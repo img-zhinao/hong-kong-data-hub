@@ -44,6 +44,7 @@ export type Database = {
           content: string | null
           cover_image_url: string | null
           created_at: string | null
+          external_id: string | null
           geo_metadata: Json | null
           id: string
           published_at: string | null
@@ -63,6 +64,7 @@ export type Database = {
           content?: string | null
           cover_image_url?: string | null
           created_at?: string | null
+          external_id?: string | null
           geo_metadata?: Json | null
           id?: string
           published_at?: string | null
@@ -82,6 +84,7 @@ export type Database = {
           content?: string | null
           cover_image_url?: string | null
           created_at?: string | null
+          external_id?: string | null
           geo_metadata?: Json | null
           id?: string
           published_at?: string | null
