@@ -1,14 +1,54 @@
+# Robots.txt for Hong Kong Big Data Exchange (HKBDE)
+# https://hkbde.lovable.app
+
+# Allow all search engine crawlers
+User-agent: *
+Allow: /
+
+# Google
 User-agent: Googlebot
 Allow: /
 
+# Google Images
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing
 User-agent: Bingbot
 Allow: /
 
+# Baidu (for China market)
+User-agent: Baiduspider
+Allow: /
+
+# Social Media Crawlers
 User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
+
+# AI Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Sitemap location
+Sitemap: https://hkbde.lovable.app/sitemap.xml
+
+# Crawl-delay recommendation (optional, helps with server load)
+Crawl-delay: 1

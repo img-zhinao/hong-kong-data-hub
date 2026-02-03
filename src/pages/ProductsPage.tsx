@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
+import { SEO } from '@/components/SEO';
 import {
   Select,
   SelectContent,
@@ -78,34 +79,37 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
       {/* Industry Tags */}
       <div>
         <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-          <Database className="h-4 w-4 text-primary" />
+          <Database className="h-4 w-4 text-primary" aria-hidden="true" />
           行业分类
         </h3>
-        <div className="space-y-1">
-          <button
-            onClick={() => setSelectedTag('all')}
-            className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-              selectedTag === 'all'
-                ? 'bg-primary/10 text-primary font-medium'
-                : 'text-muted-foreground hover:bg-accent hover:text-foreground'
-            }`}
-          >
-            全部行业
-          </button>
-          {industryCategories.map((category) => (
+        <ul className="space-y-1" role="list">
+          <li>
             <button
-              key={category}
-              onClick={() => setSelectedTag(category)}
+              onClick={() => setSelectedTag('all')}
               className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                selectedTag === category
+                selectedTag === 'all'
                   ? 'bg-primary/10 text-primary font-medium'
                   : 'text-muted-foreground hover:bg-accent hover:text-foreground'
               }`}
             >
-              {category}
+              全部行业
             </button>
+          </li>
+          {industryCategories.map((category) => (
+            <li key={category}>
+              <button
+                onClick={() => setSelectedTag(category)}
+                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                  selectedTag === category
+                    ? 'bg-primary/10 text-primary font-medium'
+                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                }`}
+              >
+                {category}
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
       <Separator />
@@ -113,21 +117,22 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
       {/* Price Filter */}
       <div>
         <h3 className="text-sm font-semibold text-foreground mb-3">价格区间</h3>
-        <div className="space-y-1">
+        <ul className="space-y-1" role="list">
           {priceOptions.map((option) => (
-            <button
-              key={option.value}
-              onClick={() => setPriceType(option.value as 'all' | 'free' | 'paid')}
-              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                priceType === option.value
-                  ? 'bg-primary/10 text-primary font-medium'
-                  : 'text-muted-foreground hover:bg-accent hover:text-foreground'
-              }`}
-            >
-              {option.label}
-            </button>
+            <li key={option.value}>
+              <button
+                onClick={() => setPriceType(option.value as 'all' | 'free' | 'paid')}
+                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                  priceType === option.value
+                    ? 'bg-primary/10 text-primary font-medium'
+                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                }`}
+              >
+                {option.label}
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
       {hasActiveFilters && (
@@ -139,7 +144,7 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
             onClick={clearFilters}
             className="w-full"
           >
-            <X className="h-4 w-4 mr-2" />
+            <X className="h-4 w-4 mr-2" aria-hidden="true" />
             清除筛选
           </Button>
         </>
@@ -149,18 +154,25 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
 
   return (
     <Layout>
+      <SEO
+        title="数据产品交易市场"
+        description="探索来自全球数据商的高质量数据产品，涵盖工业制造、金融服务、医疗健康等多个行业，助力您的业务决策与创新发展。"
+        keywords="数据产品,数据交易,数据市场,大数据,数据资产,工业数据,金融数据,医疗数据"
+        ogType="website"
+      />
+      
       {/* Hero Section - matching DataMerchantsPage */}
-      <div className="bg-gradient-hero py-12">
+      <header className="bg-gradient-hero py-12">
         <div className="container">
           <div className="flex items-center gap-3 mb-4">
-            <Database className="w-8 h-8 text-primary" />
+            <Database className="w-8 h-8 text-primary" aria-hidden="true" />
             <h1 className="text-3xl font-bold text-primary-foreground">数据产品交易市场</h1>
           </div>
           <p className="text-primary-foreground/70 max-w-2xl">
             探索来自全球数据商的高质量数据产品，助力您的业务决策与创新发展
           </p>
         </div>
-      </div>
+      </header>
 
       <div className="container py-8">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -171,21 +183,21 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
               onClick={() => setShowMobileFilter(!showMobileFilter)}
               className="w-full gap-2"
             >
-              <Filter className="h-4 w-4" />
+              <Filter className="h-4 w-4" aria-hidden="true" />
               {showMobileFilter ? '隐藏筛选' : '显示筛选'}
             </Button>
             {showMobileFilter && (
-              <div className="mt-4 p-4 bg-card rounded-xl border">
+              <nav className="mt-4 p-4 bg-card rounded-xl border" aria-label="筛选条件">
                 <FilterSidebar isMobile />
-              </div>
+              </nav>
             )}
           </div>
 
           {/* Desktop Sidebar */}
-          <aside className="hidden lg:block w-64 flex-shrink-0">
-            <div className="bg-card rounded-xl border p-4">
+          <aside className="hidden lg:block w-64 flex-shrink-0" aria-label="筛选条件">
+            <nav className="bg-card rounded-xl border p-4">
               <FilterSidebar />
-            </div>
+            </nav>
           </aside>
 
           {/* Main Content */}
@@ -193,17 +205,18 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
             {/* Search Bar & Sort */}
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
                 <Input
                   placeholder="搜索数据产品..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
+                  aria-label="搜索数据产品"
                 />
               </div>
               <Select value={sortValue} onValueChange={setSortValue}>
                 <SelectTrigger className="w-full sm:w-[180px]">
-                  <ArrowUpDown className="h-4 w-4 mr-2" />
+                  <ArrowUpDown className="h-4 w-4 mr-2" aria-hidden="true" />
                   <SelectValue placeholder="排序方式" />
                 </SelectTrigger>
                 <SelectContent>
@@ -222,7 +235,7 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
                 {isLoading ? '加载中...' : `共找到 ${products?.length || 0} 个数据产品`}
               </p>
               {hasActiveFilters && (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2" role="list" aria-label="当前筛选条件">
                   {selectedTag !== 'all' && (
                     <Badge variant="secondary" className="bg-primary/10 text-primary">
                       {selectedTag}
@@ -239,16 +252,16 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
 
             {/* Error State */}
             {error && (
-              <div className="text-center py-12">
+              <div className="text-center py-12" role="alert">
                 <p className="text-destructive">加载数据时出错，请稍后重试</p>
               </div>
             )}
 
             {/* Loading State */}
             {isLoading && (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" role="list">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-card rounded-xl border overflow-hidden p-6">
+                  <li key={i} className="bg-card rounded-xl border overflow-hidden p-6">
                     <div className="space-y-3">
                       <Skeleton className="h-5 w-3/4" />
                       <Skeleton className="h-4 w-1/2" />
@@ -259,98 +272,102 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
                         <Skeleton className="h-6 w-16" />
                       </div>
                     </div>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
 
             {/* Products Grid */}
             {!isLoading && products && products.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" role="list">
                 {products.map((product, index) => (
-                  <Link 
-                    key={product.id} 
-                    to={`/products/${product.slug}`}
-                    className="bg-card rounded-xl border overflow-hidden hover-lift group animate-fade-in"
-                    style={{ animationDelay: `${index * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}
-                  >
-                    <div className="p-6">
-                      <div className="mb-4">
-                        <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-2">
-                          {product.title}
-                        </h3>
-                        {product.provider && (
-                          <p className="text-sm text-primary">
-                            {product.provider.name}
-                          </p>
-                        )}
-                      </div>
+                  <li key={product.id}>
+                    <article>
+                      <Link 
+                        to={`/products/${product.slug}`}
+                        className="block bg-card rounded-xl border overflow-hidden hover-lift group animate-fade-in"
+                        style={{ animationDelay: `${index * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}
+                      >
+                        <div className="p-6">
+                          <header className="mb-4">
+                            <h2 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                              {product.title}
+                            </h2>
+                            {product.provider && (
+                              <p className="text-sm text-primary">
+                                {product.provider.name}
+                              </p>
+                            )}
+                          </header>
 
-                      {product.summary && (
-                        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-                          {product.summary}
-                        </p>
-                      )}
-
-                      {/* Tags */}
-                      {product.tags && product.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mb-4">
-                          {product.tags.slice(0, 2).map((tag) => (
-                            <span
-                              key={tag}
-                              className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                          {product.tags.length > 2 && (
-                            <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded">
-                              +{product.tags.length - 2}
-                            </span>
+                          {product.summary && (
+                            <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+                              {product.summary}
+                            </p>
                           )}
+
+                          {/* Tags */}
+                          {product.tags && product.tags.length > 0 && (
+                            <ul className="flex flex-wrap gap-1 mb-4" role="list" aria-label="产品标签">
+                              {product.tags.slice(0, 2).map((tag) => (
+                                <li key={tag}>
+                                  <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded">
+                                    {tag}
+                                  </span>
+                                </li>
+                              ))}
+                              {product.tags.length > 2 && (
+                                <li>
+                                  <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded">
+                                    +{product.tags.length - 2}
+                                  </span>
+                                </li>
+                              )}
+                            </ul>
+                          )}
+
+                          {/* Footer Info */}
+                          <footer className="flex items-center justify-between pt-4 border-t text-sm">
+                            <div className="flex items-center gap-3 text-muted-foreground">
+                              {product.data_format && (
+                                <span className="flex items-center gap-1">
+                                  <FileJson className="h-3 w-3" aria-hidden="true" />
+                                  {product.data_format}
+                                </span>
+                              )}
+                              {product.published_at && (
+                                <time dateTime={product.published_at} className="flex items-center gap-1">
+                                  <Clock className="h-3 w-3" aria-hidden="true" />
+                                  {formatDistanceToNow(new Date(product.published_at), {
+                                    addSuffix: true,
+                                    locale: zhCN,
+                                  })}
+                                </time>
+                              )}
+                            </div>
+                            <span className={`font-semibold ${
+                              !product.price || product.price === 0
+                                ? 'text-primary'
+                                : 'text-amber-500'
+                            }`}>
+                              {!product.price || product.price === 0
+                                ? '免费'
+                                : `${product.currency || 'HKD'} ${product.price}`}
+                            </span>
+                          </footer>
                         </div>
-                      )}
-
-                      {/* Footer Info */}
-                      <div className="flex items-center justify-between pt-4 border-t text-sm">
-                        <div className="flex items-center gap-3 text-muted-foreground">
-                          {product.data_format && (
-                            <span className="flex items-center gap-1">
-                              <FileJson className="h-3 w-3" />
-                              {product.data_format}
-                            </span>
-                          )}
-                          {product.published_at && (
-                            <span className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {formatDistanceToNow(new Date(product.published_at), {
-                                addSuffix: true,
-                                locale: zhCN,
-                              })}
-                            </span>
-                          )}
-                        </div>
-                        <span className={`font-semibold ${
-                          !product.price || product.price === 0
-                            ? 'text-primary'
-                            : 'text-amber-500'
-                        }`}>
-                          {!product.price || product.price === 0
-                            ? '免费'
-                            : `${product.currency || 'HKD'} ${product.price}`}
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
+                      </Link>
+                    </article>
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
 
             {/* Empty State */}
             {!isLoading && (!products || products.length === 0) && (
               <div className="text-center py-16">
-                <Database className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-foreground mb-2">暂无数据产品</h3>
+                <Database className="h-16 w-16 text-muted-foreground mx-auto mb-4" aria-hidden="true" />
+                <h2 className="text-xl font-semibold text-foreground mb-2">暂无数据产品</h2>
                 <p className="text-muted-foreground mb-6">
                   {hasActiveFilters
                     ? '没有找到符合筛选条件的数据产品，请尝试调整筛选条件'
@@ -367,7 +384,7 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
         </div>
 
         {/* CTA - matching DataMerchantsPage */}
-        <div className="bg-gradient-gold rounded-2xl p-8 text-center mt-12">
+        <section className="bg-gradient-gold rounded-2xl p-8 text-center mt-12" aria-label="发布产品">
           <h2 className="text-2xl font-bold text-primary-foreground mb-2">
             发布您的数据产品
           </h2>
@@ -382,7 +399,7 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
               了解发布流程
             </Button>
           </div>
-        </div>
+        </section>
       </div>
     </Layout>
   );
