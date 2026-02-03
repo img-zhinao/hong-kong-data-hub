@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useArticles, type Article } from '@/hooks/useArticles';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SEO } from '@/components/SEO';
 
 export default function NewsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -70,31 +71,38 @@ export default function NewsPage() {
 
   return (
     <Layout>
+      <SEO
+        title="行业动态"
+        description="实时追踪全球及国内数据交易机构的最新进展，把握数据要素行业发展脉搏，了解数交所动态、行业资讯和企业快讯。"
+        keywords="数据交易新闻,行业动态,数交所动态,数据要素资讯,大数据行业新闻"
+      />
+      
       {/* Page Header */}
-      <div className="bg-gradient-hero py-12">
+      <header className="bg-gradient-hero py-12">
         <div className="container">
           <div className="flex items-center gap-3 mb-4">
-            <Newspaper className="w-8 h-8 text-primary" />
+            <Newspaper className="w-8 h-8 text-primary" aria-hidden="true" />
             <h1 className="text-3xl font-bold text-primary-foreground">行业动态</h1>
           </div>
           <p className="text-primary-foreground/70 max-w-2xl">
             实时追踪全球及国内数据交易机构的最新进展，把握行业发展脉搏
           </p>
         </div>
-      </div>
+      </header>
 
-      <div className="container py-8">
+      <main className="container py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content */}
-          <div className="flex-1">
+          <section className="flex-1" aria-label="新闻列表">
             {/* Search */}
             <div className="relative mb-6">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
               <Input 
                 placeholder="搜索新闻资讯..." 
                 className="pl-10"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                aria-label="搜索新闻"
               />
             </div>
 
@@ -107,40 +115,40 @@ export default function NewsPage() {
                 <TabsTrigger value="enterprise">企业快讯</TabsTrigger>
               </TabsList>
 
-              <div className="mt-6 space-y-4">
+              <ul className="mt-6 space-y-4" role="list">
                 {currentLoading ? (
                   Array.from({ length: 5 }).map((_, i) => (
-                    <div key={i} className="news-card flex gap-4 p-4">
+                    <li key={i} className="news-card flex gap-4 p-4">
                       <Skeleton className="hidden sm:block w-40 h-28 rounded-lg" />
                       <div className="flex-1 space-y-3">
                         <Skeleton className="h-6 w-full" />
                         <Skeleton className="h-4 w-3/4" />
                         <Skeleton className="h-3 w-32" />
                       </div>
-                    </div>
+                    </li>
                   ))
                 ) : currentNews && currentNews.length > 0 ? (
                   currentNews.map((news, index) => (
                     <NewsCard key={news.id} news={news} index={index} />
                   ))
                 ) : (
-                  <div className="text-center py-12 text-muted-foreground">
+                  <li className="text-center py-12 text-muted-foreground">
                     暂无相关资讯
-                  </div>
+                  </li>
                 )}
-              </div>
+              </ul>
             </Tabs>
-          </div>
+          </section>
 
           {/* Sidebar */}
-          <aside className="w-full lg:w-80 space-y-6">
+          <aside className="w-full lg:w-80 space-y-6" aria-label="侧边栏">
             {/* Hot News */}
-            <div className="bg-card rounded-xl border p-6">
-              <h3 className="font-semibold mb-4 flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-primary" />
+            <nav className="bg-card rounded-xl border p-6" aria-label="热门资讯">
+              <h2 className="font-semibold mb-4 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-primary" aria-hidden="true" />
                 热门资讯
-              </h3>
-              <ul className="space-y-3">
+              </h2>
+              <ol className="space-y-3" role="list">
                 {hotNews?.slice(0, 5).map((news, index) => (
                   <li key={news.id}>
                     <Link
@@ -149,7 +157,7 @@ export default function NewsPage() {
                     >
                       <span className={`flex-shrink-0 w-5 h-5 rounded text-xs font-bold flex items-center justify-center ${
                         index < 3 ? 'bg-secondary text-secondary-foreground' : 'bg-muted text-muted-foreground'
-                      }`}>
+                      }`} aria-label={`排名第${index + 1}`}>
                         {index + 1}
                       </span>
                       <span className="text-sm text-foreground group-hover:text-primary transition-colors line-clamp-2">
@@ -158,33 +166,39 @@ export default function NewsPage() {
                     </Link>
                   </li>
                 ))}
-              </ul>
-            </div>
+              </ol>
+            </nav>
 
             {/* Quick Links */}
-            <div className="bg-muted/30 rounded-xl p-6">
-              <h3 className="font-semibold mb-4">快速入口</h3>
-              <div className="space-y-2">
-                <Link to="/policy">
-                  <Button variant="outline" className="w-full justify-start">
-                    政策法规
-                  </Button>
-                </Link>
-                <Link to="/insights">
-                  <Button variant="outline" className="w-full justify-start">
-                    专家观点
-                  </Button>
-                </Link>
-                <Link to="/data-merchants">
-                  <Button variant="outline" className="w-full justify-start">
-                    数商生态
-                  </Button>
-                </Link>
-              </div>
-            </div>
+            <nav className="bg-muted/30 rounded-xl p-6" aria-label="快速入口">
+              <h2 className="font-semibold mb-4">快速入口</h2>
+              <ul className="space-y-2" role="list">
+                <li>
+                  <Link to="/policy">
+                    <Button variant="outline" className="w-full justify-start">
+                      政策法规
+                    </Button>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/insights">
+                    <Button variant="outline" className="w-full justify-start">
+                      专家观点
+                    </Button>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/data-merchants">
+                    <Button variant="outline" className="w-full justify-start">
+                      数商生态
+                    </Button>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
           </aside>
         </div>
-      </div>
+      </main>
     </Layout>
   );
 }
@@ -196,38 +210,45 @@ interface NewsCardProps {
 
 function NewsCard({ news, index }: NewsCardProps) {
   return (
-    <Link
-      to={`/news/${news.slug}`}
-      className="news-card flex gap-4 p-4 animate-fade-in"
-      style={{ animationDelay: `${index * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}
-    >
-      {news.cover_image_url && (
-        <div className="hidden sm:block w-40 h-28 flex-shrink-0 overflow-hidden rounded-lg">
-          <img
-            src={news.cover_image_url}
-            alt={news.title}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-          />
-        </div>
-      )}
-      <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-foreground mb-2 line-clamp-2 hover:text-primary transition-colors">
-          {news.title}
-        </h3>
-        <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-          {news.summary}
-        </p>
-        <div className="flex items-center gap-4 text-xs text-muted-foreground">
-          <span className="flex items-center gap-1">
-            <Clock className="w-3 h-3" />
-            {formatDate(news.published_at)}
-          </span>
-          <span className="flex items-center gap-1">
-            <Eye className="w-3 h-3" />
-            {(news.view_count || 0).toLocaleString()}
-          </span>
-        </div>
-      </div>
-    </Link>
+    <li>
+      <article>
+        <Link
+          to={`/news/${news.slug}`}
+          className="news-card flex gap-4 p-4 animate-fade-in"
+          style={{ animationDelay: `${index * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}
+        >
+          {news.cover_image_url && (
+            <figure className="hidden sm:block w-40 h-28 flex-shrink-0 overflow-hidden rounded-lg">
+              <img
+                src={news.cover_image_url}
+                alt=""
+                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                loading="lazy"
+              />
+            </figure>
+          )}
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-foreground mb-2 line-clamp-2 hover:text-primary transition-colors">
+              {news.title}
+            </h3>
+            <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+              {news.summary}
+            </p>
+            <footer className="flex items-center gap-4 text-xs text-muted-foreground">
+              <time dateTime={news.published_at || undefined} className="flex items-center gap-1">
+                <Clock className="w-3 h-3" aria-hidden="true" />
+                {formatDate(news.published_at)}
+              </time>
+              <span className="flex items-center gap-1">
+                <Eye className="w-3 h-3" aria-hidden="true" />
+                <span aria-label={`${(news.view_count || 0).toLocaleString()}次阅读`}>
+                  {(news.view_count || 0).toLocaleString()}
+                </span>
+              </span>
+            </footer>
+          </div>
+        </Link>
+      </article>
+    </li>
   );
 }
