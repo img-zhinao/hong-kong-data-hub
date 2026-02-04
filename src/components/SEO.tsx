@@ -24,7 +24,7 @@ const DEFAULT_DESCRIPTION = '香港大数据交易所是香港领先的数据要
 const DEFAULT_KEYWORDS = '香港大数据交易所,HKBDE,数据交易,数据要素,大数据,AI,数据资产,数据产品';
 const DEFAULT_OG_IMAGE = '/hkbde-logo.png';
 const SITE_NAME = '香港大数据交易所 | HKBDE';
-const SITE_URL = 'https://hkbde.lovable.app';
+const SITE_URL = 'https://hkbde.fun';
 
 export function SEO({
   title,
