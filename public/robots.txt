@@ -47,8 +47,12 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
-# Sitemap location
+# Sitemap locations
+# Static sitemap (fallback)
 Sitemap: https://hkbde.lovable.app/sitemap.xml
+
+# Dynamic sitemap (primary - generated from database)
+Sitemap: https://hkbde.lovable.app/functions/v1/sitemap
 
 # Crawl-delay recommendation (optional, helps with server load)
 Crawl-delay: 1
