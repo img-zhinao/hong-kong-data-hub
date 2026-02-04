@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://hkbde.lovable.app/</loc>
+    <loc>https://hkbde.fun/</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -10,56 +10,56 @@
   
   <!-- Main Pages -->
   <url>
-    <loc>https://hkbde.lovable.app/products</loc>
+    <loc>https://hkbde.fun/products</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
-    <loc>https://hkbde.lovable.app/data-merchants</loc>
+    <loc>https://hkbde.fun/data-merchants</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
-    <loc>https://hkbde.lovable.app/news</loc>
+    <loc>https://hkbde.fun/news</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://hkbde.lovable.app/policy</loc>
+    <loc>https://hkbde.fun/policy</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://hkbde.lovable.app/insights</loc>
+    <loc>https://hkbde.fun/insights</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
-    <loc>https://hkbde.lovable.app/events</loc>
+    <loc>https://hkbde.fun/events</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
-    <loc>https://hkbde.lovable.app/opportunities</loc>
+    <loc>https://hkbde.fun/opportunities</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
-    <loc>https://hkbde.lovable.app/data-asset</loc>
+    <loc>https://hkbde.fun/data-asset</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -67,7 +67,7 @@
   
   <!-- Company Info -->
   <url>
-    <loc>https://hkbde.lovable.app/about</loc>
+    <loc>https://hkbde.fun/about</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -75,21 +75,21 @@
   
   <!-- Legal Pages -->
   <url>
-    <loc>https://hkbde.lovable.app/privacy</loc>
+    <loc>https://hkbde.fun/privacy</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   
   <url>
-    <loc>https://hkbde.lovable.app/terms</loc>
+    <loc>https://hkbde.fun/terms</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   
   <url>
-    <loc>https://hkbde.lovable.app/sitemap</loc>
+    <loc>https://hkbde.fun/sitemap</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.2</priority>
