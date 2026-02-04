@@ -25,6 +25,7 @@ const footerLinks = {
     { name: '深圳数据交易所', path: 'https://www.szdata.com', external: true },
     { name: '贵阳大数据交易所', path: 'https://www.gbdex.com', external: true },
     { name: '上海数据交易所', path: 'https://www.chinadep.com', external: true },
+    { name: '深圳文化产权交易所', path: 'https://www.szcaee.cn', external: true },
   ],
 };
 
@@ -41,6 +42,7 @@ export function Footer() {
               <span className="text-sm text-primary-foreground/80 whitespace-nowrap">深圳数据交易所</span>
               <span className="text-sm text-primary-foreground/80 whitespace-nowrap">贵阳大数据交易所</span>
               <span className="text-sm text-primary-foreground/80 whitespace-nowrap">上海数据交易所</span>
+              <span className="text-sm text-primary-foreground/80 whitespace-nowrap">深圳文化产权交易所</span>
               <span className="text-sm text-primary-foreground/80 whitespace-nowrap">香港数码港</span>
               <span className="text-sm text-primary-foreground/80 whitespace-nowrap">香港科技园</span>
             </div>
