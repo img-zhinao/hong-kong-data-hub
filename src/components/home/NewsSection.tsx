@@ -14,7 +14,7 @@ export function NewsSection() {
   
   const { data: policyNews, isLoading: loadingPolicy } = useArticles({ 
     category: 'policy', 
-    limit: 4,
+    limit: 6,
     orderBy: 'published_at'
   });
 
@@ -108,7 +108,7 @@ export function NewsSection() {
             <div className="bg-card rounded-lg border p-4">
               {loadingPolicy ? (
                 <div className="space-y-4">
-                  {Array.from({ length: 4 }).map((_, i) => (
+                  {Array.from({ length: 6 }).map((_, i) => (
                     <div key={i} className="py-3 border-b last:border-0">
                       <Skeleton className="h-4 w-full mb-2" />
                       <Skeleton className="h-3 w-24" />
