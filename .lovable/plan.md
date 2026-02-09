@@ -1,94 +1,44 @@
 
 
-## 域名更新：从 hkbde.lovable.app 更改为 hkbde.fun
+## 更新 Supabase URL 为自定义域名
+
+### 概述
+
+将 Supabase 客户端的连接 URL 从默认的 `https://otsowcnwqsduapurqnjb.supabase.co` 更改为您的自定义域名 `https://db.hkbde.fun`。
 
 ### 需要修改的文件
 
-以下 **4 个文件** 包含旧域名配置，需要更新为 `https://hkbde.fun`：
-
 | 文件路径 | 修改内容 |
 |----------|----------|
-| `src/components/SEO.tsx` | 更新 `SITE_URL` 常量 |
-| `public/robots.txt` | 更新注释和 Sitemap URL |
-| `public/sitemap.xml` | 更新所有页面的 `<loc>` 标签 |
-| `supabase/functions/sitemap/index.ts` | 更新 `SITE_URL` 常量 |
+| `src/integrations/supabase/client.ts` | 更新 `SUPABASE_URL` 常量 |
 
----
+### 具体修改
 
-### 具体修改详情
-
-#### 1. `src/components/SEO.tsx`
+#### `src/integrations/supabase/client.ts`
 
 ```typescript
 // 修改前
-const SITE_URL = 'https://hkbde.lovable.app';
+const SUPABASE_URL = "https://otsowcnwqsduapurqnjb.supabase.co";
 
 // 修改后
-const SITE_URL = 'https://hkbde.fun';
+const SUPABASE_URL = "https://db.hkbde.fun";
 ```
 
-#### 2. `public/robots.txt`
+其余代码（anon key、auth 配置等）保持不变。
 
-```text
-# 修改前
-# https://hkbde.lovable.app
-Sitemap: https://hkbde.lovable.app/sitemap.xml
-Sitemap: https://hkbde.lovable.app/functions/v1/sitemap
+### 前提条件
 
-# 修改后
-# https://hkbde.fun
-Sitemap: https://hkbde.fun/sitemap.xml
-Sitemap: https://hkbde.fun/functions/v1/sitemap
-```
+在修改代码之前，请确认您已在 Supabase 项目设置中完成自定义域名配置：
 
-#### 3. `public/sitemap.xml`
+1. 在 Supabase Dashboard → **Settings** → **Custom Domains** 中添加 `db.hkbde.fun`
+2. 在域名注册商处添加 Supabase 要求的 **CNAME** 记录，将 `db.hkbde.fun` 指向 Supabase 提供的目标地址
+3. 等待 DNS 生效并通过 Supabase 的域名验证
 
-所有 `<loc>` 标签中的 URL 都需要更改：
-
-```xml
-<!-- 修改前 -->
-<loc>https://hkbde.lovable.app/</loc>
-<loc>https://hkbde.lovable.app/products</loc>
-...
-
-<!-- 修改后 -->
-<loc>https://hkbde.fun/</loc>
-<loc>https://hkbde.fun/products</loc>
-...
-```
-
-#### 4. `supabase/functions/sitemap/index.ts`
-
-```typescript
-// 修改前
-const SITE_URL = 'https://hkbde.lovable.app'
-
-// 修改后
-const SITE_URL = 'https://hkbde.fun'
-```
-
----
+如果自定义域名尚未在 Supabase 端完成配置和验证，更改 URL 后应用将无法连接到数据库。
 
 ### 修改后的效果
 
-| 功能 | 更新结果 |
-|------|----------|
-| SEO 元数据 | Open Graph 图片链接指向 `hkbde.fun` |
-| JSON-LD 结构化数据 | Schema.org URL 使用 `hkbde.fun` |
-| robots.txt | 爬虫将使用 `hkbde.fun` 的 Sitemap |
-| 静态 sitemap.xml | 所有页面 URL 更新为 `hkbde.fun` |
-| 动态 Sitemap | Edge Function 生成的 sitemap 使用 `hkbde.fun` |
-
----
-
-### 域名配置提醒
-
-更新代码后，您还需要在 Lovable 项目设置中配置自定义域名：
-
-1. 进入项目设置 → **Domains**
-2. 点击 **Connect Domain** 并输入 `hkbde.fun`
-3. 在您的域名注册商处添加 DNS 记录：
-   - **A 记录**（根域名）：`@` → `185.158.133.1`
-   - **A 记录**（www 子域名）：`www` → `185.158.133.1`
-   - **TXT 记录**：`_lovable` → Lovable 提供的验证码
+- 所有前端 API 请求将通过 `https://db.hkbde.fun` 访问 Supabase
+- 用户浏览器中不再暴露默认的 Supabase 项目 URL
+- 品牌一致性更好，URL 更简洁
 
