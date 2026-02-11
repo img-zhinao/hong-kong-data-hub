@@ -4,16 +4,16 @@ import { Clock, Eye, FileText, Filter, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useArticles, type Article } from '@/hooks/useArticles';
+import { useArticles, useArticleSubCategories, type Article } from '@/hooks/useArticles';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SEO } from '@/components/SEO';
 
-const categories = ['全部', '国家政策', '地方政策', '香港政策', '行业标准'];
-
 export default function PolicyPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('全部');
+
+  const { data: subCategories = [] } = useArticleSubCategories('policy');
 
   const { data: policies, isLoading } = useArticles({
     category: 'policy',
@@ -73,7 +73,16 @@ export default function PolicyPage() {
             {/* Category Tabs */}
             <nav aria-label="政策分类" className="mb-6">
               <ul className="flex flex-wrap gap-2" role="list">
-                {categories.map((cat) => (
+                <li>
+                  <Button
+                    variant={selectedCategory === '全部' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setSelectedCategory('全部')}
+                  >
+                    全部
+                  </Button>
+                </li>
+                {subCategories.map((cat) => (
                   <li key={cat}>
                     <Button
                       variant={selectedCategory === cat ? 'default' : 'outline'}
