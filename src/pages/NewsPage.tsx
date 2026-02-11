@@ -82,10 +82,10 @@ export default function NewsPage() {
 
             {/* Tabs */}
             <Tabs value={currentTab} onValueChange={handleTabChange} className="mb-6">
-              <TabsList className="flex flex-wrap h-auto gap-1">
-                <TabsTrigger value="all">全部</TabsTrigger>
+              <TabsList className="w-full h-auto bg-muted/40 rounded-lg p-1 grid" style={{ gridTemplateColumns: `repeat(${subCategories.length + 1}, 1fr)` }}>
+                <TabsTrigger value="all" className="data-[state=active]:bg-background data-[state=active]:border data-[state=active]:border-border data-[state=active]:shadow-none rounded-md py-2 text-sm">全部</TabsTrigger>
                 {subCategories.map((cat) => (
-                  <TabsTrigger key={cat} value={cat}>{cat}</TabsTrigger>
+                  <TabsTrigger key={cat} value={cat} className="data-[state=active]:bg-background data-[state=active]:border data-[state=active]:border-border data-[state=active]:shadow-none rounded-md py-2 text-sm">{cat}</TabsTrigger>
                 ))}
               </TabsList>
 
