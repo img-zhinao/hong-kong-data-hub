@@ -1,44 +1,67 @@
 
 
-## 更新 Supabase URL 为自定义域名
+## 文章页面动态子分类标签
 
 ### 概述
 
-将 Supabase 客户端的连接 URL 从默认的 `https://otsowcnwqsduapurqnjb.supabase.co` 更改为您的自定义域名 `https://db.hkbde.fun`。
+为所有使用 `articles` 表的页面添加基于数据库 `sub_category` 字段的动态子分类标签筛选，替换当前的硬编码分类。
+
+### 当前数据库中的子分类
+
+| category | sub_category 值 |
+|----------|-----------------|
+| news | exchange, industry, enterprise, 行业资讯, 企业快讯 |
+| policy | 国家政策, 地方政策, 香港政策, 行业标准 |
 
 ### 需要修改的文件
 
-| 文件路径 | 修改内容 |
-|----------|----------|
-| `src/integrations/supabase/client.ts` | 更新 `SUPABASE_URL` 常量 |
+| 文件 | 修改内容 |
+|------|----------|
+| `src/hooks/useArticles.ts` | 新增 `useArticleSubCategories` hook，动态查询指定 category 下的所有 sub_category |
+| `src/pages/NewsPage.tsx` | 用动态 hook 替换硬编码的 4 个 tab，统一查询逻辑 |
+| `src/pages/PolicyPage.tsx` | 用动态 hook 替换硬编码的 `categories` 数组 |
 
-### 具体修改
+### 技术细节
 
-#### `src/integrations/supabase/client.ts`
+#### 1. 新增 `useArticleSubCategories` hook（在 `useArticles.ts` 中）
+
+从数据库查询指定 category 下所有 distinct 的 sub_category 值：
 
 ```typescript
-// 修改前
-const SUPABASE_URL = "https://otsowcnwqsduapurqnjb.supabase.co";
-
-// 修改后
-const SUPABASE_URL = "https://db.hkbde.fun";
+export function useArticleSubCategories(category: string) {
+  return useQuery({
+    queryKey: ['article-sub-categories', category],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('articles')
+        .select('sub_category')
+        .eq('category', category)
+        .eq('status', 'published')
+        .not('sub_category', 'is', null);
+      if (error) throw error;
+      const unique = [...new Set(data.map(d => d.sub_category).filter(Boolean))];
+      return unique as string[];
+    },
+    enabled: !!category,
+  });
+}
 ```
 
-其余代码（anon key、auth 配置等）保持不变。
+#### 2. 改造 `NewsPage.tsx`
 
-### 前提条件
+- 移除 4 个独立的 `useArticles` 调用（allNews, exchangeNews, industryNews, enterpriseNews）
+- 使用 `useArticleSubCategories('news')` 动态获取子分类列表
+- 使用单个 `useArticles` 调用，根据当前选中的 tab 传入 `subCategory` 参数
+- Tab 列表动态渲染：`['全部', ...subCategories]`
 
-在修改代码之前，请确认您已在 Supabase 项目设置中完成自定义域名配置：
+#### 3. 改造 `PolicyPage.tsx`
 
-1. 在 Supabase Dashboard → **Settings** → **Custom Domains** 中添加 `db.hkbde.fun`
-2. 在域名注册商处添加 Supabase 要求的 **CNAME** 记录，将 `db.hkbde.fun` 指向 Supabase 提供的目标地址
-3. 等待 DNS 生效并通过 Supabase 的域名验证
+- 移除硬编码的 `categories` 数组
+- 使用 `useArticleSubCategories('policy')` 动态获取子分类
+- 按钮列表改为动态渲染
 
-如果自定义域名尚未在 Supabase 端完成配置和验证，更改 URL 后应用将无法连接到数据库。
+### 改造后的效果
 
-### 修改后的效果
-
-- 所有前端 API 请求将通过 `https://db.hkbde.fun` 访问 Supabase
-- 用户浏览器中不再暴露默认的 Supabase 项目 URL
-- 品牌一致性更好，URL 更简洁
-
+- 在数据库中新增文章并设置新的 sub_category 时，前端自动出现对应的筛选标签
+- 无需修改代码即可扩展分类
+- 减少不必要的并行查询（NewsPage 从 4 个查询减少为 2 个）
