@@ -25,9 +25,9 @@ const navItems = [
     name: '行业动态', 
     path: '/news',
     children: [
-      { name: '数交所动态', path: '/news?tab=exchange' },
-      { name: '行业资讯', path: '/news?tab=industry' },
-      { name: '企业快讯', path: '/news?tab=enterprise' },
+      { name: '数交所动态', path: '/news?tab=数交所动态' },
+      { name: '行业资讯', path: '/news?tab=行业资讯' },
+      { name: '企业快讯', path: '/news?tab=企业快讯' },
     ]
   },
   { name: '专家观点', path: '/insights' },
