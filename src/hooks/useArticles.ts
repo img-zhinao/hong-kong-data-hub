@@ -49,6 +49,24 @@ export function useArticles(options: UseArticlesOptions = {}) {
   });
 }
 
+export function useArticleSubCategories(category: string) {
+  return useQuery({
+    queryKey: ['article-sub-categories', category],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('articles')
+        .select('sub_category')
+        .eq('category', category)
+        .eq('status', 'published')
+        .not('sub_category', 'is', null);
+      if (error) throw error;
+      const unique = [...new Set(data.map(d => d.sub_category).filter(Boolean))];
+      return unique as string[];
+    },
+    enabled: !!category,
+  });
+}
+
 export function useArticle(slug: string) {
   return useQuery({
     queryKey: ['article', slug],

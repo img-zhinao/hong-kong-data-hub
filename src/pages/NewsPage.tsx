@@ -4,8 +4,8 @@ import { Clock, Eye, Newspaper, Search, TrendingUp } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useArticles, type Article } from '@/hooks/useArticles';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useArticles, useArticleSubCategories, type Article } from '@/hooks/useArticles';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SEO } from '@/components/SEO';
@@ -15,6 +15,8 @@ export default function NewsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const tabFromUrl = searchParams.get('tab') || 'all';
   const [currentTab, setCurrentTab] = useState(tabFromUrl);
+
+  const { data: subCategories = [] } = useArticleSubCategories('news');
 
   useEffect(() => {
     setCurrentTab(tabFromUrl);
@@ -29,26 +31,9 @@ export default function NewsPage() {
     }
   };
 
-  const { data: allNews, isLoading: loadingAll } = useArticles({
+  const { data: currentNews, isLoading: currentLoading } = useArticles({
     category: 'news',
-    search: searchTerm || undefined,
-  });
-
-  const { data: exchangeNews, isLoading: loadingExchange } = useArticles({
-    category: 'news',
-    subCategory: 'exchange',
-    search: searchTerm || undefined,
-  });
-
-  const { data: industryNews, isLoading: loadingIndustry } = useArticles({
-    category: 'news',
-    subCategory: 'industry',
-    search: searchTerm || undefined,
-  });
-
-  const { data: enterpriseNews, isLoading: loadingEnterprise } = useArticles({
-    category: 'news',
-    subCategory: 'enterprise',
+    subCategory: currentTab === 'all' ? undefined : currentTab,
     search: searchTerm || undefined,
   });
 
@@ -57,17 +42,6 @@ export default function NewsPage() {
     limit: 5,
     orderBy: 'view_count',
   });
-
-  const getNewsForTab = () => {
-    switch (currentTab) {
-      case 'exchange': return { data: exchangeNews, loading: loadingExchange };
-      case 'industry': return { data: industryNews, loading: loadingIndustry };
-      case 'enterprise': return { data: enterpriseNews, loading: loadingEnterprise };
-      default: return { data: allNews, loading: loadingAll };
-    }
-  };
-
-  const { data: currentNews, loading: currentLoading } = getNewsForTab();
 
   return (
     <Layout>
@@ -108,11 +82,11 @@ export default function NewsPage() {
 
             {/* Tabs */}
             <Tabs value={currentTab} onValueChange={handleTabChange} className="mb-6">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="flex flex-wrap h-auto gap-1">
                 <TabsTrigger value="all">全部</TabsTrigger>
-                <TabsTrigger value="exchange">数交所动态</TabsTrigger>
-                <TabsTrigger value="industry">行业资讯</TabsTrigger>
-                <TabsTrigger value="enterprise">企业快讯</TabsTrigger>
+                {subCategories.map((cat) => (
+                  <TabsTrigger key={cat} value={cat}>{cat}</TabsTrigger>
+                ))}
               </TabsList>
 
               <ul className="mt-6 space-y-4" role="list">
