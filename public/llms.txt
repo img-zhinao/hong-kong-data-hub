@@ -1,0 +1,37 @@
+# 香港大数据交易所 (Hong Kong Big Data Exchange, HKBDE)
+
+> 香港领先的数据要素市场基础设施，致力于打造安全、合规、高效的数据交易生态。连接全球数据供需双方，推动数据要素价值释放。
+
+## 网站信息
+- 官方网址: https://hkbde.fun
+- 地址: Room 815, 8/F., Star House, 3 Salisbury Road, Tsim Sha Tsui, Kowloon, Hong Kong
+- 电话: +852 3749 9968
+- 传真: +852 3749 9970
+
+## 主要页面
+- [首页](https://hkbde.fun/): 了解香港大数据交易所的核心服务和最新动态
+- [数据产品](https://hkbde.fun/products): 浏览和搜索可交易的数据产品
+- [数据商](https://hkbde.fun/data-merchants): 查看入驻数据服务商信息
+- [行业动态](https://hkbde.fun/news): 数交所动态、行业资讯、企业快讯
+- [政策法规](https://hkbde.fun/policy): 数据相关政策法规解读
+- [专家观点](https://hkbde.fun/insights): 行业专家分析与洞察
+- [活动中心](https://hkbde.fun/events): 行业会议、研讨会等活动信息
+- [项目招标](https://hkbde.fun/opportunities): 数据相关项目招标信息
+- [数据资产入门](https://hkbde.fun/data-asset): 数据资产化基础知识
+- [关于我们](https://hkbde.fun/about): 公司简介与联系方式
+
+## 核心服务
+- 数据产品交易撮合
+- 数据资产评估与定价
+- 数据合规咨询
+- 跨境数据流通服务
+- 数据要素市场基础设施建设
+
+## 动态内容
+获取包含最新文章和数据产品的完整版本，请访问:
+https://hkbde.fun/functions/v1/llms-txt
+
+## 相关资源
+- [Sitemap](https://hkbde.fun/functions/v1/sitemap): XML 格式站点地图
+- [隐私政策](https://hkbde.fun/privacy)
+- [服务条款](https://hkbde.fun/terms)
