@@ -54,5 +54,9 @@ Sitemap: https://hkbde.fun/sitemap.xml
 # Dynamic sitemap (primary - generated from database)
 Sitemap: https://hkbde.fun/functions/v1/sitemap
 
+# LLM/AI Content Guide
+# llms.txt for AI model consumption
+Sitemap: https://hkbde.fun/functions/v1/llms-txt
+
 # Crawl-delay recommendation (optional, helps with server load)
 Crawl-delay: 1

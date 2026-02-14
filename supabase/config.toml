@@ -1,1 +1,4 @@
 project_id = "otsowcnwqsduapurqnjb"
+
+[functions.llms-txt]
+verify_jwt = false
