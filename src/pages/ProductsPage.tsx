@@ -159,6 +159,12 @@ const [sortBy, sortOrder] = sortValue.split('-') as ['published_at' | 'price' | 
         description="探索来自全球数据商的高质量数据产品，涵盖工业制造、金融服务、医疗健康等多个行业，助力您的业务决策与创新发展。"
         keywords="数据产品,数据交易,数据市场,大数据,数据资产,工业数据,金融数据,医疗数据"
         ogType="website"
+        canonicalUrl="https://hkbde.fun/products"
+        itemList={products?.map((p, i) => ({
+          name: p.title,
+          url: `/products/${p.slug}`,
+          position: i + 1,
+        }))}
       />
       
       {/* Hero Section - matching DataMerchantsPage */}

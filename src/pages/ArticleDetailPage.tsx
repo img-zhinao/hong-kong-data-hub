@@ -127,6 +127,7 @@ export default function ArticleDetailPage() {
         keywords={article.tags?.join(',') || '数据交易,数据要素,行业资讯'}
         ogType="article"
         ogImage={article.cover_image_url || undefined}
+        canonicalUrl={`https://hkbde.fun${categoryPath}/${article.slug}`}
         article={{
           publishedTime: article.published_at || undefined,
           modifiedTime: article.updated_at || undefined,
@@ -134,6 +135,11 @@ export default function ArticleDetailPage() {
           section: categoryLabel,
           tags: article.tags || undefined,
         }}
+        breadcrumbs={[
+          { name: '首页', url: '/' },
+          { name: categoryLabel, url: categoryPath },
+          { name: article.title, url: `${categoryPath}/${article.slug}` },
+        ]}
       />
       
       <main>

@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
+import { SEO } from '@/components/SEO';
 import { useDataProduct } from '@/hooks/useDataProducts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -84,6 +85,27 @@ export default function ProductDetailPage() {
 
   return (
     <Layout>
+      <SEO
+        title={product.title}
+        description={product.summary || `${product.title} - 香港大数据交易所数据产品`}
+        keywords={product.tags?.join(',') || '数据产品,数据交易'}
+        ogType="product"
+        canonicalUrl={`https://hkbde.fun/products/${product.slug}`}
+        product={{
+          name: product.title,
+          description: product.summary || undefined,
+          price: product.price || 0,
+          currency: product.currency || 'HKD',
+          brand: product.provider?.name,
+          category: product.tags?.[0] || undefined,
+          image: undefined,
+        }}
+        breadcrumbs={[
+          { name: '首页', url: '/' },
+          { name: '数据产品', url: '/products' },
+          { name: product.title, url: `/products/${product.slug}` },
+        ]}
+      />
       {/* Hero Section - matching other pages */}
       <div className="bg-gradient-hero py-12">
         <div className="container">
