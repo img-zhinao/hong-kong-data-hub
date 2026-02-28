@@ -17,21 +17,32 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
 
-    // Fetch published articles grouped by sub_category
-    const { data: articles } = await supabase
-      .from('articles')
-      .select('title, slug, summary, category, sub_category')
-      .eq('status', 'published')
-      .order('published_at', { ascending: false })
-      .limit(100)
+    // Fetch all data in parallel
+    const [articlesRes, productsRes, statsRes, merchantsRes] = await Promise.all([
+      supabase
+        .from('articles')
+        .select('title, slug, summary, category, sub_category')
+        .eq('status', 'published')
+        .order('published_at', { ascending: false })
+        .limit(100),
+      supabase
+        .from('data_products')
+        .select('title, slug, summary, category')
+        .eq('status', 'published')
+        .order('published_at', { ascending: false })
+        .limit(50),
+      supabase
+        .from('platform_stats')
+        .select('metric_key, metric_value, label'),
+      supabase
+        .from('data_merchants')
+        .select('id', { count: 'exact', head: true }),
+    ])
 
-    // Fetch published data products
-    const { data: products } = await supabase
-      .from('data_products')
-      .select('title, slug, summary, category')
-      .eq('status', 'published')
-      .order('published_at', { ascending: false })
-      .limit(50)
+    const articles = articlesRes.data
+    const products = productsRes.data
+    const stats = statsRes.data
+    const merchantCount = merchantsRes.count || 0
 
     // Group articles by sub_category
     const articlesByCategory: Record<string, typeof articles> = {}
@@ -52,6 +63,21 @@ Deno.serve(async (req) => {
 - 电话: +852 3749 9968
 - 传真: +852 3749 9970
 
+## 平台统计
+- 入驻数据商: ${merchantCount} 家
+- 数据产品: ${products?.length || 0} 个
+- 文章资讯: ${articles?.length || 0} 篇
+`
+    // Add platform_stats metrics
+    if (stats && stats.length > 0) {
+      for (const stat of stats) {
+        if (stat.label && stat.metric_value != null) {
+          content += `- ${stat.label}: ${stat.metric_value}\n`
+        }
+      }
+    }
+
+    content += `
 ## 主要页面
 - [首页](${SITE_URL}/): 了解香港大数据交易所的核心服务和最新动态
 - [数据产品](${SITE_URL}/products): 浏览和搜索可交易的数据产品
@@ -70,6 +96,9 @@ Deno.serve(async (req) => {
 - 数据合规咨询
 - 跨境数据流通服务
 - 数据要素市场基础设施建设
+
+## 行业覆盖
+工业制造、现代农业、商贸流通、交通运输、金融服务、科技创新、文化旅游、医疗健康、应急管理、气象服务、城市治理、绿色低碳
 `
 
     // Articles section
@@ -112,7 +141,7 @@ Deno.serve(async (req) => {
     console.error('Error generating llms.txt:', error)
     return new Response(`Error: ${errorMessage}`, {
       status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'text/plain' },
+      headers: { ...corsHeaders, 'Content-Type': 'text/plain; charset=utf-8' },
     })
   }
 })
