@@ -1,5 +1,6 @@
-import { Monitor, Bot, ArrowRight } from 'lucide-react';
+import { Bot, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import heroImg from '@/assets/openclaw-hero.png';
 
 export function OpenClawHero() {
   return (
