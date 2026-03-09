@@ -40,25 +40,13 @@ export function OpenClawHero() {
           </div>
 
           {/* Right: Visual */}
-          <div className="relative flex justify-center">
-            <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-              {/* Mac Mini visual */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 backdrop-blur-sm flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <Monitor className="w-20 h-20 text-gold mx-auto" />
-                  <p className="text-white font-semibold text-lg">Mac Mini M4 Pro</p>
-                  <div className="flex flex-wrap justify-center gap-2 px-6">
-                    {['BossAgent', 'DataMiner', 'Writer', 'Coder', 'Designer', 'Analyst'].map((name) => (
-                      <span key={name} className="px-2 py-1 rounded-md bg-gold/10 text-gold text-xs border border-gold/20">
-                        {name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              {/* Animated ring */}
-              <div className="absolute -inset-4 rounded-3xl border border-gold/20 animate-pulse-glow" />
-            </div>
+          <div className="relative">
+            <img
+              src={heroImg}
+              alt="OpenClaw Mac Mini AI数字员工军团工作站"
+              className="rounded-2xl border border-white/10 shadow-2xl w-full object-cover"
+            />
+            <div className="absolute -inset-2 rounded-3xl border border-gold/20 animate-pulse-glow pointer-events-none" />
           </div>
         </div>
       </div>
