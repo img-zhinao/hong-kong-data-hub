@@ -37,6 +37,7 @@ const navItems = [
     children: [
       { name: '数商生态', path: '/data-merchants' },
       { name: '需求大厅', path: '/opportunities' },
+      { name: 'OpenClaw 交易', path: '/openclaw' },
     ]
   },
   { name: '活动会议', path: '/events' },

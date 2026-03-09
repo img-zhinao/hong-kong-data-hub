@@ -24,6 +24,7 @@ import SitemapPage from "./pages/SitemapPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import OpportunitiesPage from "./pages/OpportunitiesPage";
+import OpenClawPage from "./pages/OpenClawPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +57,7 @@ const App = () => (
               <Route path="/terms" element={<TermsPage />} />
               <Route path="/sitemap" element={<SitemapPage />} />
               <Route path="/opportunities" element={<OpportunitiesPage />} />
+              <Route path="/openclaw" element={<OpenClawPage />} />
               <Route path="/auth" element={<AuthPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/my-assets" element={<NotFound />} />
