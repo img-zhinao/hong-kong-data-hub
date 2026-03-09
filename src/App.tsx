@@ -24,6 +24,7 @@ import SitemapPage from "./pages/SitemapPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import OpportunitiesPage from "./pages/OpportunitiesPage";
+import OpenClawPage from "./pages/OpenClawPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
