@@ -57,6 +57,7 @@ const App = () => (
               <Route path="/terms" element={<TermsPage />} />
               <Route path="/sitemap" element={<SitemapPage />} />
               <Route path="/opportunities" element={<OpportunitiesPage />} />
+              <Route path="/openclaw" element={<OpenClawPage />} />
               <Route path="/auth" element={<AuthPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/my-assets" element={<NotFound />} />
