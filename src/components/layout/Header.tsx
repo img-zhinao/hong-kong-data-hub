@@ -16,7 +16,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/components/ui/toaster';
 import logo from '@/assets/hkbde-logo.png';
 
-const navItems = [
+const navItems: Array<{ name: string; path: string; highlight?: boolean; children?: Array<{ name: string; path: string }> }> = [
   { name: '首页', path: '/' },
   { name: '数据产品', path: '/products' },
   { name: '数据资产入表', path: '/data-asset' },
@@ -37,10 +37,10 @@ const navItems = [
     children: [
       { name: '数商生态', path: '/data-merchants' },
       { name: '需求大厅', path: '/opportunities' },
-      { name: 'OpenClaw 交易', path: '/openclaw' },
+      { name: '活动会议', path: '/events' },
     ]
   },
-  { name: '活动会议', path: '/events' },
+  { name: 'OpenClaw 交易', path: '/openclaw', highlight: true },
   { name: '关于我们', path: '/about' },
 ];
 
@@ -98,7 +98,9 @@ export function Header() {
                 <Link
                   to={item.path}
                   className={`nav-link flex items-center gap-1 ${
-                    location.pathname === item.path ? 'text-primary active' : 'text-foreground hover:text-primary'
+                    item.highlight
+                      ? 'text-gold font-semibold border border-gold/50 rounded-md px-3 py-1 hover:bg-gold/10'
+                      : location.pathname === item.path ? 'text-primary active' : 'text-foreground hover:text-primary'
                   }`}
                 >
                   {item.name}
