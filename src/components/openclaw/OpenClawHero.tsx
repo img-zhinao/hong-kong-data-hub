@@ -33,7 +33,7 @@ export function OpenClawHero() {
                 浏览在售军团
                 <ArrowRight className="w-5 h-5" />
               </Button>
-              <Button variant="outline" size="xl" className="border-white/20 text-white hover:bg-white/10">
+              <Button variant="outline" size="xl" className="border-white/20 text-white hover:bg-white/10 bg-transparent">
                 了解运作模式
               </Button>
             </div>
