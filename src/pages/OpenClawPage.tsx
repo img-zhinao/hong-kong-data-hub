@@ -20,6 +20,7 @@ export default function OpenClawPage() {
         <OpenClawStats />
         <OpenClawProductGrid />
         <OpenClawProcess />
+        <OpenClawListing />
         <OpenClawRiskNotice />
         <OpenClawFAQ />
       </div>
