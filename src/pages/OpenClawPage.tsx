@@ -4,6 +4,7 @@ import { OpenClawHero } from '@/components/openclaw/OpenClawHero';
 import { OpenClawStats } from '@/components/openclaw/OpenClawStats';
 import { OpenClawProductGrid } from '@/components/openclaw/OpenClawProductGrid';
 import { OpenClawProcess } from '@/components/openclaw/OpenClawProcess';
+import { OpenClawListing } from '@/components/openclaw/OpenClawListing';
 import { OpenClawRiskNotice } from '@/components/openclaw/OpenClawRiskNotice';
 import { OpenClawFAQ } from '@/components/openclaw/OpenClawFAQ';
 
@@ -19,6 +20,7 @@ export default function OpenClawPage() {
         <OpenClawStats />
         <OpenClawProductGrid />
         <OpenClawProcess />
+        <OpenClawListing />
         <OpenClawRiskNotice />
         <OpenClawFAQ />
       </div>
