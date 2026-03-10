@@ -21,7 +21,7 @@ const Index = () => {
         <DataStatsSection />
         <InsightsSection />
         <DataMerchantsSection />
-        <EventsSection />
+        <OpenClawPromoSection />
       </main>
     </Layout>
   );
