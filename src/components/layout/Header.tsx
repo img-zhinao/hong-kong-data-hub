@@ -98,7 +98,9 @@ export function Header() {
                 <Link
                   to={item.path}
                   className={`nav-link flex items-center gap-1 ${
-                    location.pathname === item.path ? 'text-primary active' : 'text-foreground hover:text-primary'
+                    item.highlight
+                      ? 'text-gold font-semibold border border-gold/50 rounded-md px-3 py-1 hover:bg-gold/10'
+                      : location.pathname === item.path ? 'text-primary active' : 'text-foreground hover:text-primary'
                   }`}
                 >
                   {item.name}
