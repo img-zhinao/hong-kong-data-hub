@@ -3,8 +3,8 @@ import { HeroSection } from '@/components/home/HeroSection';
 import { NewsSection } from '@/components/home/NewsSection';
 import { DataStatsSection } from '@/components/home/DataStatsSection';
 import { InsightsSection } from '@/components/home/InsightsSection';
-import { EventsSection } from '@/components/home/EventsSection';
 import { DataMerchantsSection } from '@/components/home/DataMerchantsSection';
+import { OpenClawPromoSection } from '@/components/home/OpenClawPromoSection';
 import { SEO } from '@/components/SEO';
 
 const Index = () => {
