@@ -1,117 +1,177 @@
 
 
-## GEO 全面优化方案
+## 重构 OpenClaw 页面 — Agentic AI 资产化交易平台
 
-本方案涵盖 8 项优化任务，提升网站对 AI 搜索引擎和传统搜索引擎的可见性。
-
----
-
-### 1. 修复 llms-txt Edge Function
-
-当前 Edge Function 可能返回 HTML 错误页面。重新部署并验证返回 `Content-Type: text/plain`。
-
-### 2. 更新静态 `public/llms.txt`
-
-补充更多结构化信息：核心服务详细描述、平台统计数据、行业分类列表，增强事实密度。
-
-### 3. 添加 Schema.org 结构化标记
-
-**`index.html`** — 添加全局 Organization + WebSite JSON-LD：
-```json
-{
-  "@type": "Organization",
-  "name": "香港大数据交易所",
-  "url": "https://hkbde.fun",
-  "logo": "...",
-  "contactPoint": { "telephone": "+852 3749 9968" },
-  "sameAs": []
-}
-```
-
-**`SEO.tsx`** — 已有基础 JSON-LD，增强为：
-- 首页：Organization + WebSite（含 SearchAction）
-- 文章页：Article 标记（已有，保持）
-- 产品页：Product 标记（新增）
-
-**`ProductDetailPage.tsx`** — 添加 Product JSON-LD：
-```json
-{
-  "@type": "Product",
-  "name": "...",
-  "description": "...",
-  "offers": { "@type": "Offer", "price": "...", "priceCurrency": "HKD" }
-}
-```
-
-### 4. 优化 Meta 标签
-
-**`index.html`**：
-- 补充 `og:url`、`og:locale`、`og:site_name`
-- 补充 `twitter:card`、`twitter:site`
-- OG image 使用完整 URL
-
-**`SEO.tsx`**：
-- 添加 `og:url`（基于当前路由）
-- 已有完善的 OG/Twitter 标签，保持
-
-**`ProductDetailPage.tsx`**：
-- 添加 `<SEO>` 组件（当前缺失）
-
-### 5. 添加 noscript 兜底内容
-
-**`index.html`**：
-```html
-<noscript>
-  <div>
-    <h1>香港大数据交易所 (HKBDE)</h1>
-    <p>香港领先的数据要素市场基础设施...</p>
-    <nav>
-      <a href="/products">数据产品</a>
-      <a href="/news">行业动态</a>
-      ...
-    </nav>
-    <p>联系电话: +852 3749 9968</p>
-    <p>地址: Room 815, 8/F., Star House...</p>
-  </div>
-</noscript>
-```
-
-### 6. 数据产品页面结构化标记
-
-**`ProductDetailPage.tsx`**：
-- 引入 `<SEO>` 组件，设置 title/description/ogType="product"
-- 添加 Product JSON-LD（含 offers、provider/brand）
-- 使用语义化 HTML（`<article>`、`<header>`、`<section>`）
-
-**`ProductsPage.tsx`**：
-- 添加 ItemList JSON-LD，列出所有产品
-
-### 7. 文章系统优化
-
-**`ArticleDetailPage.tsx`**：
-- 已有良好的语义 HTML 和 Article JSON-LD
-- 补充 `BreadcrumbList` JSON-LD 结构化标记
-- 确保 `datePublished`/`dateModified` 格式为 ISO 8601
-
-### 8. 补充统计数据提高事实密度
-
-**`public/llms.txt`** + **Edge Function**：
-- 添加平台统计数据（从 `platform_stats` 表动态获取）
-- 补充行业分类完整列表
-- 添加数据商数量、产品数量等关键数字
+将 `/openclaw` 页面从简单的军团销售页改造为专业的 AI 智能体资产化交易平台，分为**育种者仪表盘**和**用工市场**两大模块。
 
 ---
 
-### 修改文件清单
+### 页面整体架构
 
-| 文件 | 变更 |
+使用 Tabs 组件将页面分为两个视图：
+
+```text
+┌─────────────────────────────────────────────┐
+│  OpenClaw Hero (简化，突出平台定位)           │
+├──────────────────┬──────────────────────────┤
+│  育种者仪表盘 Tab │  用工市场 Tab              │
+├──────────────────┴──────────────────────────┤
+│  Tab 内容区                                  │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+### 新增 / 重构组件
+
+| 文件 | 说明 |
 |------|------|
-| `index.html` | Organization/WebSite JSON-LD + OG 完善 + noscript |
-| `src/components/SEO.tsx` | 增强 JSON-LD 支持多类型 |
-| `src/pages/ProductDetailPage.tsx` | 添加 SEO 组件 + Product JSON-LD |
-| `src/pages/ProductsPage.tsx` | 添加 ItemList JSON-LD |
-| `src/pages/ArticleDetailPage.tsx` | 添加 BreadcrumbList JSON-LD |
-| `public/llms.txt` | 补充统计数据和行业分类 |
-| `supabase/functions/llms-txt/index.ts` | 添加 platform_stats 查询 + 增强内容 |
-| `public/robots.txt` | 确认 llms.txt 引用路径完整 |
+| `src/components/openclaw/OpenClawHero.tsx` | **修改** — 更新标题为 Agentic AI 资产交易平台定位 |
+| `src/components/openclaw/openClawData.ts` | **修改** — 扩展数据模型，增加 TCR、记忆深度、GEO 评分、硬件系数、安全合规字段 |
+| `src/components/openclaw/AgentPassport.tsx` | **新建** — 龙虾简历/体检报告卡片组件 |
+| `src/components/openclaw/DynamicValuation.tsx` | **新建** — 动态估值器公式组件 |
+| `src/components/openclaw/C2DVerification.tsx` | **新建** — 试运行 C2D 验证 UI |
+| `src/components/openclaw/ComplianceLabels.tsx` | **新建** — 安全合规标签组件 |
+| `src/components/openclaw/BreederDashboard.tsx` | **新建** — 育种者仪表盘（资产挂牌表单） |
+| `src/components/openclaw/TalentMarket.tsx` | **新建** — 用工市场（浏览、筛选、详情） |
+| `src/components/openclaw/AgentDetailDialog.tsx` | **新建** — 替代旧 DetailDialog，整合 Passport + 估值 + C2D + 合规 |
+| `src/pages/OpenClawPage.tsx` | **修改** — 整合 Tabs 布局 |
+
+---
+
+### 1) 数据模型扩展 (`openClawData.ts`)
+
+在现有 `OpenClawProduct` 基础上增加字段：
+
+```typescript
+interface AgentMetrics {
+  tcr: number;              // 任务成功率 0-100
+  memoryEntries: number;    // MEMORY.md 条目数
+  memoryCompression: number;// 压缩比 (如 0.35)
+  geoScore: number;         // GEO 友好度 0-100
+}
+
+interface ComplianceStatus {
+  appleIdUnbound: boolean;  // Apple ID 已解绑
+  piiSanitized: boolean;    // PII 已脱敏
+  soulMdUploaded: boolean;  // SOUL.md 已上传
+  identityMdUploaded: boolean; // IDENTITY.md 已上传
+}
+
+interface HardwareSpec {
+  model: string;            // 'Mac Mini M4' | 'Mac Mini M4 Pro'
+  ram: number;              // GB
+  storage: number;          // GB
+  quantity: number;
+  hwCoefficient: number;    // C_HW 硬件折算系数
+}
+
+// 扩展后的产品接口
+interface OpenClawAgent extends OpenClawProduct {
+  metrics: AgentMetrics;
+  compliance: ComplianceStatus;
+  hardwareSpec: HardwareSpec;
+  soulDescription?: string;
+  identityDescription?: string;
+  basePrice?: number;       // 公式计算的基准价
+}
+```
+
+Mock 数据为每个现有产品补充上述字段。
+
+---
+
+### 2) 龙虾简历 Agent Passport (`AgentPassport.tsx`)
+
+一个卡片组件，展示智能体的"体检报告"：
+
+- **TCR 仪表盘** — 圆环进度条显示任务成功率（绿色 > 80%，黄色 60-80%，红色 < 60%）
+- **记忆深度** — 条目数 + 压缩比，用进度条可视化
+- **GEO 友好度** — 评分 + 星级标识
+- 所有指标排列在 2×2 网格中，配色与现有深蓝金色一致
+
+---
+
+### 3) 动态估值器 (`DynamicValuation.tsx`)
+
+- 展示公式 `P_base = (α·TCR + β·log(T) + γ·S_count) × C_HW`
+- 公式用金色高亮，参数说明以 tooltip 展示
+- 实时计算并展示基准价（前端纯计算，α=100, β=500, γ=200 为默认系数）
+- 与挂牌价对比显示差异百分比
+
+---
+
+### 4) C2D 试运行 (`C2DVerification.tsx`)
+
+- "试运行"按钮，点击后模拟发起任务
+- 展示 loading 动画 → 模拟返回执行结果（成功/失败 + 耗时 + 输出摘要）
+- 明确标注"无需下载原始记忆文件"
+- 暂为前端 mock，后续可接后端接口
+
+---
+
+### 5) 安全合规标签 (`ComplianceLabels.tsx`)
+
+- 4 个检查项：Apple ID 解绑、PII 脱敏、SOUL.md 上传、IDENTITY.md 上传
+- 通过的显示绿色勾 ✓，未通过显示红色 ✗
+- 紧凑的水平标签行，嵌入到智能体卡片和详情弹窗
+
+---
+
+### 6) 育种者仪表盘 (`BreederDashboard.tsx`)
+
+改造现有 `OpenClawListing` + `OpenClawListingForm`：
+
+- **资产挂牌表单**（全页面，非弹窗）：
+  - 上传 SOUL.md / IDENTITY.md 描述文本框
+  - 硬件参数选择（型号、RAM、存储、数量）
+  - AI 员工配置
+  - 运营数据填写（运行天数、TCR、收益）
+- 保留原有三档收费标准
+- 提交后 toast 提示
+
+---
+
+### 7) 用工市场 (`TalentMarket.tsx`)
+
+改造现有 `OpenClawProductGrid`：
+
+- 筛选栏：按状态、硬件型号、TCR 范围筛选
+- 卡片增加：TCR 指标、GEO 评分、合规标签
+- 点击进入 `AgentDetailDialog`（整合 Passport + 估值器 + C2D + 合规）
+
+---
+
+### 8) 页面组装 (`OpenClawPage.tsx`)
+
+```tsx
+<Layout>
+  <OpenClawHero />   {/* 更新文案 */}
+  <OpenClawStats />  {/* 保留 */}
+  <Tabs defaultValue="market">
+    <TabsList>
+      <TabsTrigger value="market">用工市场 Talent Market</TabsTrigger>
+      <TabsTrigger value="breeder">育种者仪表盘 Breeder Dashboard</TabsTrigger>
+    </TabsList>
+    <TabsContent value="market">
+      <TalentMarket />
+    </TabsContent>
+    <TabsContent value="breeder">
+      <BreederDashboard />
+    </TabsContent>
+  </Tabs>
+  <OpenClawProcess />    {/* 保留 */}
+  <OpenClawRiskNotice />  {/* 保留 */}
+  <OpenClawFAQ />        {/* 更新 FAQ 内容 */}
+</Layout>
+```
+
+---
+
+### 设计风格
+
+- 延续现有深蓝 `#0a1628` + 金色 `#d4af37` 主题
+- 新增数据可视化：圆环进度条（TCR）、线性进度条（记忆深度）
+- 公式使用 monospace 字体 + 金色高亮
+- 合规标签使用绿/红色简洁标记
 
