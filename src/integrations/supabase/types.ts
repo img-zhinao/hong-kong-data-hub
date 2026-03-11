@@ -340,6 +340,102 @@ export type Database = {
         }
         Relationships: []
       }
+      openclaw_agents: {
+        Row: {
+          agent_code: string
+          annual_return: number
+          apple_id_unbound: boolean
+          created_at: string | null
+          employees: string[]
+          geo_score: number
+          hardware: string
+          hw_coefficient: number
+          hw_model: string
+          hw_quantity: number
+          hw_ram: number
+          hw_storage: number
+          id: string
+          identity_description: string | null
+          identity_md_uploaded: boolean
+          memory_compression: number
+          memory_entries: number
+          monthly_revenue: number
+          name: string
+          pii_sanitized: boolean
+          price: number
+          revenue_history: Json
+          run_days: number
+          soul_description: string | null
+          soul_md_uploaded: boolean
+          status: string
+          tcr: number
+          total_revenue: number
+          updated_at: string | null
+        }
+        Insert: {
+          agent_code: string
+          annual_return?: number
+          apple_id_unbound?: boolean
+          created_at?: string | null
+          employees?: string[]
+          geo_score?: number
+          hardware: string
+          hw_coefficient?: number
+          hw_model?: string
+          hw_quantity?: number
+          hw_ram?: number
+          hw_storage?: number
+          id?: string
+          identity_description?: string | null
+          identity_md_uploaded?: boolean
+          memory_compression?: number
+          memory_entries?: number
+          monthly_revenue?: number
+          name: string
+          pii_sanitized?: boolean
+          price?: number
+          revenue_history?: Json
+          run_days?: number
+          soul_description?: string | null
+          soul_md_uploaded?: boolean
+          status?: string
+          tcr?: number
+          total_revenue?: number
+          updated_at?: string | null
+        }
+        Update: {
+          agent_code?: string
+          annual_return?: number
+          apple_id_unbound?: boolean
+          created_at?: string | null
+          employees?: string[]
+          geo_score?: number
+          hardware?: string
+          hw_coefficient?: number
+          hw_model?: string
+          hw_quantity?: number
+          hw_ram?: number
+          hw_storage?: number
+          id?: string
+          identity_description?: string | null
+          identity_md_uploaded?: boolean
+          memory_compression?: number
+          memory_entries?: number
+          monthly_revenue?: number
+          name?: string
+          pii_sanitized?: boolean
+          price?: number
+          revenue_history?: Json
+          run_days?: number
+          soul_description?: string | null
+          soul_md_uploaded?: boolean
+          status?: string
+          tcr?: number
+          total_revenue?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       platform_stats: {
         Row: {
           geo_metadata: Json | null
