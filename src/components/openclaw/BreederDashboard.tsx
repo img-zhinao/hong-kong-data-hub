@@ -7,18 +7,96 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { Upload, Cpu, Bot, FileText } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { useQueryClient } from '@tanstack/react-query';
+
+const HW_COEFFICIENTS: Record<string, number> = {
+  'm4': 1.0,
+  'm4pro': 1.35,
+  'm2': 0.8,
+  'm2pro': 1.1,
+};
+
+const HW_LABELS: Record<string, string> = {
+  'm4': 'Mac Mini M4',
+  'm4pro': 'Mac Mini M4 Pro',
+  'm2': 'Mac Mini M2',
+  'm2pro': 'Mac Mini M2 Pro',
+};
 
 export function BreederDashboard() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [submitting, setSubmitting] = useState(false);
   const [plan, setPlan] = useState('preferred');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!user) {
+      toast.error('请先登录后再提交挂牌申请');
+      return;
+    }
+
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    const hwModel = fd.get('hw_model') as string;
+    const hwQuantity = Number(fd.get('hw_quantity')) || 1;
+    const hwRam = Number(fd.get('hw_ram')) || 16;
+    const hwStorage = Number(fd.get('hw_storage')) || 256;
+    const runDays = Number(fd.get('run_days')) || 0;
+    const tcr = Number(fd.get('tcr')) || 0;
+    const totalRevenue = Number(fd.get('total_revenue')) || 0;
+    const monthlyRevenue = Number(fd.get('monthly_revenue')) || 0;
+    const name = fd.get('name') as string;
+    const soulDescription = fd.get('soul_description') as string;
+    const identityDescription = fd.get('identity_description') as string;
+    const price = Number(fd.get('price')) || 0;
+
+    const agentCode = `OC-${String(Date.now()).slice(-4)}`;
+    const hwLabel = HW_LABELS[hwModel] || 'Mac Mini M4';
+    const hwCoeff = HW_COEFFICIENTS[hwModel] || 1.0;
+
+    const { error } = await supabase.from('openclaw_agents' as any).insert({
+      agent_code: agentCode,
+      name,
+      status: 'presale',
+      hardware: `${hwLabel} × ${hwQuantity}台`,
+      employees: ['BossAgent'],
+      run_days: runDays,
+      total_revenue: totalRevenue,
+      price,
+      monthly_revenue: monthlyRevenue,
+      annual_return: monthlyRevenue > 0 && price > 0 ? Math.round((monthlyRevenue * 12 / price) * 100) : 0,
+      revenue_history: [],
+      tcr,
+      memory_entries: 0,
+      memory_compression: 0,
+      geo_score: 0,
+      apple_id_unbound: false,
+      pii_sanitized: false,
+      soul_md_uploaded: !!soulDescription,
+      identity_md_uploaded: !!identityDescription,
+      hw_model: hwLabel,
+      hw_ram: hwRam,
+      hw_storage: hwStorage,
+      hw_quantity: hwQuantity,
+      hw_coefficient: hwCoeff,
+      soul_description: soulDescription || null,
+      identity_description: identityDescription || null,
+    } as any);
+
+    setSubmitting(false);
+
+    if (error) {
+      toast.error('提交失败', { description: error.message });
+    } else {
       toast.success('挂牌申请已提交', { description: '我们的团队将在 1-3 个工作日内与您联系。' });
-    }, 1200);
+      queryClient.invalidateQueries({ queryKey: ['openclaw-agents'] });
+      form.reset();
+    }
   };
 
   return (
@@ -39,6 +117,7 @@ export function BreederDashboard() {
             <div className="space-y-2">
               <Label className="text-white/80">SOUL.md — 核心灵魂描述</Label>
               <Textarea
+                name="soul_description"
                 required
                 placeholder="描述智能体的核心能力、使命和价值观..."
                 className="bg-white/5 border-white/10 text-white placeholder:text-white/30 min-h-[100px] font-mono text-sm"
@@ -47,6 +126,7 @@ export function BreederDashboard() {
             <div className="space-y-2">
               <Label className="text-white/80">IDENTITY.md — 身份标识描述</Label>
               <Textarea
+                name="identity_description"
                 placeholder="描述智能体的身份、资质和历史记录（选填）..."
                 className="bg-white/5 border-white/10 text-white placeholder:text-white/30 min-h-[80px] font-mono text-sm"
               />
@@ -62,7 +142,7 @@ export function BreederDashboard() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-white/80">设备型号</Label>
-                <Select required>
+                <Select name="hw_model" required>
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue placeholder="选择型号" />
                   </SelectTrigger>
@@ -76,11 +156,11 @@ export function BreederDashboard() {
               </div>
               <div className="space-y-2">
                 <Label className="text-white/80">设备数量</Label>
-                <Input required type="number" min={1} placeholder="例：2" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                <Input name="hw_quantity" required type="number" min={1} placeholder="例：2" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
               </div>
               <div className="space-y-2">
                 <Label className="text-white/80">RAM (GB)</Label>
-                <Select>
+                <Select name="hw_ram">
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue placeholder="选择内存" />
                   </SelectTrigger>
@@ -94,7 +174,7 @@ export function BreederDashboard() {
               </div>
               <div className="space-y-2">
                 <Label className="text-white/80">存储 (GB)</Label>
-                <Select>
+                <Select name="hw_storage">
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue placeholder="选择存储" />
                   </SelectTrigger>
@@ -117,16 +197,16 @@ export function BreederDashboard() {
             </div>
             <div className="space-y-2">
               <Label className="text-white/80">军团名称</Label>
-              <Input required placeholder="例：Alpha-7 内容创作军团" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+              <Input name="name" required placeholder="例：Alpha-7 内容创作军团" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-white/80">AI 员工数量</Label>
-                <Input required type="number" min={1} placeholder="例：6" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                <Label className="text-white/80">已运行天数</Label>
+                <Input name="run_days" required type="number" min={0} placeholder="例：45" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
               </div>
               <div className="space-y-2">
-                <Label className="text-white/80">已运行天数</Label>
-                <Input required type="number" min={0} placeholder="例：45" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                <Label className="text-white/80">挂牌价格 (¥)</Label>
+                <Input name="price" required type="number" min={0} placeholder="例：18999" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
               </div>
             </div>
           </div>
@@ -140,35 +220,16 @@ export function BreederDashboard() {
             <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label className="text-white/80">TCR 成功率 (%)</Label>
-                <Input required type="number" min={0} max={100} placeholder="例：92" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                <Input name="tcr" required type="number" min={0} max={100} placeholder="例：92" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
               </div>
               <div className="space-y-2">
                 <Label className="text-white/80">累计收益 (¥)</Label>
-                <Input required type="number" min={0} placeholder="例：12580" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                <Input name="total_revenue" required type="number" min={0} placeholder="例：12580" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
               </div>
               <div className="space-y-2">
                 <Label className="text-white/80">月收益 (¥)</Label>
-                <Input required type="number" min={0} placeholder="例：3200" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                <Input name="monthly_revenue" required type="number" min={0} placeholder="例：3200" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
               </div>
-            </div>
-          </div>
-
-          {/* Contact info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">联系信息</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-white/80">联系人姓名</Label>
-                <Input required placeholder="您的姓名" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-white/80">联系电话</Label>
-                <Input required type="tel" placeholder="+852 / +86" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label className="text-white/80">邮箱</Label>
-              <Input required type="email" placeholder="your@email.com" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
             </div>
           </div>
 
@@ -194,12 +255,6 @@ export function BreederDashboard() {
                 </div>
               ))}
             </RadioGroup>
-          </div>
-
-          {/* Notes */}
-          <div className="space-y-2">
-            <Label className="text-white/80">补充说明（选填）</Label>
-            <Textarea placeholder="军团特色、收益模式等补充信息..." className="bg-white/5 border-white/10 text-white placeholder:text-white/30 min-h-[60px]" />
           </div>
 
           <Button type="submit" variant="gold" size="lg" className="w-full" disabled={submitting}>
