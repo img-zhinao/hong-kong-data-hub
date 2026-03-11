@@ -1,13 +1,24 @@
 import { TrendingUp, Server, DollarSign, Percent, Cpu } from 'lucide-react';
-
-const stats = [
-  { label: '已挂牌资产', value: '12', unit: '台', icon: Server },
-  { label: '累计交易额', value: '168', unit: '万', prefix: '¥', icon: DollarSign },
-  { label: '平均收益率', value: '58', unit: '%/月', icon: Percent },
-  { label: '运行中军团', value: '8', unit: '个', icon: Cpu },
-];
+import { useOpenClawAgents } from '@/hooks/useOpenClawAgents';
+import { useMemo } from 'react';
 
 export function OpenClawStats() {
+  const { data: agents = [] } = useOpenClawAgents();
+
+  const stats = useMemo(() => {
+    const listed = agents.length;
+    const totalTx = agents.reduce((s, a) => s + a.totalRevenue, 0);
+    const avgReturn = agents.length > 0 ? Math.round(agents.reduce((s, a) => s + a.annualReturn, 0) / agents.length) : 0;
+    const running = agents.filter(a => a.runDays > 0).length;
+
+    return [
+      { label: '已挂牌资产', value: String(listed), unit: '台', icon: Server },
+      { label: '累计交易额', value: totalTx >= 10000 ? String(Math.round(totalTx / 10000)) : String(totalTx), unit: totalTx >= 10000 ? '万' : '元', prefix: '¥', icon: DollarSign },
+      { label: '平均收益率', value: String(avgReturn), unit: '%/年', icon: Percent },
+      { label: '运行中军团', value: String(running), unit: '个', icon: Cpu },
+    ];
+  }, [agents]);
+
   return (
     <section className="py-16">
       <div className="container">
