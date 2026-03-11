@@ -1,117 +1,93 @@
 
 
-## GEO 全面优化方案
+## 将 OpenClaw Agent 数据接入 Supabase
 
-本方案涵盖 8 项优化任务，提升网站对 AI 搜索引擎和传统搜索引擎的可见性。
+### 1) 创建数据库表
 
----
+创建 `openclaw_agents` 表，将当前 mock 数据的所有字段映射为列：
 
-### 1. 修复 llms-txt Edge Function
+```sql
+CREATE TABLE public.openclaw_agents (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  agent_code text UNIQUE NOT NULL,          -- 'OC-001'
+  name text NOT NULL,
+  status text NOT NULL DEFAULT 'available', -- available/sold/presale
+  hardware text NOT NULL,
+  employees text[] NOT NULL DEFAULT '{}',
+  run_days integer NOT NULL DEFAULT 0,
+  total_revenue numeric NOT NULL DEFAULT 0,
+  price numeric NOT NULL DEFAULT 0,
+  monthly_revenue numeric NOT NULL DEFAULT 0,
+  annual_return numeric NOT NULL DEFAULT 0,
+  revenue_history jsonb NOT NULL DEFAULT '[]',
+  -- Agent metrics
+  tcr numeric NOT NULL DEFAULT 0,
+  memory_entries integer NOT NULL DEFAULT 0,
+  memory_compression numeric NOT NULL DEFAULT 0,
+  geo_score numeric NOT NULL DEFAULT 0,
+  -- Compliance
+  apple_id_unbound boolean NOT NULL DEFAULT false,
+  pii_sanitized boolean NOT NULL DEFAULT false,
+  soul_md_uploaded boolean NOT NULL DEFAULT false,
+  identity_md_uploaded boolean NOT NULL DEFAULT false,
+  -- Hardware spec
+  hw_model text NOT NULL DEFAULT 'Mac Mini M4',
+  hw_ram integer NOT NULL DEFAULT 16,
+  hw_storage integer NOT NULL DEFAULT 256,
+  hw_quantity integer NOT NULL DEFAULT 1,
+  hw_coefficient numeric NOT NULL DEFAULT 1.0,
+  -- Descriptions
+  soul_description text,
+  identity_description text,
+  -- Timestamps
+  created_at timestamptz DEFAULT (now() AT TIME ZONE 'Asia/Hong_Kong'),
+  updated_at timestamptz DEFAULT (now() AT TIME ZONE 'Asia/Hong_Kong')
+);
 
-当前 Edge Function 可能返回 HTML 错误页面。重新部署并验证返回 `Content-Type: text/plain`。
+ALTER TABLE public.openclaw_agents ENABLE ROW LEVEL SECURITY;
 
-### 2. 更新静态 `public/llms.txt`
+-- Public read
+CREATE POLICY "Enable read access for all users"
+  ON public.openclaw_agents FOR SELECT TO public USING (true);
 
-补充更多结构化信息：核心服务详细描述、平台统计数据、行业分类列表，增强事实密度。
-
-### 3. 添加 Schema.org 结构化标记
-
-**`index.html`** — 添加全局 Organization + WebSite JSON-LD：
-```json
-{
-  "@type": "Organization",
-  "name": "香港大数据交易所",
-  "url": "https://hkbde.fun",
-  "logo": "...",
-  "contactPoint": { "telephone": "+852 3749 9968" },
-  "sameAs": []
-}
+-- Admin write
+CREATE POLICY "Admin only insert" ON public.openclaw_agents
+  FOR INSERT TO authenticated WITH CHECK (is_admin());
+CREATE POLICY "Admin only update" ON public.openclaw_agents
+  FOR UPDATE TO authenticated USING (is_admin());
+CREATE POLICY "Admin only delete" ON public.openclaw_agents
+  FOR DELETE TO authenticated USING (is_admin());
 ```
 
-**`SEO.tsx`** — 已有基础 JSON-LD，增强为：
-- 首页：Organization + WebSite（含 SearchAction）
-- 文章页：Article 标记（已有，保持）
-- 产品页：Product 标记（新增）
+### 2) 插入现有 mock 数据
 
-**`ProductDetailPage.tsx`** — 添加 Product JSON-LD：
-```json
-{
-  "@type": "Product",
-  "name": "...",
-  "description": "...",
-  "offers": { "@type": "Offer", "price": "...", "priceCurrency": "HKD" }
-}
-```
+将 6 条 mock agent 数据 INSERT 到新表中。
 
-### 4. 优化 Meta 标签
+### 3) 创建 React Query hook
 
-**`index.html`**：
-- 补充 `og:url`、`og:locale`、`og:site_name`
-- 补充 `twitter:card`、`twitter:site`
-- OG image 使用完整 URL
+新建 `src/hooks/useOpenClawAgents.ts`：
+- 从 `openclaw_agents` 表 SELECT 全部数据
+- 将 snake_case 列映射回 `OpenClawAgent` 接口（camelCase）
+- 导出 `useOpenClawAgents()` hook
 
-**`SEO.tsx`**：
-- 添加 `og:url`（基于当前路由）
-- 已有完善的 OG/Twitter 标签，保持
+### 4) 更新组件引用
 
-**`ProductDetailPage.tsx`**：
-- 添加 `<SEO>` 组件（当前缺失）
+- **`TalentMarket.tsx`** — 替换 `mockAgents` 为 `useOpenClawAgents()` hook，增加 loading/error 状态
+- **`OpenClawStats.tsx`** — 从数据库数据计算实际统计数字（挂牌数、交易额、平均收益率、运行中军团数）
+- **`openClawData.ts`** — 保留类型定义和 `calculateBasePrice` 函数，移除 mock 数据导出
 
-### 5. 添加 noscript 兜底内容
+### 5) 育种者仪表盘写入
 
-**`index.html`**：
-```html
-<noscript>
-  <div>
-    <h1>香港大数据交易所 (HKBDE)</h1>
-    <p>香港领先的数据要素市场基础设施...</p>
-    <nav>
-      <a href="/products">数据产品</a>
-      <a href="/news">行业动态</a>
-      ...
-    </nav>
-    <p>联系电话: +852 3749 9968</p>
-    <p>地址: Room 815, 8/F., Star House...</p>
-  </div>
-</noscript>
-```
+- **`BreederDashboard.tsx`** — 表单提交时 INSERT 到 `openclaw_agents` 表（需登录），成功后刷新缓存
 
-### 6. 数据产品页面结构化标记
+### 涉及文件
 
-**`ProductDetailPage.tsx`**：
-- 引入 `<SEO>` 组件，设置 title/description/ogType="product"
-- 添加 Product JSON-LD（含 offers、provider/brand）
-- 使用语义化 HTML（`<article>`、`<header>`、`<section>`）
-
-**`ProductsPage.tsx`**：
-- 添加 ItemList JSON-LD，列出所有产品
-
-### 7. 文章系统优化
-
-**`ArticleDetailPage.tsx`**：
-- 已有良好的语义 HTML 和 Article JSON-LD
-- 补充 `BreadcrumbList` JSON-LD 结构化标记
-- 确保 `datePublished`/`dateModified` 格式为 ISO 8601
-
-### 8. 补充统计数据提高事实密度
-
-**`public/llms.txt`** + **Edge Function**：
-- 添加平台统计数据（从 `platform_stats` 表动态获取）
-- 补充行业分类完整列表
-- 添加数据商数量、产品数量等关键数字
-
----
-
-### 修改文件清单
-
-| 文件 | 变更 |
+| 文件 | 操作 |
 |------|------|
-| `index.html` | Organization/WebSite JSON-LD + OG 完善 + noscript |
-| `src/components/SEO.tsx` | 增强 JSON-LD 支持多类型 |
-| `src/pages/ProductDetailPage.tsx` | 添加 SEO 组件 + Product JSON-LD |
-| `src/pages/ProductsPage.tsx` | 添加 ItemList JSON-LD |
-| `src/pages/ArticleDetailPage.tsx` | 添加 BreadcrumbList JSON-LD |
-| `public/llms.txt` | 补充统计数据和行业分类 |
-| `supabase/functions/llms-txt/index.ts` | 添加 platform_stats 查询 + 增强内容 |
-| `public/robots.txt` | 确认 llms.txt 引用路径完整 |
+| Supabase migration | 新建表 + RLS + 插入种子数据 |
+| `src/hooks/useOpenClawAgents.ts` | 新建 |
+| `src/components/openclaw/TalentMarket.tsx` | 修改 |
+| `src/components/openclaw/OpenClawStats.tsx` | 修改 |
+| `src/components/openclaw/BreederDashboard.tsx` | 修改 |
+| `src/components/openclaw/openClawData.ts` | 修改（保留类型，删除 mock） |
 
