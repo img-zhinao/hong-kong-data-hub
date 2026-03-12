@@ -62,10 +62,10 @@ export function TalentMarket() {
             <SelectTrigger className="w-[150px] bg-white/5 border-white/10 text-white text-sm h-9">
               <SelectValue placeholder="硬件型号" />
             </SelectTrigger>
-            <SelectContent className="bg-[#0d1f3c] border-white/10">
-              <SelectItem value="all">全部型号</SelectItem>
-              <SelectItem value="M4 Pro">M4 Pro</SelectItem>
-              <SelectItem value="M4">M4 (标准)</SelectItem>
+            <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+              <SelectItem value="all" className="text-white/90 focus:bg-white/10 focus:text-white">全部型号</SelectItem>
+              <SelectItem value="M4 Pro" className="text-white/90 focus:bg-white/10 focus:text-white">M4 Pro</SelectItem>
+              <SelectItem value="M4" className="text-white/90 focus:bg-white/10 focus:text-white">M4 (标准)</SelectItem>
             </SelectContent>
           </Select>
           <Select value={tcrFilter} onValueChange={setTcrFilter}>
