@@ -164,11 +164,11 @@ export function BreederDashboard() {
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue placeholder="选择内存" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#0d1f3c] border-white/10">
-                    <SelectItem value="16">16 GB</SelectItem>
-                    <SelectItem value="24">24 GB</SelectItem>
-                    <SelectItem value="36">36 GB</SelectItem>
-                    <SelectItem value="48">48 GB</SelectItem>
+                  <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+                    <SelectItem value="16" className="text-white/90 focus:bg-white/10 focus:text-white">16 GB</SelectItem>
+                    <SelectItem value="24" className="text-white/90 focus:bg-white/10 focus:text-white">24 GB</SelectItem>
+                    <SelectItem value="36" className="text-white/90 focus:bg-white/10 focus:text-white">36 GB</SelectItem>
+                    <SelectItem value="48" className="text-white/90 focus:bg-white/10 focus:text-white">48 GB</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
