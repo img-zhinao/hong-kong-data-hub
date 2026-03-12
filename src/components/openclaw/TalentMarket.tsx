@@ -51,11 +51,11 @@ export function TalentMarket() {
             <SelectTrigger className="w-[130px] bg-white/5 border-white/10 text-white text-sm h-9">
               <SelectValue placeholder="状态" />
             </SelectTrigger>
-            <SelectContent className="bg-[#0d1f3c] border-white/10">
-              <SelectItem value="all">全部状态</SelectItem>
-              <SelectItem value="available">可交易</SelectItem>
-              <SelectItem value="presale">预售中</SelectItem>
-              <SelectItem value="sold">已售罄</SelectItem>
+            <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+              <SelectItem value="all" className="text-white/90 focus:bg-white/10 focus:text-white">全部状态</SelectItem>
+              <SelectItem value="available" className="text-white/90 focus:bg-white/10 focus:text-white">可交易</SelectItem>
+              <SelectItem value="presale" className="text-white/90 focus:bg-white/10 focus:text-white">预售中</SelectItem>
+              <SelectItem value="sold" className="text-white/90 focus:bg-white/10 focus:text-white">已售罄</SelectItem>
             </SelectContent>
           </Select>
           <Select value={hwFilter} onValueChange={setHwFilter}>
