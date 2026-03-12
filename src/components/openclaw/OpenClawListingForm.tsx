@@ -48,12 +48,12 @@ export function OpenClawListingForm({ open, onOpenChange, defaultPlan = 'preferr
             <div className="space-y-2">
               <Label className="text-slate-300">硬件配置</Label>
               <select required className="flex h-10 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm text-white">
-                <option value="" className="bg-[#0d1f3c]">请选择</option>
-                <option value="m2" className="bg-[#0d1f3c]">Mac Mini M2</option>
-                <option value="m2pro" className="bg-[#0d1f3c]">Mac Mini M2 Pro</option>
-                <option value="m4" className="bg-[#0d1f3c]">Mac Mini M4</option>
-                <option value="m4pro" className="bg-[#0d1f3c]">Mac Mini M4 Pro</option>
-                <option value="other" className="bg-[#0d1f3c]">其他</option>
+                <option value="" className="bg-[#0d1f3c] text-white">请选择</option>
+                <option value="m2" className="bg-[#0d1f3c] text-white">Mac Mini M2</option>
+                <option value="m2pro" className="bg-[#0d1f3c] text-white">Mac Mini M2 Pro</option>
+                <option value="m4" className="bg-[#0d1f3c] text-white">Mac Mini M4</option>
+                <option value="m4pro" className="bg-[#0d1f3c] text-white">Mac Mini M4 Pro</option>
+                <option value="other" className="bg-[#0d1f3c] text-white">其他</option>
               </select>
             </div>
             <div className="space-y-2">

@@ -146,11 +146,11 @@ export function BreederDashboard() {
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue placeholder="选择型号" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#0d1f3c] border-white/10">
-                    <SelectItem value="m4">Mac Mini M4</SelectItem>
-                    <SelectItem value="m4pro">Mac Mini M4 Pro</SelectItem>
-                    <SelectItem value="m2">Mac Mini M2</SelectItem>
-                    <SelectItem value="m2pro">Mac Mini M2 Pro</SelectItem>
+                  <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+                    <SelectItem value="m4" className="text-white/90 focus:bg-white/10 focus:text-white">Mac Mini M4</SelectItem>
+                    <SelectItem value="m4pro" className="text-white/90 focus:bg-white/10 focus:text-white">Mac Mini M4 Pro</SelectItem>
+                    <SelectItem value="m2" className="text-white/90 focus:bg-white/10 focus:text-white">Mac Mini M2</SelectItem>
+                    <SelectItem value="m2pro" className="text-white/90 focus:bg-white/10 focus:text-white">Mac Mini M2 Pro</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -164,11 +164,11 @@ export function BreederDashboard() {
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue placeholder="选择内存" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#0d1f3c] border-white/10">
-                    <SelectItem value="16">16 GB</SelectItem>
-                    <SelectItem value="24">24 GB</SelectItem>
-                    <SelectItem value="36">36 GB</SelectItem>
-                    <SelectItem value="48">48 GB</SelectItem>
+                  <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+                    <SelectItem value="16" className="text-white/90 focus:bg-white/10 focus:text-white">16 GB</SelectItem>
+                    <SelectItem value="24" className="text-white/90 focus:bg-white/10 focus:text-white">24 GB</SelectItem>
+                    <SelectItem value="36" className="text-white/90 focus:bg-white/10 focus:text-white">36 GB</SelectItem>
+                    <SelectItem value="48" className="text-white/90 focus:bg-white/10 focus:text-white">48 GB</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -178,11 +178,11 @@ export function BreederDashboard() {
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue placeholder="选择存储" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#0d1f3c] border-white/10">
-                    <SelectItem value="256">256 GB</SelectItem>
-                    <SelectItem value="512">512 GB</SelectItem>
-                    <SelectItem value="1024">1 TB</SelectItem>
-                    <SelectItem value="2048">2 TB</SelectItem>
+                  <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+                    <SelectItem value="256" className="text-white/90 focus:bg-white/10 focus:text-white">256 GB</SelectItem>
+                    <SelectItem value="512" className="text-white/90 focus:bg-white/10 focus:text-white">512 GB</SelectItem>
+                    <SelectItem value="1024" className="text-white/90 focus:bg-white/10 focus:text-white">1 TB</SelectItem>
+                    <SelectItem value="2048" className="text-white/90 focus:bg-white/10 focus:text-white">2 TB</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

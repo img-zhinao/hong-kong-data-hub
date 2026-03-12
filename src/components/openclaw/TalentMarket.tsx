@@ -51,32 +51,32 @@ export function TalentMarket() {
             <SelectTrigger className="w-[130px] bg-white/5 border-white/10 text-white text-sm h-9">
               <SelectValue placeholder="状态" />
             </SelectTrigger>
-            <SelectContent className="bg-[#0d1f3c] border-white/10">
-              <SelectItem value="all">全部状态</SelectItem>
-              <SelectItem value="available">可交易</SelectItem>
-              <SelectItem value="presale">预售中</SelectItem>
-              <SelectItem value="sold">已售罄</SelectItem>
+            <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+              <SelectItem value="all" className="text-white/90 focus:bg-white/10 focus:text-white">全部状态</SelectItem>
+              <SelectItem value="available" className="text-white/90 focus:bg-white/10 focus:text-white">可交易</SelectItem>
+              <SelectItem value="presale" className="text-white/90 focus:bg-white/10 focus:text-white">预售中</SelectItem>
+              <SelectItem value="sold" className="text-white/90 focus:bg-white/10 focus:text-white">已售罄</SelectItem>
             </SelectContent>
           </Select>
           <Select value={hwFilter} onValueChange={setHwFilter}>
             <SelectTrigger className="w-[150px] bg-white/5 border-white/10 text-white text-sm h-9">
               <SelectValue placeholder="硬件型号" />
             </SelectTrigger>
-            <SelectContent className="bg-[#0d1f3c] border-white/10">
-              <SelectItem value="all">全部型号</SelectItem>
-              <SelectItem value="M4 Pro">M4 Pro</SelectItem>
-              <SelectItem value="M4">M4 (标准)</SelectItem>
+            <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+              <SelectItem value="all" className="text-white/90 focus:bg-white/10 focus:text-white">全部型号</SelectItem>
+              <SelectItem value="M4 Pro" className="text-white/90 focus:bg-white/10 focus:text-white">M4 Pro</SelectItem>
+              <SelectItem value="M4" className="text-white/90 focus:bg-white/10 focus:text-white">M4 (标准)</SelectItem>
             </SelectContent>
           </Select>
           <Select value={tcrFilter} onValueChange={setTcrFilter}>
             <SelectTrigger className="w-[130px] bg-white/5 border-white/10 text-white text-sm h-9">
               <SelectValue placeholder="TCR" />
             </SelectTrigger>
-            <SelectContent className="bg-[#0d1f3c] border-white/10">
-              <SelectItem value="all">全部 TCR</SelectItem>
-              <SelectItem value="80+">TCR ≥ 80%</SelectItem>
-              <SelectItem value="60-80">60-80%</SelectItem>
-              <SelectItem value="<60">{"< 60%"}</SelectItem>
+            <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+              <SelectItem value="all" className="text-white/90 focus:bg-white/10 focus:text-white">全部 TCR</SelectItem>
+              <SelectItem value="80+" className="text-white/90 focus:bg-white/10 focus:text-white">TCR ≥ 80%</SelectItem>
+              <SelectItem value="60-80" className="text-white/90 focus:bg-white/10 focus:text-white">60-80%</SelectItem>
+              <SelectItem value="<60" className="text-white/90 focus:bg-white/10 focus:text-white">{"< 60%"}</SelectItem>
             </SelectContent>
           </Select>
           <span className="text-xs text-muted-foreground ml-auto">{isLoading ? '...' : `${filtered.length} 个结果`}</span>
