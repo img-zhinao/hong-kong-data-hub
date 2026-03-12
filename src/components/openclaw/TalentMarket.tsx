@@ -72,11 +72,11 @@ export function TalentMarket() {
             <SelectTrigger className="w-[130px] bg-white/5 border-white/10 text-white text-sm h-9">
               <SelectValue placeholder="TCR" />
             </SelectTrigger>
-            <SelectContent className="bg-[#0d1f3c] border-white/10">
-              <SelectItem value="all">全部 TCR</SelectItem>
-              <SelectItem value="80+">TCR ≥ 80%</SelectItem>
-              <SelectItem value="60-80">60-80%</SelectItem>
-              <SelectItem value="<60">{"< 60%"}</SelectItem>
+            <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+              <SelectItem value="all" className="text-white/90 focus:bg-white/10 focus:text-white">全部 TCR</SelectItem>
+              <SelectItem value="80+" className="text-white/90 focus:bg-white/10 focus:text-white">TCR ≥ 80%</SelectItem>
+              <SelectItem value="60-80" className="text-white/90 focus:bg-white/10 focus:text-white">60-80%</SelectItem>
+              <SelectItem value="<60" className="text-white/90 focus:bg-white/10 focus:text-white">{"< 60%"}</SelectItem>
             </SelectContent>
           </Select>
           <span className="text-xs text-muted-foreground ml-auto">{isLoading ? '...' : `${filtered.length} 个结果`}</span>
