@@ -199,6 +199,11 @@ export function BreederDashboard() {
               <Label className="text-white/80">军团名称</Label>
               <Input name="name" required placeholder="例：Alpha-7 内容创作军团" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
             </div>
+            <div className="space-y-2">
+              <Label className="text-white/80">AI 员工编制</Label>
+              <Input name="employees" required placeholder="例：BossAgent, DataMiner, ContentWriter" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+              <p className="text-xs text-muted-foreground">多个员工名称用逗号分隔</p>
+            </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-white/80">已运行天数</Label>
