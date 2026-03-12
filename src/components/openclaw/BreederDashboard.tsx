@@ -51,6 +51,8 @@ export function BreederDashboard() {
     const totalRevenue = Number(fd.get('total_revenue')) || 0;
     const monthlyRevenue = Number(fd.get('monthly_revenue')) || 0;
     const name = fd.get('name') as string;
+    const employeesRaw = (fd.get('employees') as string) || '';
+    const employees = employeesRaw.split(',').map(s => s.trim()).filter(Boolean);
     const soulDescription = fd.get('soul_description') as string;
     const identityDescription = fd.get('identity_description') as string;
     const price = Number(fd.get('price')) || 0;
