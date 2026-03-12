@@ -66,7 +66,7 @@ export function BreederDashboard() {
       name,
       status: 'presale',
       hardware: `${hwLabel} × ${hwQuantity}台`,
-      employees: ['BossAgent'],
+      employees,
       run_days: runDays,
       total_revenue: totalRevenue,
       price,
