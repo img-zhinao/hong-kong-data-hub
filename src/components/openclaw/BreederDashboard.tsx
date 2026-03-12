@@ -51,6 +51,8 @@ export function BreederDashboard() {
     const totalRevenue = Number(fd.get('total_revenue')) || 0;
     const monthlyRevenue = Number(fd.get('monthly_revenue')) || 0;
     const name = fd.get('name') as string;
+    const employeesRaw = (fd.get('employees') as string) || '';
+    const employees = employeesRaw.split(',').map(s => s.trim()).filter(Boolean);
     const soulDescription = fd.get('soul_description') as string;
     const identityDescription = fd.get('identity_description') as string;
     const price = Number(fd.get('price')) || 0;
@@ -64,7 +66,7 @@ export function BreederDashboard() {
       name,
       status: 'presale',
       hardware: `${hwLabel} × ${hwQuantity}台`,
-      employees: ['BossAgent'],
+      employees,
       run_days: runDays,
       total_revenue: totalRevenue,
       price,
@@ -198,6 +200,11 @@ export function BreederDashboard() {
             <div className="space-y-2">
               <Label className="text-white/80">军团名称</Label>
               <Input name="name" required placeholder="例：Alpha-7 内容创作军团" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-white/80">AI 员工编制</Label>
+              <Input name="employees" required placeholder="例：BossAgent, DataMiner, ContentWriter" className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+              <p className="text-xs text-muted-foreground">多个员工名称用逗号分隔</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
