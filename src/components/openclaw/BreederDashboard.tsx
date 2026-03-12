@@ -146,11 +146,11 @@ export function BreederDashboard() {
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue placeholder="选择型号" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#0d1f3c] border-white/10">
-                    <SelectItem value="m4">Mac Mini M4</SelectItem>
-                    <SelectItem value="m4pro">Mac Mini M4 Pro</SelectItem>
-                    <SelectItem value="m2">Mac Mini M2</SelectItem>
-                    <SelectItem value="m2pro">Mac Mini M2 Pro</SelectItem>
+                  <SelectContent className="bg-[#0d1f3c] border-white/10 text-white">
+                    <SelectItem value="m4" className="text-white/90 focus:bg-white/10 focus:text-white">Mac Mini M4</SelectItem>
+                    <SelectItem value="m4pro" className="text-white/90 focus:bg-white/10 focus:text-white">Mac Mini M4 Pro</SelectItem>
+                    <SelectItem value="m2" className="text-white/90 focus:bg-white/10 focus:text-white">Mac Mini M2</SelectItem>
+                    <SelectItem value="m2pro" className="text-white/90 focus:bg-white/10 focus:text-white">Mac Mini M2 Pro</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
