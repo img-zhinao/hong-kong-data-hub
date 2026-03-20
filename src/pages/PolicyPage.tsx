@@ -15,17 +15,19 @@ export default function PolicyPage() {
 
   const { data: subCategories = [] } = useArticleSubCategories('policy');
 
-  const { data: policies, isLoading } = useArticles({
+  const { data: policiesData, isLoading } = useArticles({
     category: 'policy',
     subCategory: selectedCategory === '全部' ? undefined : selectedCategory,
     search: searchTerm || undefined,
   });
+  const policies = policiesData?.articles;
 
-  const { data: hotPolicies } = useArticles({
+  const { data: hotPoliciesData } = useArticles({
     category: 'policy',
     limit: 5,
     orderBy: 'view_count',
   });
+  const hotPolicies = hotPoliciesData?.articles;
 
   return (
     <Layout>

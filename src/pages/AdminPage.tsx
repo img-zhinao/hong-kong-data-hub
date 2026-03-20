@@ -32,7 +32,8 @@ export default function AdminPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
-  const { data: recentArticles, isLoading: loadingArticles } = useArticles({ limit: 5 });
+  const { data: recentArticlesData, isLoading: loadingArticles } = useArticles({ limit: 5 });
+  const recentArticles = recentArticlesData?.articles;
   const { data: platformStats, isLoading: loadingStats } = usePlatformStats();
   const { data: merchants } = useDataMerchants({ limit: 1 });
 

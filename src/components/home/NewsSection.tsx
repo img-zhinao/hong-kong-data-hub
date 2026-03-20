@@ -6,17 +6,19 @@ import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function NewsSection() {
-  const { data: latestNews, isLoading: loadingNews } = useArticles({ 
+  const { data: latestNewsData, isLoading: loadingNews } = useArticles({ 
     category: 'news', 
     limit: 3,
     orderBy: 'published_at'
   });
+  const latestNews = latestNewsData?.articles;
   
-  const { data: policyNews, isLoading: loadingPolicy } = useArticles({ 
+  const { data: policyNewsData, isLoading: loadingPolicy } = useArticles({ 
     category: 'policy', 
     limit: 6,
     orderBy: 'published_at'
   });
+  const policyNews = policyNewsData?.articles;
 
   return (
     <section className="py-12 bg-background">
