@@ -9,10 +9,22 @@ import { useArticles, useArticleSubCategories, type Article } from '@/hooks/useA
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SEO } from '@/components/SEO';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from '@/components/ui/pagination';
+
+const PAGE_SIZE = 10;
 
 export default function NewsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const tabFromUrl = searchParams.get('tab') || 'all';
   const [currentTab, setCurrentTab] = useState(tabFromUrl);
 
@@ -24,6 +36,7 @@ export default function NewsPage() {
 
   const handleTabChange = (value: string) => {
     setCurrentTab(value);
+    setCurrentPage(1);
     if (value === 'all') {
       setSearchParams({});
     } else {
@@ -31,17 +44,45 @@ export default function NewsPage() {
     }
   };
 
-  const { data: currentNews, isLoading: currentLoading } = useArticles({
+  // Reset page when search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+  const { data: currentNewsData, isLoading: currentLoading } = useArticles({
     category: 'news',
     subCategory: currentTab === 'all' ? undefined : currentTab,
     search: searchTerm || undefined,
+    page: currentPage,
+    pageSize: PAGE_SIZE,
   });
 
-  const { data: hotNews } = useArticles({
+  const currentNews = currentNewsData?.articles;
+  const totalCount = currentNewsData?.totalCount ?? 0;
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+
+  const { data: hotNewsData } = useArticles({
     category: 'news',
     limit: 5,
     orderBy: 'view_count',
   });
+  const hotNews = hotNewsData?.articles;
+
+  const getPageNumbers = () => {
+    const pages: (number | 'ellipsis')[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push('ellipsis');
+      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) pages.push('ellipsis');
+      pages.push(totalPages);
+    }
+    return pages;
+  };
 
   return (
     <Layout>
@@ -51,7 +92,6 @@ export default function NewsPage() {
         keywords="数据交易新闻,行业动态,数交所动态,数据要素资讯,大数据行业新闻"
       />
       
-      {/* Page Header */}
       <header className="bg-gradient-hero py-12">
         <div className="container">
           <div className="flex items-center gap-3 mb-4">
@@ -66,9 +106,7 @@ export default function NewsPage() {
 
       <main className="container py-8">
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Main Content */}
           <section className="flex-1" aria-label="新闻列表">
-            {/* Search */}
             <div className="relative mb-6">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
               <Input 
@@ -80,7 +118,6 @@ export default function NewsPage() {
               />
             </div>
 
-            {/* Tabs */}
             <Tabs value={currentTab} onValueChange={handleTabChange} className="mb-6">
               <TabsList className="w-full h-auto bg-muted/40 rounded-lg p-1 grid" style={{ gridTemplateColumns: `repeat(${subCategories.length + 1}, 1fr)` }}>
                 <TabsTrigger value="all" className="data-[state=active]:bg-background data-[state=active]:border data-[state=active]:border-border data-[state=active]:shadow-none rounded-md py-2 text-sm">全部</TabsTrigger>
@@ -112,11 +149,51 @@ export default function NewsPage() {
                 )}
               </ul>
             </Tabs>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-6 flex flex-col items-center gap-3">
+                <p className="text-sm text-muted-foreground">
+                  共 {totalCount} 条，第 {currentPage}/{totalPages} 页
+                </p>
+                <Pagination>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                        className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                      />
+                    </PaginationItem>
+                    {getPageNumbers().map((p, i) =>
+                      p === 'ellipsis' ? (
+                        <PaginationItem key={`e-${i}`}>
+                          <PaginationEllipsis />
+                        </PaginationItem>
+                      ) : (
+                        <PaginationItem key={p}>
+                          <PaginationLink
+                            isActive={p === currentPage}
+                            onClick={() => setCurrentPage(p)}
+                            className="cursor-pointer"
+                          >
+                            {p}
+                          </PaginationLink>
+                        </PaginationItem>
+                      )
+                    )}
+                    <PaginationItem>
+                      <PaginationNext
+                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                        className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </div>
+            )}
           </section>
 
-          {/* Sidebar */}
           <aside className="w-full lg:w-80 space-y-6" aria-label="侧边栏">
-            {/* Hot News */}
             <nav className="bg-card rounded-xl border p-6" aria-label="热门资讯">
               <h2 className="font-semibold mb-4 flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-primary" aria-hidden="true" />
@@ -143,7 +220,6 @@ export default function NewsPage() {
               </ol>
             </nav>
 
-            {/* Quick Links */}
             <nav className="bg-muted/30 rounded-xl p-6" aria-label="快速入口">
               <h2 className="font-semibold mb-4">快速入口</h2>
               <ul className="space-y-2" role="list">

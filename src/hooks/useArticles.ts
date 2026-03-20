@@ -11,17 +11,21 @@ interface UseArticlesOptions {
   limit?: number;
   orderBy?: 'published_at' | 'view_count' | 'created_at';
   search?: string;
+  page?: number;
+  pageSize?: number;
 }
 
 export function useArticles(options: UseArticlesOptions = {}) {
-  const { category, subCategory, status = 'published', limit, orderBy = 'published_at', search } = options;
+  const { category, subCategory, status = 'published', limit, orderBy = 'published_at', search, page, pageSize } = options;
 
   return useQuery({
     queryKey: ['articles', options],
     queryFn: async () => {
+      const usePagination = page !== undefined && pageSize !== undefined;
+
       let query = supabase
         .from('articles')
-        .select('*')
+        .select('*', usePagination ? { count: 'exact' } : {})
         .eq('status', status)
         .order(orderBy, { ascending: false });
 
@@ -37,14 +41,18 @@ export function useArticles(options: UseArticlesOptions = {}) {
         query = query.ilike('title', `%${search}%`);
       }
 
-      if (limit) {
+      if (usePagination) {
+        const from = (page! - 1) * pageSize!;
+        const to = from + pageSize! - 1;
+        query = query.range(from, to);
+      } else if (limit) {
         query = query.limit(limit);
       }
 
-      const { data, error } = await query;
+      const { data, error, count } = await query;
 
       if (error) throw error;
-      return data as Article[];
+      return { articles: (data as Article[]) || [], totalCount: count ?? 0 };
     },
   });
 }
