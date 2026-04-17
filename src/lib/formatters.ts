@@ -30,6 +30,15 @@ export function formatNumber(value: number | null): string {
   return value.toLocaleString('zh-CN');
 }
 
+export function formatTokenCount(value: number | null | undefined): string {
+  if (value == null) return '0';
+  const n = Number(value);
+  if (n >= 1_000_000_000) return `${(n / 1_000_000_000).toFixed(1)}B`;
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return n.toString();
+}
+
 export function formatStatValue(value: number | null, key: string): string {
   if (value === null) return '0';
   

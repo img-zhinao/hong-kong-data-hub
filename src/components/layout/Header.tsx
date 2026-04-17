@@ -19,6 +19,7 @@ import logo from '@/assets/hkbde-logo.png';
 const navItems: Array<{ name: string; path: string; highlight?: boolean; children?: Array<{ name: string; path: string }> }> = [
   { name: '首页', path: '/' },
   { name: '数据产品', path: '/products' },
+  { name: 'Token Hub', path: '/token-hub', highlight: true },
   { name: '数据资产入表', path: '/data-asset' },
   { name: '政策法规', path: '/policy' },
   { 

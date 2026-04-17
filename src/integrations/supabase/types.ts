@@ -538,6 +538,163 @@ export type Database = {
         }
         Relationships: []
       }
+      token_balances: {
+        Row: {
+          api_key: string | null
+          created_at: string | null
+          dataset_id: string
+          id: string
+          tokens_remaining: number
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          api_key?: string | null
+          created_at?: string | null
+          dataset_id: string
+          id?: string
+          tokens_remaining?: number
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          api_key?: string | null
+          created_at?: string | null
+          dataset_id?: string
+          id?: string
+          tokens_remaining?: number
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "token_balances_dataset_id_fkey"
+            columns: ["dataset_id"]
+            isOneToOne: false
+            referencedRelation: "token_datasets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      token_datasets: {
+        Row: {
+          cover_image_url: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          industry: string
+          license: string | null
+          modality: string
+          name: string
+          package_options: Json | null
+          price_per_1k_tokens: number | null
+          provider_id: string | null
+          provider_name: string | null
+          quality_score: number | null
+          sample_url: string | null
+          slug: string
+          status: string | null
+          tags: string[] | null
+          total_tokens: number | null
+          updated_at: string | null
+          view_count: number | null
+        }
+        Insert: {
+          cover_image_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          industry: string
+          license?: string | null
+          modality: string
+          name: string
+          package_options?: Json | null
+          price_per_1k_tokens?: number | null
+          provider_id?: string | null
+          provider_name?: string | null
+          quality_score?: number | null
+          sample_url?: string | null
+          slug: string
+          status?: string | null
+          tags?: string[] | null
+          total_tokens?: number | null
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Update: {
+          cover_image_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          industry?: string
+          license?: string | null
+          modality?: string
+          name?: string
+          package_options?: Json | null
+          price_per_1k_tokens?: number | null
+          provider_id?: string | null
+          provider_name?: string | null
+          quality_score?: number | null
+          sample_url?: string | null
+          slug?: string
+          status?: string | null
+          tags?: string[] | null
+          total_tokens?: number | null
+          updated_at?: string | null
+          view_count?: number | null
+        }
+        Relationships: []
+      }
+      token_orders: {
+        Row: {
+          amount: number
+          created_at: string | null
+          currency: string | null
+          dataset_id: string
+          id: string
+          paid_at: string | null
+          payment_provider: string | null
+          payment_ref: string | null
+          status: string | null
+          tokens_purchased: number
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          currency?: string | null
+          dataset_id: string
+          id?: string
+          paid_at?: string | null
+          payment_provider?: string | null
+          payment_ref?: string | null
+          status?: string | null
+          tokens_purchased: number
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          currency?: string | null
+          dataset_id?: string
+          id?: string
+          paid_at?: string | null
+          payment_provider?: string | null
+          payment_ref?: string | null
+          status?: string | null
+          tokens_purchased?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "token_orders_dataset_id_fkey"
+            columns: ["dataset_id"]
+            isOneToOne: false
+            referencedRelation: "token_datasets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
