@@ -29,9 +29,9 @@ const navItems: Array<{ name: string; path: string; highlight?: boolean; childre
       { name: '数交所动态', path: '/news?tab=数交所动态' },
       { name: '行业资讯', path: '/news?tab=行业资讯' },
       { name: '企业快讯', path: '/news?tab=企业快讯' },
+      { name: '专家观点', path: '/insights' },
     ]
   },
-  { name: '专家观点', path: '/insights' },
   { 
     name: '数商生态', 
     path: '/data-merchants',
