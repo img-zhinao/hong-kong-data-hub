@@ -25,6 +25,8 @@ import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import OpportunitiesPage from "./pages/OpportunitiesPage";
 import OpenClawPage from "./pages/OpenClawPage";
+import TokenHubPage from "./pages/TokenHubPage";
+import TokenDatasetDetailPage from "./pages/TokenDatasetDetailPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -58,6 +60,8 @@ const App = () => (
               <Route path="/sitemap" element={<SitemapPage />} />
               <Route path="/opportunities" element={<OpportunitiesPage />} />
               <Route path="/openclaw" element={<OpenClawPage />} />
+              <Route path="/token-hub" element={<TokenHubPage />} />
+              <Route path="/token-hub/:slug" element={<TokenDatasetDetailPage />} />
               <Route path="/auth" element={<AuthPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/my-assets" element={<NotFound />} />
