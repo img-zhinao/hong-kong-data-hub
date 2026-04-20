@@ -1,5 +1,6 @@
 import { Layout } from '@/components/layout/Layout';
 import { FileText, Scale, Users, AlertTriangle, CreditCard, Ban, Gavel, Mail, MapPin } from 'lucide-react';
+import { SEO } from '@/components/SEO';
 
 export default function TermsPage() {
   const lastUpdated = '2024年12月1日';
@@ -7,10 +8,11 @@ export default function TermsPage() {
 
   return (
     <Layout>
-      {/* SEO Meta */}
-      <title>服务条款 | 香港大数据交易所 HKBDE</title>
-      <meta name="description" content="香港大数据交易所服务条款规定了用户使用本所数据交易平台及相关服务的权利与义务。请在使用服务前仔细阅读。" />
-      
+      <SEO
+        title="服务条款"
+        description="香港大数据交易所服务条款规定了用户使用本所数据交易平台及相关服务的权利与义务。请在使用服务前仔细阅读。"
+        canonicalUrl="https://hkbde.fun/terms"
+      />
       <article className="min-h-screen bg-background" itemScope itemType="https://schema.org/WebPage">
         {/* Hero Section */}
         <header className="bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-16 md:py-24">

@@ -13,6 +13,7 @@ import { useArticles } from '@/hooks/useArticles';
 import { usePlatformStats } from '@/hooks/usePlatformStats';
 import { useDataMerchants } from '@/hooks/useDataMerchants';
 import { formatDate, formatStatValue } from '@/lib/formatters';
+import { SEO } from '@/components/SEO';
 import logo from '@/assets/hkbde-logo.png';
 
 const sidebarItems = [
@@ -45,6 +46,8 @@ export default function AdminPage() {
   ];
 
   return (
+    <>
+      <SEO title="后台管理" noIndex />
     <div className="min-h-screen bg-background flex">
       {/* Sidebar */}
       <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-navy text-primary-foreground transform transition-transform duration-300 ${
@@ -248,5 +251,6 @@ export default function AdminPage() {
         />
       )}
     </div>
+    </>
   );
 }

@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/components/ui/toaster';
+import { SEO } from '@/components/SEO';
 
 export default function ProfilePage() {
   const { user, profile, loading, updateProfile } = useAuth();
@@ -90,6 +91,7 @@ export default function ProfilePage() {
 
   return (
     <Layout>
+      <SEO title="个人中心" noIndex />
       <div className="container py-12 max-w-3xl">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground">个人中心</h1>

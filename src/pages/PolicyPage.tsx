@@ -35,6 +35,7 @@ export default function PolicyPage() {
         title="政策法规"
         description="汇集国家级、地方级关于数据资产、数据要素、数字经济的政策文件及专业解读，包括国家政策、地方政策、香港政策和行业标准。"
         keywords="数据政策,数据法规,数据要素政策,数字经济政策,数据安全法,个人信息保护法"
+        canonicalUrl="https://hkbde.fun/policy"
       />
       
       {/* Page Header */}

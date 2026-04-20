@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/components/ui/toaster';
 import logo from '@/assets/hkbde-logo.png';
+import { SEO } from '@/components/SEO';
 
 const signInSchema = z.object({
   email: z.string().trim().email({ message: '请输入有效的邮箱地址' }).max(255, { message: '邮箱长度不能超过255字符' }),
@@ -149,6 +150,8 @@ export default function AuthPage() {
   }
 
   return (
+    <>
+      <SEO title="登录注册" noIndex />
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-4 py-12">
       <Card className="w-full max-w-md bg-slate-900/80 border-slate-800 backdrop-blur-sm">
         <CardHeader className="text-center pb-2">
@@ -297,5 +300,6 @@ export default function AuthPage() {
         </CardContent>
       </Card>
     </div>
+    </>
   );
 }

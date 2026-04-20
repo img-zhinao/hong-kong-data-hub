@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
+import { SEO } from '@/components/SEO';
 import { 
   Map, 
   Home, 
@@ -102,10 +103,11 @@ export default function SitemapPage() {
 
   return (
     <Layout>
-      {/* SEO Meta */}
-      <title>网站地图 | 香港大数据交易所 HKBDE</title>
-      <meta name="description" content="香港大数据交易所网站地图，快速导航至所有页面，包括资讯中心、数商生态、业务服务、关于我们等栏目。" />
-      
+      <SEO
+        title="网站地图"
+        description="香港大数据交易所网站地图，快速导航至所有页面，包括资讯中心、数商生态、业务服务、关于我们等栏目。"
+        canonicalUrl="https://hkbde.fun/sitemap"
+      />
       <article className="min-h-screen bg-background" itemScope itemType="https://schema.org/WebPage">
         {/* Hero Section */}
         <header className="bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-16 md:py-24">

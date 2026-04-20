@@ -15,6 +15,7 @@ export default function OpenClawPage() {
       <SEO
         title="OpenClaw Agentic AI 资产交易平台 - 香港大数据交易所"
         description="面向 AI 智能体的资产化交易平台。育种者仪表盘挂牌训练好的 AI 军团，用工市场按需挑选即买即用的数字员工。"
+        canonicalUrl="https://hkbde.fun/openclaw"
       />
       <div className="bg-navy min-h-screen">
         <OpenClawHero />
