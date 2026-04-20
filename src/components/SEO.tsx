@@ -10,6 +10,8 @@ interface SEOProps {
   ogType?: 'website' | 'article' | 'product';
   canonicalUrl?: string;
   noIndex?: boolean;
+  /** Use NewsArticle schema instead of Article (for news category items) */
+  isNewsArticle?: boolean;
   article?: {
     publishedTime?: string;
     modifiedTime?: string;
@@ -55,6 +57,7 @@ export function SEO({
   ogType = 'website',
   canonicalUrl,
   noIndex = false,
+  isNewsArticle = false,
   article,
   product,
   breadcrumbs,
@@ -68,11 +71,11 @@ export function SEO({
   // Build JSON-LD based on page type
   const jsonLdScripts: object[] = [];
 
-  // Base WebPage / Article
+  // Base WebPage / Article / NewsArticle
   if (ogType === 'article' && article) {
     jsonLdScripts.push({
       '@context': 'https://schema.org',
-      '@type': 'Article',
+      '@type': isNewsArticle ? 'NewsArticle' : 'Article',
       headline: finalOgTitle,
       description: finalOgDescription,
       image: fullOgImage,
