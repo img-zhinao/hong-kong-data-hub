@@ -18,6 +18,7 @@ export default function EventsPage() {
         title="活动会议"
         description="数博会、行业峰会、培训讲座等精彩活动，助您把握数据要素行业脉搏，与业内专家交流互动。"
         keywords="数据交易活动,行业峰会,数博会,数据要素论坛,培训讲座,数据交易大会"
+        canonicalUrl="https://hkbde.fun/events"
       />
       
       {/* Page Header */}

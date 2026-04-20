@@ -11,6 +11,7 @@ export default function AboutPage() {
         title="关于我们"
         description="香港大数据交易所成立于2014年，是香港领先的数据要素市场基础设施，致力于打造安全、合规、高效的数据交易生态。"
         keywords="香港大数据交易所,HKBDE,关于我们,公司简介,数据交易所,粤港澳大湾区"
+        canonicalUrl="https://hkbde.fun/about"
       />
       
       {/* Hero */}
