@@ -126,6 +126,7 @@ export default function ArticleDetailPage() {
         description={article.summary || `阅读${article.title}了解更多关于数据要素行业的最新动态`}
         keywords={article.tags?.join(',') || '数据交易,数据要素,行业资讯'}
         ogType="article"
+        isNewsArticle={article.category === 'news'}
         ogImage={article.cover_image_url || undefined}
         canonicalUrl={`https://hkbde.fun${categoryPath}/${article.slug}`}
         article={{
