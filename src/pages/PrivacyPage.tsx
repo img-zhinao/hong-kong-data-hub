@@ -1,15 +1,17 @@
 import { Layout } from '@/components/layout/Layout';
 import { Shield, Lock, Eye, Database, UserCheck, Bell, Mail, MapPin } from 'lucide-react';
+import { SEO } from '@/components/SEO';
 
 export default function PrivacyPage() {
   const lastUpdated = '2024年12月1日';
 
   return (
     <Layout>
-      {/* SEO Meta */}
-      <title>隐私政策 | 香港大数据交易所 HKBDE</title>
-      <meta name="description" content="了解香港大数据交易所如何收集、使用和保护您的个人信息。我们承诺遵守香港《个人资料（私隐）条例》及相关法规，确保您的数据安全。" />
-      
+      <SEO
+        title="隐私政策"
+        description="了解香港大数据交易所如何收集、使用和保护您的个人信息。我们承诺遵守香港《个人资料（私隐）条例》及相关法规，确保您的数据安全。"
+        canonicalUrl="https://hkbde.fun/privacy"
+      />
       <article className="min-h-screen bg-background" itemScope itemType="https://schema.org/WebPage">
         {/* Hero Section */}
         <header className="bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-16 md:py-24">

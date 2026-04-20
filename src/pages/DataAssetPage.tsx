@@ -1,4 +1,5 @@
 import { Layout } from '@/components/layout/Layout';
+import { SEO } from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
@@ -147,6 +148,12 @@ const architectureLayers = [
 export default function DataAssetPage() {
   return (
     <Layout>
+      <SEO
+        title="数据资产入表"
+        description="企业数据资产化、数据资源入表一站式服务平台。提供数据资产评估、合规咨询、入表流程指导，助力企业释放数据价值。"
+        keywords="数据资产入表,数据资产化,数据资产评估,数据要素,企业数据"
+        canonicalUrl="https://hkbde.fun/data-asset"
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary/5 via-background to-primary/10 py-20 overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />

@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Globe, Landmark, Building2, Search, Radar, ExternalLink, X } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
+import { SEO } from '@/components/SEO';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -181,6 +182,12 @@ export default function OpportunitiesPage() {
 
   return (
     <Layout>
+      <SEO
+        title="全球数商需求大厅"
+        description="汇聚世界银行、亚洲开发银行及全球政府的数字化项目招标信息，为数据服务商提供国际化业务机会。"
+        keywords="项目招标,数据需求,世界银行,数字化项目,跨境数据服务"
+        canonicalUrl="https://hkbde.fun/opportunities"
+      />
       {/* Hero Section */}
       <section className="bg-gradient-hero text-primary-foreground py-16">
         <div className="container mx-auto px-4">
