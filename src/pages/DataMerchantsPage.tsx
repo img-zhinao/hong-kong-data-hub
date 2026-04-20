@@ -26,6 +26,11 @@ export default function DataMerchantsPage() {
         description="优质数据服务商生态，提供安全合规的数据产品与服务。探索金融数据、医疗健康、物流运输等多个领域的专业数商。"
         keywords="数商,数据服务商,数据供应商,金融数据,医疗数据,物流数据,智能制造"
         canonicalUrl="https://hkbde.fun/data-merchants"
+        itemList={merchants?.slice(0, 20).map((m, i) => ({
+          name: m.name,
+          url: `/data-merchants/${m.id}`,
+          position: i + 1,
+        }))}
       />
       
       {/* Page Header */}

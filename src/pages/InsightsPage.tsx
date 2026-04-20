@@ -26,6 +26,11 @@ export default function InsightsPage() {
         description="汇集行业领袖、学术专家的深度见解与前沿洞察，涵盖数据要素市场化、AI与数据、数据资产化、跨境数据流通等热门话题。"
         keywords="专家观点,行业洞察,数据要素观点,AI与数据,数据资产化,跨境数据流通"
         canonicalUrl="https://hkbde.fun/insights"
+        itemList={insights?.slice(0, 20).map((it, i) => ({
+          name: it.author_name,
+          url: `/insights/${it.id}`,
+          position: i + 1,
+        }))}
       />
       
       {/* Page Header */}

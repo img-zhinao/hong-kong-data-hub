@@ -91,6 +91,11 @@ export default function NewsPage() {
         description="实时追踪全球及国内数据交易机构的最新进展，把握数据要素行业发展脉搏，了解数交所动态、行业资讯和企业快讯。"
         keywords="数据交易新闻,行业动态,数交所动态,数据要素资讯,大数据行业新闻"
         canonicalUrl="https://hkbde.fun/news"
+        itemList={currentNews?.slice(0, 20).map((n, i) => ({
+          name: n.title,
+          url: `/news/${n.slug}`,
+          position: i + 1,
+        }))}
       />
       
       <header className="bg-gradient-hero py-12">
