@@ -1,27 +1,38 @@
 # Robots.txt for Hong Kong Big Data Exchange (HKBDE)
 # https://hkbde.fun
 
-# Allow all search engine crawlers
+# Allow all search engine crawlers to index public content
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /admin
+Disallow: /auth
+Disallow: /profile
+Disallow: /my-assets
 
-# Google
+# Major search engines
 User-agent: Googlebot
 Allow: /
+Disallow: /admin/
+Disallow: /auth
+Disallow: /profile
 
-# Google Images
 User-agent: Googlebot-Image
 Allow: /
 
-# Bing
 User-agent: Bingbot
 Allow: /
+Disallow: /admin/
+Disallow: /auth
+Disallow: /profile
 
-# Baidu (for China market)
 User-agent: Baiduspider
 Allow: /
+Disallow: /admin/
+Disallow: /auth
+Disallow: /profile
 
-# Social Media Crawlers
+# Social media crawlers (full access for previews)
 User-agent: Twitterbot
 Allow: /
 
@@ -31,7 +42,7 @@ Allow: /
 User-agent: LinkedInBot
 Allow: /
 
-# AI Crawlers
+# AI crawlers
 User-agent: GPTBot
 Allow: /
 
@@ -47,18 +58,9 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
-# Sitemap locations
-# Static sitemap (fallback)
+# Sitemaps
 Sitemap: https://hkbde.fun/sitemap.xml
-
-# Dynamic sitemap (primary - generated from database)
 Sitemap: https://hkbde.fun/functions/v1/sitemap
 
-# LLM/AI Content Guide
-# Static llms.txt (always accessible)
-# https://hkbde.fun/llms.txt
-# Dynamic llms.txt (real-time from database)
-# https://hkbde.fun/functions/v1/llms-txt
-
-# Crawl-delay recommendation (optional, helps with server load)
+# Reasonable crawl delay
 Crawl-delay: 1
