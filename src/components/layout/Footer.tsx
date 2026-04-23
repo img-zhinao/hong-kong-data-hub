@@ -1,35 +1,50 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import logo from '@/assets/hkbde-logo.png';
 
-const footerLinks = {
-  关于我们: [
-    { name: '交易所介绍', path: '/about' },
-    { name: '组织架构', path: '/about/structure' },
-    { name: '联系我们', path: '/about/contact' },
-    { name: '加入我们', path: '/about/careers' },
-  ],
-  业务服务: [
-    { name: '数据交易', path: '/services/trading' },
-    { name: '数据确权', path: '/services/rights' },
-    { name: '数据资产评估', path: '/services/valuation' },
-    { name: '数商入驻', path: '/data-merchants/apply' },
-  ],
-  资讯中心: [
-    { name: '政策法规', path: '/policy' },
-    { name: '行业动态', path: '/news' },
-    { name: '专家观点', path: '/insights' },
-    { name: '活动会议', path: '/events' },
-  ],
-  友情链接: [
-    { name: '北京国际大数据交易所', path: 'https://www.bjidex.com', external: true },
-    { name: '深圳数据交易所', path: 'https://www.szdata.com', external: true },
-    { name: '贵阳大数据交易所', path: 'https://www.gbdex.com', external: true },
-    { name: '上海数据交易所', path: 'https://www.chinadep.com', external: true },
-    { name: '深圳文化产权交易所', path: 'https://www.szcaee.cn', external: true },
-  ],
-};
-
 export function Footer() {
+  const { t } = useTranslation();
+
+  const footerGroups = [
+    {
+      title: t('footer.groupAbout'),
+      links: [
+        { name: t('footer.aboutIntro'), path: '/about' },
+        { name: t('footer.aboutStructure'), path: '/about/structure' },
+        { name: t('footer.aboutContact'), path: '/about/contact' },
+        { name: t('footer.aboutCareers'), path: '/about/careers' },
+      ],
+    },
+    {
+      title: t('footer.groupServices'),
+      links: [
+        { name: t('footer.svcTrading'), path: '/services/trading' },
+        { name: t('footer.svcRights'), path: '/services/rights' },
+        { name: t('footer.svcValuation'), path: '/services/valuation' },
+        { name: t('footer.svcMerchantApply'), path: '/data-merchants/apply' },
+      ],
+    },
+    {
+      title: t('footer.groupNews'),
+      links: [
+        { name: t('footer.newsPolicy'), path: '/policy' },
+        { name: t('footer.newsIndustry'), path: '/news' },
+        { name: t('footer.newsInsights'), path: '/insights' },
+        { name: t('footer.newsEvents'), path: '/events' },
+      ],
+    },
+    {
+      title: t('footer.groupPartners'),
+      links: [
+        { name: '北京国际大数据交易所', path: 'https://www.bjidex.com', external: true },
+        { name: '深圳数据交易所', path: 'https://www.szdata.com', external: true },
+        { name: '贵阳大数据交易所', path: 'https://www.gbdex.com', external: true },
+        { name: '上海数据交易所', path: 'https://www.chinadep.com', external: true },
+        { name: '深圳文化产权交易所', path: 'https://www.szcaee.cn', external: true },
+      ] as Array<{ name: string; path: string; external?: boolean }>,
+    },
+  ];
+
   return (
     <footer className="bg-navy text-primary-foreground">
       {/* Partners Marquee */}
@@ -37,7 +52,7 @@ export function Footer() {
         <div className="flex animate-marquee">
           {[...Array(2)].map((_, i) => (
             <div key={i} className="flex items-center gap-12 px-6">
-              <span className="text-primary-foreground/60 whitespace-nowrap">合作伙伴：</span>
+              <span className="text-primary-foreground/60 whitespace-nowrap">{t('footer.partnersLabel')}</span>
               <span className="text-sm text-primary-foreground/80 whitespace-nowrap">北京国际大数据交易所</span>
               <span className="text-sm text-primary-foreground/80 whitespace-nowrap">深圳数据交易所</span>
               <span className="text-sm text-primary-foreground/80 whitespace-nowrap">贵阳大数据交易所</span>
@@ -59,16 +74,16 @@ export function Footer() {
               <img src={logo} alt="HKBDE" className="h-12 w-auto" />
             </Link>
             <p className="text-sm text-primary-foreground/70 leading-relaxed">
-              香港大数据交易所是香港领先的数据要素市场基础设施，致力于打造安全、合规、高效的数据交易生态。
+              {t('brand.tagline')}
             </p>
           </div>
 
           {/* Links */}
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
-              <h4 className="font-semibold text-primary mb-4">{title}</h4>
+          {footerGroups.map((group) => (
+            <div key={group.title}>
+              <h4 className="font-semibold text-primary mb-4">{group.title}</h4>
               <ul className="space-y-2">
-                {links.map((link) => (
+                {group.links.map((link) => (
                   <li key={link.name}>
                     {link.external ? (
                       <a
@@ -98,11 +113,11 @@ export function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-navy-light">
         <div className="container py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-primary-foreground/60">
-          <p>© 2024 香港大数据交易所 HKBDE. All rights reserved.</p>
+          <p>{t('footer.copyright')}</p>
           <div className="flex items-center gap-6">
-            <Link to="/privacy" className="hover:text-primary transition-colors">隐私政策</Link>
-            <Link to="/terms" className="hover:text-primary transition-colors">服务条款</Link>
-            <Link to="/sitemap" className="hover:text-primary transition-colors">网站地图</Link>
+            <Link to="/privacy" className="hover:text-primary transition-colors">{t('footer.privacy')}</Link>
+            <Link to="/terms" className="hover:text-primary transition-colors">{t('footer.terms')}</Link>
+            <Link to="/sitemap" className="hover:text-primary transition-colors">{t('footer.sitemap')}</Link>
           </div>
         </div>
       </div>
