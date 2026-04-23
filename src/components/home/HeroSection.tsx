@@ -14,15 +14,6 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=600&fit=crop',
   },
   {
-    id: 2,
-    tag: '行业动态',
-    title: '2024香港大数据产业博览会圆满闭幕',
-    description: '本届数博会吸引超过500家企业参展，达成数据交易意向金额突破50亿港元，创历史新高。',
-    date: '2024-12-25',
-    link: '/news/2',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=600&fit=crop',
-  },
-  {
     id: 3,
     tag: '生态建设',
     title: '首批100家数商正式入驻香港大数据交易所',
