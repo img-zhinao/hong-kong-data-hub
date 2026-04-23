@@ -1,5 +1,6 @@
 # Robots.txt for Hong Kong Big Data Exchange (HKBDE)
-# https://hkbde.fun
+# Primary domain: https://hkbde.fun
+# Mirror domains: https://hkbde.net, https://www.hkbde.net (301 -> primary)
 
 # Allow all search engine crawlers to index public content
 User-agent: *
