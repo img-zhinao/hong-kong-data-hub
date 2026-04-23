@@ -4,6 +4,7 @@
 
 ## 网站信息
 - 官方网址: https://hkbde.fun
+- 备用域名: https://hkbde.net, https://www.hkbde.net
 - 地址: Room 815, 8/F., Star House, 3 Salisbury Road, Tsim Sha Tsui, Kowloon, Hong Kong
 - 电话: +852 3749 9968
 - 传真: +852 3749 9970

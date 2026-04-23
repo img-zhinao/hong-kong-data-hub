@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap for HKBDE.
+  Primary (canonical) domain: https://hkbde.fun
+  Mirror domains (301 -> primary): https://hkbde.net, https://www.hkbde.net
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
