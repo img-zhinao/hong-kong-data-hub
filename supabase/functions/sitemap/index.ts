@@ -5,6 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+// Primary (canonical) domain. Mirror domains hkbde.net / www.hkbde.net 301-redirect here.
 const SITE_URL = 'https://hkbde.fun'
 
 interface SitemapUrl {
