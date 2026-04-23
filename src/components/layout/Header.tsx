@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Search, Menu, X, ChevronDown, User, LogOut, Database, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,36 +15,8 @@ import {
 import { MarketTicker } from './MarketTicker';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/components/ui/toaster';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import logo from '@/assets/hkbde-logo.png';
-
-const navItems: Array<{ name: string; path: string; highlight?: boolean; children?: Array<{ name: string; path: string }> }> = [
-  { name: '首页', path: '/' },
-  { name: '数据产品', path: '/products' },
-  { name: 'Token Hub', path: '/token-hub', highlight: true },
-  { name: '数据资产入表', path: '/data-asset' },
-  { name: '政策法规', path: '/policy' },
-  { 
-    name: '行业动态', 
-    path: '/news',
-    children: [
-      { name: '数交所动态', path: '/news?tab=数交所动态' },
-      { name: '行业资讯', path: '/news?tab=行业资讯' },
-      { name: '企业快讯', path: '/news?tab=企业快讯' },
-      { name: '专家观点', path: '/insights' },
-    ]
-  },
-  { 
-    name: '数商生态', 
-    path: '/data-merchants',
-    children: [
-      { name: '数商生态', path: '/data-merchants' },
-      { name: '需求大厅', path: '/opportunities' },
-      { name: '活动会议', path: '/events' },
-    ]
-  },
-  { name: 'OpenClaw 交易', path: '/openclaw', highlight: true },
-  { name: '关于我们', path: '/about' },
-];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,12 +25,42 @@ export function Header() {
   const navigate = useNavigate();
   const { user, profile, loading, signOut } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
+
+  const navItems: Array<{ name: string; path: string; highlight?: boolean; children?: Array<{ name: string; path: string }> }> = [
+    { name: t('nav.home'), path: '/' },
+    { name: t('nav.products'), path: '/products' },
+    { name: t('nav.tokenHub'), path: '/token-hub', highlight: true },
+    { name: t('nav.dataAsset'), path: '/data-asset' },
+    { name: t('nav.policy'), path: '/policy' },
+    {
+      name: t('nav.news'),
+      path: '/news',
+      children: [
+        { name: t('nav.newsExchange'), path: '/news?tab=数交所动态' },
+        { name: t('nav.newsIndustry'), path: '/news?tab=行业资讯' },
+        { name: t('nav.newsEnterprise'), path: '/news?tab=企业快讯' },
+        { name: t('nav.insights'), path: '/insights' },
+      ],
+    },
+    {
+      name: t('nav.merchants'),
+      path: '/data-merchants',
+      children: [
+        { name: t('nav.merchants'), path: '/data-merchants' },
+        { name: t('nav.opportunities'), path: '/opportunities' },
+        { name: t('nav.events'), path: '/events' },
+      ],
+    },
+    { name: t('nav.openclaw'), path: '/openclaw', highlight: true },
+    { name: t('nav.about'), path: '/about' },
+  ];
 
   const handleSignOut = async () => {
     await signOut();
     toast({
-      title: '已登出',
-      description: '您已成功退出登录',
+      title: t('common.loggedOut'),
+      description: t('common.loggedOutDesc'),
     });
     navigate('/');
   };
@@ -77,17 +80,17 @@ export function Header() {
         <div className="container flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <img 
-              src={logo} 
-              alt="HKBDE Logo" 
+            <img
+              src={logo}
+              alt="HKBDE Logo"
               className="h-14 w-auto transition-transform duration-300 group-hover:scale-105"
             />
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-foreground leading-tight">
-                香港大数据交易所
+                {t('brand.name')}
               </h1>
               <p className="text-xs text-muted-foreground">
-                Hong Kong Big Data Exchange
+                {t('brand.nameEn')}
               </p>
             </div>
           </Link>
@@ -130,13 +133,13 @@ export function Header() {
           <div className="flex items-center gap-1">
             {isSearchOpen ? (
               <div className="flex items-center gap-2 animate-fade-in">
-                <Input 
-                  placeholder="搜索..." 
+                <Input
+                  placeholder={t('common.searchPlaceholder')}
                   className="w-48 h-9"
                   autoFocus
                 />
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   onClick={() => setIsSearchOpen(false)}
                 >
@@ -144,18 +147,17 @@ export function Header() {
                 </Button>
               </div>
             ) : (
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 size="icon"
                 onClick={() => setIsSearchOpen(true)}
+                aria-label={t('common.search')}
               >
                 <Search className="w-5 h-5" />
               </Button>
             )}
 
-            <span className="hidden md:inline-block text-sm text-muted-foreground px-3 py-2 hover:text-foreground cursor-pointer transition-colors">
-              English
-            </span>
+            <LanguageSwitcher />
 
             {/* User Authentication State */}
             {loading ? (
@@ -164,14 +166,14 @@ export function Header() {
               <>
                 {/* Admin Link for admins */}
                 {profile?.role === 'admin' || profile?.role === 'editor' ? (
-                  <Link 
-                    to="/admin" 
+                  <Link
+                    to="/admin"
                     className="hidden md:inline-block text-sm text-primary hover:text-primary/80 px-3 py-2 transition-colors"
                   >
-                    管理后台
+                    {t('common.admin')}
                   </Link>
                 ) : null}
-                
+
                 {/* User Dropdown */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -188,7 +190,7 @@ export function Header() {
                     <div className="flex items-center justify-start gap-2 p-2">
                       <div className="flex flex-col space-y-1 leading-none">
                         <p className="font-medium text-foreground">
-                          {profile?.full_name || '未设置姓名'}
+                          {profile?.full_name || t('common.noNameSet')}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           {profile?.email}
@@ -199,22 +201,22 @@ export function Header() {
                     <DropdownMenuItem asChild>
                       <Link to="/profile" className="flex items-center cursor-pointer">
                         <User className="mr-2 h-4 w-4" />
-                        个人中心
+                        {t('common.profile')}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link to="/my-assets" className="flex items-center cursor-pointer">
                         <Database className="mr-2 h-4 w-4" />
-                        我的数据资产
+                        {t('common.myAssets')}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={handleSignOut}
                       className="text-destructive focus:text-destructive cursor-pointer"
                     >
                       <LogOut className="mr-2 h-4 w-4" />
-                      登出
+                      {t('common.logout')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -222,7 +224,7 @@ export function Header() {
             ) : (
               <Link to="/auth">
                 <Button variant="outline" size="sm" className="hidden md:inline-flex border-primary/50 text-primary hover:bg-primary/10">
-                  登录 / 注册
+                  {t('common.loginRegister')}
                 </Button>
               </Link>
             )}
@@ -247,8 +249,8 @@ export function Header() {
                   <Link
                     to={item.path}
                     className={`block px-4 py-3 rounded-lg font-medium transition-colors ${
-                      location.pathname === item.path 
-                        ? 'bg-primary/10 text-primary' 
+                      location.pathname === item.path
+                        ? 'bg-primary/10 text-primary'
                         : 'text-foreground hover:bg-accent'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
@@ -271,7 +273,13 @@ export function Header() {
                   )}
                 </div>
               ))}
-              
+
+              {/* Mobile Language Switcher */}
+              <div className="pt-4 border-t border-border mt-4 px-4">
+                <p className="text-xs text-muted-foreground mb-2">{t('common.language')}</p>
+                <LanguageSwitcher variant="inline" />
+              </div>
+
               {/* Mobile Auth */}
               <div className="pt-4 border-t border-border mt-4">
                 {user ? (
@@ -281,14 +289,14 @@ export function Header() {
                       className="block px-4 py-3 rounded-lg font-medium text-foreground hover:bg-accent"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      个人中心
+                      {t('common.profile')}
                     </Link>
                     <Link
                       to="/my-assets"
                       className="block px-4 py-3 rounded-lg font-medium text-foreground hover:bg-accent"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      我的数据资产
+                      {t('common.myAssets')}
                     </Link>
                     {(profile?.role === 'admin' || profile?.role === 'editor') && (
                       <Link
@@ -296,7 +304,7 @@ export function Header() {
                         className="block px-4 py-3 rounded-lg font-medium text-primary hover:bg-accent"
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        管理后台
+                        {t('common.admin')}
                       </Link>
                     )}
                     <button
@@ -306,7 +314,7 @@ export function Header() {
                       }}
                       className="block w-full text-left px-4 py-3 rounded-lg font-medium text-destructive hover:bg-accent"
                     >
-                      登出
+                      {t('common.logout')}
                     </button>
                   </>
                 ) : (
@@ -315,7 +323,7 @@ export function Header() {
                     className="block px-4 py-3 rounded-lg font-medium text-primary hover:bg-accent"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    登录 / 注册
+                    {t('common.loginRegister')}
                   </Link>
                 )}
               </div>

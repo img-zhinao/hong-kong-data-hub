@@ -1,0 +1,63 @@
+{
+  "brand": {
+    "name": "بورصة هونغ كونغ للبيانات الضخمة",
+    "nameEn": "Hong Kong Big Data Exchange",
+    "tagline": "بورصة هونغ كونغ للبيانات الضخمة (HKBDE) هي البنية التحتية الرائدة لسوق عناصر البيانات في هونغ كونغ، وتلتزم ببناء منظومة تداول بيانات آمنة ومتوافقة وفعّالة."
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "products": "منتجات البيانات",
+    "tokenHub": "مركز التوكنات",
+    "dataAsset": "تسجيل أصول البيانات",
+    "policy": "السياسات واللوائح",
+    "news": "أخبار القطاع",
+    "newsExchange": "أخبار البورصة",
+    "newsIndustry": "تحديثات القطاع",
+    "newsEnterprise": "أخبار الشركات",
+    "insights": "آراء الخبراء",
+    "merchants": "تجار البيانات",
+    "opportunities": "قاعة الفرص",
+    "events": "الفعاليات",
+    "openclaw": "تداول OpenClaw",
+    "about": "من نحن"
+  },
+  "common": {
+    "search": "بحث",
+    "searchPlaceholder": "بحث...",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "loginRegister": "تسجيل الدخول / إنشاء حساب",
+    "logout": "تسجيل الخروج",
+    "loading": "جارٍ التحميل...",
+    "language": "اللغة",
+    "profile": "الملف الشخصي",
+    "myAssets": "أصول بياناتي",
+    "admin": "لوحة الإدارة",
+    "noNameSet": "لم يتم تعيين اسم",
+    "loggedOut": "تم تسجيل الخروج",
+    "loggedOutDesc": "تم تسجيل خروجك بنجاح"
+  },
+  "footer": {
+    "groupAbout": "من نحن",
+    "groupServices": "خدماتنا",
+    "groupNews": "مركز الأخبار",
+    "groupPartners": "الشركاء",
+    "aboutIntro": "نبذة عن البورصة",
+    "aboutStructure": "الهيكل التنظيمي",
+    "aboutContact": "اتصل بنا",
+    "aboutCareers": "انضم إلينا",
+    "svcTrading": "تداول البيانات",
+    "svcRights": "حقوق البيانات",
+    "svcValuation": "تقييم أصول البيانات",
+    "svcMerchantApply": "انضمام التجار",
+    "newsPolicy": "السياسات واللوائح",
+    "newsIndustry": "أخبار القطاع",
+    "newsInsights": "آراء الخبراء",
+    "newsEvents": "الفعاليات",
+    "partnersLabel": "الشركاء:",
+    "copyright": "© 2024 بورصة هونغ كونغ للبيانات الضخمة (HKBDE). جميع الحقوق محفوظة.",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة",
+    "sitemap": "خريطة الموقع"
+  }
+}

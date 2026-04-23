@@ -1,0 +1,63 @@
+{
+  "brand": {
+    "name": "Hong Kong Big Data Exchange",
+    "nameEn": "Hong Kong Big Data Exchange",
+    "tagline": "HKBDE is Hong Kong's leading infrastructure for the data factor market, committed to building a secure, compliant and efficient data trading ecosystem."
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Data Products",
+    "tokenHub": "Token Hub",
+    "dataAsset": "Data Asset Registration",
+    "policy": "Policies & Regulations",
+    "news": "Industry News",
+    "newsExchange": "Exchange News",
+    "newsIndustry": "Industry Updates",
+    "newsEnterprise": "Enterprise Briefs",
+    "insights": "Expert Insights",
+    "merchants": "Data Merchants",
+    "opportunities": "Opportunities",
+    "events": "Events",
+    "openclaw": "OpenClaw Trading",
+    "about": "About Us"
+  },
+  "common": {
+    "search": "Search",
+    "searchPlaceholder": "Search...",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "loginRegister": "Sign In / Sign Up",
+    "logout": "Sign Out",
+    "loading": "Loading...",
+    "language": "Language",
+    "profile": "Profile",
+    "myAssets": "My Data Assets",
+    "admin": "Admin Console",
+    "noNameSet": "No name set",
+    "loggedOut": "Signed out",
+    "loggedOutDesc": "You have successfully signed out"
+  },
+  "footer": {
+    "groupAbout": "About Us",
+    "groupServices": "Services",
+    "groupNews": "News Center",
+    "groupPartners": "Partners",
+    "aboutIntro": "About the Exchange",
+    "aboutStructure": "Organization",
+    "aboutContact": "Contact Us",
+    "aboutCareers": "Careers",
+    "svcTrading": "Data Trading",
+    "svcRights": "Data Rights",
+    "svcValuation": "Data Asset Valuation",
+    "svcMerchantApply": "Merchant Onboarding",
+    "newsPolicy": "Policies & Regulations",
+    "newsIndustry": "Industry News",
+    "newsInsights": "Expert Insights",
+    "newsEvents": "Events",
+    "partnersLabel": "Partners:",
+    "copyright": "© 2024 Hong Kong Big Data Exchange (HKBDE). All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "sitemap": "Sitemap"
+  }
+}
