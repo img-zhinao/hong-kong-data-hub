@@ -1,90 +1,116 @@
-## 多语言（中文 / 英语 / 阿拉伯语）支持
+# Token Hub 重新定位：香港 Token 流转平台
 
-### 范围
-- **翻译对象**：UI 框架静态文案 —— 导航、页脚、按钮、表单 label、页面标题/副标题、空状态提示、Toast 文案。
-- **不翻译**：数据库内容（文章、政策、数据集、活动等）保持原中文显示。
-- **布局**：阿拉伯语保持 LTR，仅切换文字内容。
+## 战略定位
 
-### 一、技术方案
+依托香港作为国际数据自由港的独特优势，将 Token Hub 从单纯的"数据集词元市场"升级为面向**中小企业（SME）**的双向 Token 流转枢纽：
 
-引入 `react-i18next` + `i18next` + `i18next-browser-languagedetector`：
-- 业界标准、生态完善，支持命名空间、插值、复数。
-- 自动从 `localStorage` / 浏览器语言检测首选语言。
+- **Token 出海**：帮助大陆数据/模型方将 Token 化资产合规出境，对接全球买家
+- **Token 入境**：让大陆中小企业通过香港枢纽，合规调用 OpenAI、Anthropic、Google 等国际领先大模型
+- **桥梁角色**：香港中立、合规、可结算（HKD/USD/CNH/USDC）
 
-### 二、文件结构
+## 页面改造范围（仅 UI 框架文字 + 静态结构，不改数据库）
 
-```
-src/i18n/
-  index.ts              # i18n 初始化
-  locales/
-    zh.json             # 中文（基准）
-    en.json             # 英文
-    ar.json             # 阿拉伯语
-src/components/
-  LanguageSwitcher.tsx  # 语言下拉切换器（替换 Header 里的"English"）
-```
+### 1. 改造 Hero 区（`TokenHubHero.tsx`）
 
-### 三、翻译 key 组织（命名空间扁平结构）
+新标题与定位文案：
 
-```json
-{
-  "nav": { "home": "首页", "products": "数据产品", "tokenHub": "Token Hub", ... },
-  "common": { "search": "搜索", "login": "登录 / 注册", "logout": "登出", "loading": "加载中...", ... },
-  "footer": { "about": "关于我们", "contact": "联系方式", ... },
-  "auth": { "signIn": "登录", "signUp": "注册", "email": "邮箱", "password": "密码", ... },
-  "home": { "heroTitle": "...", "heroSubtitle": "...", ... },
-  "tokenHub": { "title": "...", "addToCart": "加入购物车", ... },
-  "openclaw": { ... },
-  "news": { ... },
-  "policy": { ... },
-  ...（每个页面一个命名空间）
-}
+- 主标题：**Token Hub · 香港 Token 流转平台**
+- 副标题：**Token 出海 · 全球大模型入境 · 一站式枢纽**
+- 描述：依托香港国际数据港优势，为中小企业提供合规、低门槛的 Token 双向流转通道——既支持大陆数据资产 Token 化出海，也支持大陆企业经香港合规调用 OpenAI / Anthropic / Google 等国际领先大模型服务。
+- CTA：`接入国际大模型` / `Token 资产出海`（取代原 `浏览数据集` / `商业模式说明`）
+
+### 2. 新增「双向流转」核心区块（新组件 `BidirectionalFlowSection.tsx`）
+
+放在 Hero 之下、Stats 之上。两栏对称卡片 + 中央香港枢纽图示（CSS/SVG，无外部图）：
+
+```text
+   大陆数据 / 模型           ←→  [ 香港 Token Hub ]  ←→        国际大模型 / 买家
+   (出海方向)                     合规 · 结算 · 路由              (入境方向)
 ```
 
-阿拉伯语和英语翻译由 AI 一次性生成（基于中文 zh.json 一对一翻译），后续可在 json 里手工微调。
+- 左卡「Token 出海」：数据资产 Token 化、合规出境、结算结汇、面向全球买家
+- 右卡「全球模型入境」：统一 API 网关、聚合 OpenAI/Anthropic/Google/Meta、HKD/USDC 结算、对中小企业零门槛
 
-### 四、改造范围（约 25-30 个文件）
+### 3. 新增「面向中小企业」价值主张区（新组件 `SMEValueSection.tsx`）
 
-| 文件 | 改动 |
-|------|------|
-| `src/main.tsx` | import './i18n' 初始化 |
-| `src/i18n/index.ts` + 3 个 json | 新建 |
-| `src/components/LanguageSwitcher.tsx` | 新建：下拉显示 中文 / English / العربية，点击 `i18n.changeLanguage()` 并写入 localStorage |
-| `src/components/layout/Header.tsx` | 删除静态 "English"，接入 `LanguageSwitcher`；导航项改用 `t('nav.xxx')` |
-| `src/components/layout/Footer.tsx` | `t('footer.xxx')` |
-| `src/components/home/*.tsx`（6 个） | 首页各 section 静态文案 → `t()` |
-| `src/pages/AuthPage.tsx` | 表单 label/按钮/校验提示 → `t()` |
-| 其他 page 顶部静态标题/描述（NewsPage, PolicyPage, EventsPage, AboutPage, OpenClawPage, TokenHubPage 等） | 标题、副标题、tab 名、空态文本 → `t()` |
-| `src/components/SEO.tsx` | 默认 title/description 支持当前语言变体 |
-| `index.html` | `<html lang="zh-CN">` 由 i18n 在 `i18n.on('languageChanged')` 钩子里动态更新 |
+四张卡片，突出中小企业痛点解决：
 
-文章详情页、产品详情页、Admin 页面这类**内容主体来自数据库**的页面，仅翻译外壳（"返回列表"、"发布于"、"阅读全文"等按钮文案），正文不动。
+| 痛点 | Token Hub 方案 |
+|---|---|
+| 国际大模型支付/合规难 | 香港主体统一开票、HKD/USD/USDC 结算 |
+| 多模型 API 切换成本高 | 单一 OpenAI 兼容接口聚合主流模型 |
+| 数据出海合规风险 | 香港合规通道 + Token 化脱敏 |
+| 起量门槛高 | 按 Token 计费、无最低消费、按需充值 |
 
-### 五、语言切换器 UI
+### 4. 新增「国际大模型聚合」展示区（新组件 `ModelGatewaySection.tsx`）
 
-Header 右上角，下拉样式（替换现在的"English"文本）：
+展示已聚合的国际模型品牌（纯文字 + lucide 图标，避免外链 logo 版权）：
+- OpenAI（GPT-5 系列）
+- Anthropic（Claude）
+- Google（Gemini）
+- Meta（Llama）
+- Mistral / xAI 等
 
-```
-🌐 中文  ▾
-   ├─ 中文
-   ├─ English
-   └─ العربية
-```
+含一段简短代码片段卡片，展示「OpenAI 兼容接口」调用示例（仅展示，不真实运行），并标注：API endpoint 由香港合规网关提供。
 
-- 当前语言高亮
-- 选择后立即生效（无需刷新），同时持久化到 localStorage
-- 移动端菜单底部也加入同款切换器
+### 5. 新增「香港优势」区（新组件 `HongKongAdvantageSection.tsx`）
 
-### 六、SEO 兼容
+四个要点：
+- 国际数据自由港，跨境数据流通便利
+- 多币种结算（HKD/USD/CNH/USDC），全球开票
+- 普通法体系 + 国际仲裁，合同与 IP 保护
+- 与 CEPA / 大湾区数据跨境政策衔接
 
-- canonical 仍指向 `hkbde.fun`（不分语言版本，因翻译只在客户端生效，URL 不变）
-- `<html lang>` 跟随当前语言动态切换，便于无障碍和搜索引擎识别
+### 6. 调整「商业模式」区（`BusinessModelSection.tsx`）
 
-### 七、不在本次范围
+保留原 4 阶段结构，但补充一段说明：在「Token 流转平台」定位下，前两阶段（数据包销售、API 调用）即对应「出海」与「模型入境」两条主线，强化与新定位的衔接。
 
-- 数据库内容多语言（文章/政策/数据集翻译）
-- URL 路径加语言前缀（`/en/news`）—— 无 SEO 多语言需求时无必要
-- RTL 布局
-- AI 实时翻译
+### 7. 数据集市场区（`TokenHubPage.tsx` 中段）
 
-如果未来需要数据库内容翻译，可在 Phase 2 引入 Edge Function + AI Gateway 做按需翻译并缓存。
+- 标题由「数据集市场」→「**Token 资产市场（出海方向）**」
+- 增加副标题说明：以下数据集已完成 Token 化，可面向全球买家流转
+- 列表/筛选/分页逻辑、`useTokenDatasets` Hook、数据库均**不改动**
+
+### 8. SEO 更新
+
+`SEO` 组件 props：
+- title：`Token Hub · 香港 Token 流转平台 | 大模型入境 + 数据出海`
+- description：突出「中小企业」「国际大模型」「Token 出海」「香港枢纽」
+- keywords：补充 `OpenAI 香港接入, Claude 大陆调用, 数据出海, Token 跨境, 中小企业 AI`
+
+## 不做的事
+
+- 不改 Supabase 数据库 / `token_datasets` 表 / Hooks
+- 不接入真实的 OpenAI/Anthropic 转发能力（属于后续 Edge Function 工作，本次仅做定位与 UI 框架）
+- 不改导航菜单结构
+- 不做 RTL / 不影响 i18n（页面内容均为静态中文，与既有 i18n 框架不冲突）
+
+## 文件清单
+
+新建：
+- `src/components/tokenhub/BidirectionalFlowSection.tsx`
+- `src/components/tokenhub/SMEValueSection.tsx`
+- `src/components/tokenhub/ModelGatewaySection.tsx`
+- `src/components/tokenhub/HongKongAdvantageSection.tsx`
+
+修改：
+- `src/components/tokenhub/TokenHubHero.tsx`（文案 + CTA）
+- `src/components/tokenhub/BusinessModelSection.tsx`（补充说明段）
+- `src/pages/TokenHubPage.tsx`（编排新区块顺序、调整数据集市场标题、更新 SEO）
+
+## 页面新顺序
+
+1. TokenHubHero（新文案）
+2. BidirectionalFlowSection（双向流转核心图示）
+3. Stats（保留）
+4. SMEValueSection（中小企业价值）
+5. ModelGatewaySection（国际大模型聚合）
+6. 数据集市场（更名为 Token 资产市场）
+7. HongKongAdvantageSection（香港优势）
+8. BusinessModelSection（保留 + 补充）
+
+## 后续可选（非本次范围）
+
+- Edge Function `ai-gateway-proxy`：实际承接国际大模型 API 转发（OpenAI 兼容接口）
+- 中小企业账户体系：充值钱包、用量看板、API Key 管理
+- 跨境结算对接（Stripe HK / Airwallex / USDC on-chain）
