@@ -14,6 +14,10 @@ import {
 import { TokenHubHero } from '@/components/tokenhub/TokenHubHero';
 import { DatasetCard } from '@/components/tokenhub/DatasetCard';
 import { BusinessModelSection } from '@/components/tokenhub/BusinessModelSection';
+import { BidirectionalFlowSection } from '@/components/tokenhub/BidirectionalFlowSection';
+import { SMEValueSection } from '@/components/tokenhub/SMEValueSection';
+import { ModelGatewaySection } from '@/components/tokenhub/ModelGatewaySection';
+import { HongKongAdvantageSection } from '@/components/tokenhub/HongKongAdvantageSection';
 import {
   useTokenDatasets, useTokenDatasetStats,
   INDUSTRIES, MODALITIES,
@@ -40,20 +44,22 @@ export default function TokenHubPage() {
   return (
     <Layout>
       <SEO
-        title="Token Hub 数据集词元交易"
-        description="香港大数据交易所 Token Hub —— 行业高质量数据集词元（Token）交易市场。覆盖工业、医疗、金融、交通等 12 个行业的多模态高质量数据集，按词元计价，可量化、可定价、可组合。"
-        keywords="Token Hub,词元交易,高质量数据集,AI训练数据,行业数据集,数据要素,香港大数据交易所"
+        title="Token Hub · 香港 Token 流转平台 | 大模型入境 + 数据出海"
+        description="香港大数据交易所 Token Hub —— 依托香港国际数据自由港优势，为中小企业提供 Token 双向流转：大陆数据资产合规出海，国际领先大模型（OpenAI / Claude / Gemini）经香港合规入境。统一 OpenAI 兼容 API、多币种结算。"
+        keywords="Token Hub,香港 Token 流转,OpenAI 香港接入,Claude 大陆调用,Gemini API,数据出海,Token 跨境,中小企业 AI,香港大数据交易所,AI 网关"
         canonicalUrl="https://hkbde.fun/token-hub"
       />
 
       <TokenHubHero />
 
+      <BidirectionalFlowSection />
+
       {/* Stats */}
-      <section className="container -mt-10 relative z-10">
+      <section className="container py-8 lg:py-10">
         <div className="grid grid-cols-3 gap-3 lg:gap-6 max-w-4xl mx-auto">
           {[
-            { icon: Database, label: '数据集', value: stats?.datasetCount ?? '—' },
-            { icon: Coins, label: '总词元', value: stats ? formatTokenCount(stats.totalTokens) : '—' },
+            { icon: Database, label: 'Token 化数据集', value: stats?.datasetCount ?? '—' },
+            { icon: Coins, label: '总词元储备', value: stats ? formatTokenCount(stats.totalTokens) : '—' },
             { icon: Layers, label: '覆盖行业', value: stats?.industryCount ?? '—' },
           ].map((s, i) => (
             <Card key={i} className="p-4 lg:p-6 text-center">
@@ -65,13 +71,19 @@ export default function TokenHubPage() {
         </div>
       </section>
 
+      <SMEValueSection />
+
+      <ModelGatewaySection />
+
       {/* Datasets */}
       <section id="datasets" className="container py-12 lg:py-16">
         <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
           <div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-foreground">数据集市场</h2>
+            <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
+              Token 资产市场 <span className="text-gold text-lg">· 出海方向</span>
+            </h2>
             <p className="text-sm text-muted-foreground mt-1">
-              共 {data?.totalCount || 0} 个数据集，按行业 / 模态筛选
+              以下数据集已完成 Token 化，可经香港合规通道面向全球买家流转 · 共 {data?.totalCount || 0} 个，按行业 / 模态筛选
             </p>
           </div>
         </div>
