@@ -162,6 +162,8 @@ export default function TokenHubPage() {
         )}
       </section>
 
+      <HongKongAdvantageSection />
+
       <BusinessModelSection />
     </Layout>
   );
