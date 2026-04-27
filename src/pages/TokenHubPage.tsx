@@ -86,6 +86,9 @@ export default function TokenHubPage() {
               以下数据集已完成 Token 化，可经香港合规通道面向全球买家流转 · 共 {data?.totalCount || 0} 个，按行业 / 模态筛选
             </p>
           </div>
+          <a href="/token-hub/market" className="text-sm text-gold hover:underline whitespace-nowrap">
+            进入完整市场（含计费方式筛选）→
+          </a>
         </div>
 
         {/* Filters */}
