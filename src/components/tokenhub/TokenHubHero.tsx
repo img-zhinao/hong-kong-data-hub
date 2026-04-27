@@ -1,4 +1,4 @@
-import { Coins, ArrowRight } from 'lucide-react';
+import { Coins, ArrowRight, Globe2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function TokenHubHero() {
@@ -12,28 +12,30 @@ export function TokenHubHero() {
       <div className="container relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold/30 bg-gold/5 text-gold text-sm font-medium">
-            <Coins className="w-4 h-4" />
-            行业高质量数据集 · 词元交易市场
+            <Globe2 className="w-4 h-4" />
+            香港 · 国际数据自由港 · Token 双向流转枢纽
           </div>
           <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground leading-tight">
             Token Hub
             <br />
-            <span className="text-gold">以词元为单位的数据交易</span>
+            <span className="text-gold">香港 Token 流转平台</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            响应国家数据局《关于推进行业高质量数据集建设行动的实施方案》，构建以词元（Token）为基础、可量化、可定价的数据集价值体系，
-            推动商业模式从基础数据包销售向 API 调用、模型化解决方案及全栈服务梯次跃升。
+            依托香港国际数据自由港优势，为<span className="text-foreground font-semibold">中小企业</span>提供合规、低门槛的 Token 双向流转通道——
+            既支持大陆数据资产 <span className="text-gold">Token 化合规出海</span>，
+            也支持大陆企业经香港枢纽合规调用 <span className="text-gold">OpenAI / Anthropic / Google</span> 等国际领先大模型服务。
           </p>
           <div className="flex flex-wrap gap-4 justify-center pt-2">
-            <a href="#datasets">
+            <a href="#model-gateway">
               <Button variant="gold" size="xl" className="gap-2">
-                浏览数据集
+                接入国际大模型
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </a>
-            <a href="#business-model">
-              <Button variant="outline" size="xl">
-                商业模式说明
+            <a href="#datasets">
+              <Button variant="outline" size="xl" className="gap-2">
+                <Coins className="w-5 h-5" />
+                Token 资产出海
               </Button>
             </a>
           </div>
