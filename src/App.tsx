@@ -29,6 +29,7 @@ import TokenHubPage from "./pages/TokenHubPage";
 import TokenMarketPage from "./pages/TokenMarketPage";
 import TokenDatasetDetailPage from "./pages/TokenDatasetDetailPage";
 import TokenTicketPage from "./pages/TokenTicketPage";
+import DataRightsPage from "./pages/DataRightsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -66,6 +67,7 @@ const App = () => (
               <Route path="/token-hub/market" element={<TokenMarketPage />} />
               <Route path="/token-hub/tickets/:ticketId" element={<TokenTicketPage />} />
               <Route path="/token-hub/:slug" element={<TokenDatasetDetailPage />} />
+              <Route path="/services/rights" element={<DataRightsPage />} />
               <Route path="/auth" element={<AuthPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/my-assets" element={<NotFound />} />
