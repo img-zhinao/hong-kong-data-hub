@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { z } from 'zod';
-import { Copy, CheckCircle2, Send } from 'lucide-react';
+import { Copy, CheckCircle2, Send, ExternalLink } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
