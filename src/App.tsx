@@ -28,6 +28,7 @@ import OpenClawPage from "./pages/OpenClawPage";
 import TokenHubPage from "./pages/TokenHubPage";
 import TokenMarketPage from "./pages/TokenMarketPage";
 import TokenDatasetDetailPage from "./pages/TokenDatasetDetailPage";
+import TokenTicketPage from "./pages/TokenTicketPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -63,6 +64,7 @@ const App = () => (
               <Route path="/openclaw" element={<OpenClawPage />} />
               <Route path="/token-hub" element={<TokenHubPage />} />
               <Route path="/token-hub/market" element={<TokenMarketPage />} />
+              <Route path="/token-hub/tickets/:ticketId" element={<TokenTicketPage />} />
               <Route path="/token-hub/:slug" element={<TokenDatasetDetailPage />} />
               <Route path="/auth" element={<AuthPage />} />
               <Route path="/profile" element={<ProfilePage />} />

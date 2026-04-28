@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { z } from 'zod';
-import { Copy, CheckCircle2, Send } from 'lucide-react';
+import { Copy, CheckCircle2, Send, ExternalLink } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -34,6 +35,8 @@ const SETTLEMENTS = [
   { value: 'crypto', label: '稳定币结算（USDT / USDC）' },
 ];
 
+import { saveTicket, generateTicketId } from '@/lib/tokenTickets';
+
 const schema = z.object({
   companyName: z.string().trim().min(2, '请输入公司名称').max(100),
   contactName: z.string().trim().min(2, '请输入联系人').max(50),
@@ -44,12 +47,6 @@ const schema = z.object({
   models: z.array(z.string()).min(1, '请至少选择一个模型'),
   notes: z.string().max(500).optional(),
 });
-
-function generateTicketId() {
-  const ts = Date.now().toString(36).toUpperCase();
-  const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
-  return `THK-${ts}-${rand}`;
-}
 
 export function ModelAccessForm() {
   const [companyName, setCompanyName] = useState('');
@@ -80,6 +77,19 @@ export function ModelAccessForm() {
     setSubmitting(true);
     await new Promise((r) => setTimeout(r, 600));
     const id = generateTicketId();
+    saveTicket({
+      id,
+      createdAt: new Date().toISOString(),
+      status: 'submitted',
+      companyName: companyName.trim(),
+      contactName: contactName.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      volume,
+      settlement,
+      models,
+      notes: notes.trim() || undefined,
+    });
     setTicketId(id);
     setSubmitting(false);
     toast.success('申请已提交，工单已生成');
@@ -108,11 +118,14 @@ export function ModelAccessForm() {
           我们的香港 Token Hub 团队将在 1 个工作日内通过邮件与您联系，开通沙箱 API Key。
         </p>
         <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-          <div className="text-xs text-muted-foreground mb-2">您的工单编号</div>
-          <div className="flex items-center justify-center gap-3">
-            <code className="text-lg lg:text-xl font-mono font-bold text-gold tracking-wider">
+          <div className="text-xs text-muted-foreground mb-2">您的工单编号（点击查看详情）</div>
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <Link
+              to={`/token-hub/tickets/${ticketId}`}
+              className="text-lg lg:text-xl font-mono font-bold text-gold tracking-wider underline-offset-4 hover:underline"
+            >
               {ticketId}
-            </code>
+            </Link>
             <Button size="sm" variant="outline" onClick={copyTicket}>
               {copied ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               <span className="ml-1">{copied ? '已复制' : '复制'}</span>
@@ -122,7 +135,15 @@ export function ModelAccessForm() {
             请妥善保管编号，后续沟通、对账与发票均需引用
           </div>
         </div>
-        <Button variant="ghost" onClick={reset}>提交另一份申请</Button>
+        <div className="flex items-center justify-center gap-3 flex-wrap">
+          <Link to={`/token-hub/tickets/${ticketId}`}>
+            <Button>
+              <ExternalLink className="w-4 h-4 mr-2" />
+              查看工单详情
+            </Button>
+          </Link>
+          <Button variant="ghost" onClick={reset}>提交另一份申请</Button>
+        </div>
       </Card>
     );
   }
