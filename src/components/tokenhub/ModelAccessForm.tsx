@@ -118,11 +118,14 @@ export function ModelAccessForm() {
           我们的香港 Token Hub 团队将在 1 个工作日内通过邮件与您联系，开通沙箱 API Key。
         </p>
         <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-          <div className="text-xs text-muted-foreground mb-2">您的工单编号</div>
-          <div className="flex items-center justify-center gap-3">
-            <code className="text-lg lg:text-xl font-mono font-bold text-gold tracking-wider">
+          <div className="text-xs text-muted-foreground mb-2">您的工单编号（点击查看详情）</div>
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <Link
+              to={`/token-hub/tickets/${ticketId}`}
+              className="text-lg lg:text-xl font-mono font-bold text-gold tracking-wider underline-offset-4 hover:underline"
+            >
               {ticketId}
-            </code>
+            </Link>
             <Button size="sm" variant="outline" onClick={copyTicket}>
               {copied ? <CheckCircle2 className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               <span className="ml-1">{copied ? '已复制' : '复制'}</span>
@@ -132,7 +135,15 @@ export function ModelAccessForm() {
             请妥善保管编号，后续沟通、对账与发票均需引用
           </div>
         </div>
-        <Button variant="ghost" onClick={reset}>提交另一份申请</Button>
+        <div className="flex items-center justify-center gap-3 flex-wrap">
+          <Link to={`/token-hub/tickets/${ticketId}`}>
+            <Button>
+              <ExternalLink className="w-4 h-4 mr-2" />
+              查看工单详情
+            </Button>
+          </Link>
+          <Button variant="ghost" onClick={reset}>提交另一份申请</Button>
+        </div>
       </Card>
     );
   }
