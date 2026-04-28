@@ -35,6 +35,8 @@ const SETTLEMENTS = [
   { value: 'crypto', label: '稳定币结算（USDT / USDC）' },
 ];
 
+import { saveTicket, generateTicketId } from '@/lib/tokenTickets';
+
 const schema = z.object({
   companyName: z.string().trim().min(2, '请输入公司名称').max(100),
   contactName: z.string().trim().min(2, '请输入联系人').max(50),
@@ -45,12 +47,6 @@ const schema = z.object({
   models: z.array(z.string()).min(1, '请至少选择一个模型'),
   notes: z.string().max(500).optional(),
 });
-
-function generateTicketId() {
-  const ts = Date.now().toString(36).toUpperCase();
-  const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
-  return `THK-${ts}-${rand}`;
-}
 
 export function ModelAccessForm() {
   const [companyName, setCompanyName] = useState('');
@@ -81,6 +77,19 @@ export function ModelAccessForm() {
     setSubmitting(true);
     await new Promise((r) => setTimeout(r, 600));
     const id = generateTicketId();
+    saveTicket({
+      id,
+      createdAt: new Date().toISOString(),
+      status: 'submitted',
+      companyName: companyName.trim(),
+      contactName: contactName.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      volume,
+      settlement,
+      models,
+      notes: notes.trim() || undefined,
+    });
     setTicketId(id);
     setSubmitting(false);
     toast.success('申请已提交，工单已生成');
