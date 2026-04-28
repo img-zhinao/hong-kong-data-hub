@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
 const heroSlides = [
   {
     id: 1,
-    tag: '重要政策',
-    title: '香港数据要素市场化配置改革全面启动',
-    description: '香港特区政府正式发布《数据要素市场化配置综合改革方案》，标志着香港数据交易市场进入全新发展阶段。',
-    date: '2024-12-28',
-    link: '/news/1',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=600&fit=crop',
+    tag: '重磅上线',
+    title: 'Token 流转市场正式上线 · 数据出海 × 大模型入境',
+    description: '香港大数据交易所 Token Hub 依托香港国际数据自由港优势，为中小企业打通双向 Token 流转通道：内地数据资产合规出海，OpenAI / Claude / Gemini 等国际领先大模型经港合规入境，统一 OpenAI 兼容 API、多币种结算。',
+    date: '2026-04-28',
+    link: '/token-hub',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=600&fit=crop',
   },
   {
     id: 3,
