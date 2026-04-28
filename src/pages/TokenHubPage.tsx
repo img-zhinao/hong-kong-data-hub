@@ -18,6 +18,7 @@ import { BidirectionalFlowSection } from '@/components/tokenhub/BidirectionalFlo
 import { SMEValueSection } from '@/components/tokenhub/SMEValueSection';
 import { ModelGatewaySection } from '@/components/tokenhub/ModelGatewaySection';
 import { HongKongAdvantageSection } from '@/components/tokenhub/HongKongAdvantageSection';
+import { ModelAccessForm } from '@/components/tokenhub/ModelAccessForm';
 import {
   useTokenDatasets, useTokenDatasetStats,
   INDUSTRIES, MODALITIES,
@@ -166,6 +167,20 @@ export default function TokenHubPage() {
       </section>
 
       <HongKongAdvantageSection />
+
+      {/* Model Access Application */}
+      <section id="apply" className="container py-12 lg:py-16">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
+            模型接入申请 <span className="text-gold text-lg">· 入境方向</span>
+          </h2>
+          <p className="text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
+            填写下方表单，香港 Token Hub 团队将在 1 个工作日内为您开通沙箱 API Key，
+            统一接入 OpenAI / Claude / Gemini 等国际领先大模型。
+          </p>
+        </div>
+        <ModelAccessForm />
+      </section>
 
       <BusinessModelSection />
     </Layout>
