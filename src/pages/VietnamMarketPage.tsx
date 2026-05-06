@@ -372,7 +372,7 @@ export default function VietnamMarketPage() {
                   </div>
                   <div>
                     <Label>{t3(lang, { zh: '偏好语言', en: 'Preferred language', vi: 'Ngôn ngữ ưu tiên' })}</Label>
-                    <Select value={form.preferred_language} onValueChange={(v) => setForm({ ...form, preferred_language: v })}>
+                    <Select value={form.preferred_language} onValueChange={(v) => setForm({ ...form, preferred_language: v as Lang })}>
                       <SelectTrigger><SelectValue /></SelectTrigger>
                       <SelectContent>
                         <SelectItem value="zh">中文</SelectItem>
