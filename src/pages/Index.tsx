@@ -2,7 +2,7 @@ import { Layout } from '@/components/layout/Layout';
 import { HeroSection } from '@/components/home/HeroSection';
 import { NewsSection } from '@/components/home/NewsSection';
 import { DataStatsSection } from '@/components/home/DataStatsSection';
-import { InsightsSection } from '@/components/home/InsightsSection';
+import { PositioningSection } from '@/components/home/PositioningSection';
 import { DataMerchantsSection } from '@/components/home/DataMerchantsSection';
 import { OpenClawPromoSection } from '@/components/home/OpenClawPromoSection';
 import { SEO } from '@/components/SEO';
@@ -20,7 +20,7 @@ const Index = () => {
         <HeroSection />
         <NewsSection />
         <DataStatsSection />
-        <InsightsSection />
+        <PositioningSection />
         <DataMerchantsSection />
         <OpenClawPromoSection />
       </main>
