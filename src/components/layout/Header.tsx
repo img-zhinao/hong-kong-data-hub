@@ -30,7 +30,15 @@ export function Header() {
   const navItems: Array<{ name: string; path: string; highlight?: boolean; children?: Array<{ name: string; path: string }> }> = [
     { name: t('nav.home'), path: '/' },
     { name: t('nav.products'), path: '/products' },
-    { name: t('nav.tokenHub'), path: '/token-hub', highlight: true },
+    {
+      name: t('nav.tokenHub'),
+      path: '/token-hub',
+      highlight: true,
+      children: [
+        { name: t('nav.tokenHub'), path: '/token-hub' },
+        { name: t('nav.vietnam', '🇻🇳 越南专区'), path: '/vietnam' },
+      ],
+    },
     { name: t('nav.dataAsset'), path: '/data-asset' },
     { name: t('nav.policy'), path: '/policy' },
     {
@@ -53,7 +61,6 @@ export function Header() {
       ],
     },
     { name: t('nav.openclaw'), path: '/openclaw', highlight: true },
-    { name: t('nav.vietnam', '🇻🇳 越南专区'), path: '/vietnam', highlight: true },
     { name: t('nav.about'), path: '/about' },
   ];
 
