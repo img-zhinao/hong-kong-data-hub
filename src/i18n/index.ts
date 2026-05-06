@@ -5,10 +5,12 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import zh from './locales/zh.json';
 import en from './locales/en.json';
 import ar from './locales/ar.json';
+import vi from './locales/vi.json';
 
 export const SUPPORTED_LANGUAGES = [
   { code: 'zh', label: '中文' },
   { code: 'en', label: 'English' },
+  { code: 'vi', label: 'Tiếng Việt' },
   { code: 'ar', label: 'العربية' },
 ] as const;
 
@@ -20,9 +22,10 @@ i18n
       zh: { translation: zh },
       en: { translation: en },
       ar: { translation: ar },
+      vi: { translation: vi },
     },
     fallbackLng: 'zh',
-    supportedLngs: ['zh', 'en', 'ar'],
+    supportedLngs: ['zh', 'en', 'ar', 'vi'],
     interpolation: { escapeValue: false },
     detection: {
       order: ['localStorage', 'navigator', 'htmlTag'],

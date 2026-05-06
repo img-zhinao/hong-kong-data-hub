@@ -1,0 +1,48 @@
+{
+  "brand": {
+    "name": "Sở Giao dịch Dữ liệu lớn Hồng Kông",
+    "nameEn": "Hong Kong Big Data Exchange",
+    "tagline": "HKBDE — hạ tầng thị trường yếu tố dữ liệu hàng đầu Hồng Kông, kết nối nội địa Trung Quốc với thế giới."
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "products": "Sản phẩm dữ liệu",
+    "tokenHub": "Token Hub",
+    "dataAsset": "Ghi nhận tài sản dữ liệu",
+    "policy": "Chính sách & Pháp lý",
+    "news": "Tin tức ngành",
+    "newsExchange": "Tin Sở giao dịch",
+    "newsIndustry": "Tin ngành",
+    "newsEnterprise": "Tin doanh nghiệp",
+    "insights": "Quan điểm chuyên gia",
+    "merchants": "Hệ sinh thái Data Merchant",
+    "opportunities": "Sảnh nhu cầu",
+    "events": "Sự kiện & Hội nghị",
+    "openclaw": "Giao dịch OpenClaw",
+    "vietnam": "Khu Việt Nam",
+    "about": "Về chúng tôi"
+  },
+  "common": {
+    "search": "Tìm kiếm",
+    "searchPlaceholder": "Tìm kiếm...",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "loginRegister": "Đăng nhập / Đăng ký",
+    "logout": "Đăng xuất",
+    "loading": "Đang tải...",
+    "language": "Ngôn ngữ",
+    "profile": "Hồ sơ",
+    "myAssets": "Tài sản dữ liệu của tôi",
+    "admin": "Quản trị",
+    "noNameSet": "Chưa đặt tên",
+    "loggedOut": "Đã đăng xuất",
+    "loggedOutDesc": "Bạn đã đăng xuất thành công"
+  },
+  "footer": {
+    "groupAbout": "Về chúng tôi",
+    "groupServices": "Dịch vụ",
+    "groupNews": "Trung tâm tin tức",
+    "groupPartners": "Đối tác",
+    "copyright": "© 2024 HKBDE. Bảo lưu mọi quyền."
+  }
+}

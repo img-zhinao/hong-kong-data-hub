@@ -53,6 +53,7 @@ export function Header() {
       ],
     },
     { name: t('nav.openclaw'), path: '/openclaw', highlight: true },
+    { name: t('nav.vietnam', '🇻🇳 越南专区'), path: '/vietnam', highlight: true },
     { name: t('nav.about'), path: '/about' },
   ];
 
