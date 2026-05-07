@@ -1,0 +1,64 @@
+{
+  "dataset": "中国制造业缺陷检测图像集",
+  "industry": "工业制造",
+  "modality": "image",
+  "license": "CC-BY-NC 4.0",
+  "schema": {
+    "image_id": "string",
+    "image_url": "string (高分辨率工业图像)",
+    "product_category": "enum [汽车零件, PCB, 铸件, 纺织品, 注塑件, 电池, 五金, 玻璃, 半导体, 木材, 食品包装, 印刷品]",
+    "resolution": "string (e.g. 4096x4096)",
+    "defect_labels": [
+      {
+        "type": "enum [划痕, 凹陷, 裂纹, 污渍, 缺料, 错位, 焊点缺陷, 异物]",
+        "severity": "enum [minor, major, critical]",
+        "bbox": [120, 340, 88, 76],
+        "polygon": [[120,340],[208,340],[208,416],[120,416]],
+        "pixel_mask_url": "string"
+      }
+    ],
+    "annotation": "pixel-level + bbox + class label",
+    "captured_at": "ISO 8601 timestamp",
+    "source_factory_region": "Greater Bay Area / Yangtze Delta"
+  },
+  "samples": [
+    {
+      "image_id": "IMG_AUTO_000123",
+      "image_url": "https://cdn.hkbde.fun/samples/industrial/auto_part_000123.jpg",
+      "product_category": "汽车零件",
+      "resolution": "4096x4096",
+      "defect_labels": [
+        {"type": "划痕", "severity": "major", "bbox": [1024, 768, 220, 18]}
+      ],
+      "captured_at": "2026-02-14T03:21:00Z"
+    },
+    {
+      "image_id": "IMG_PCB_004587",
+      "image_url": "https://cdn.hkbde.fun/samples/industrial/pcb_004587.jpg",
+      "product_category": "PCB",
+      "resolution": "6000x6000",
+      "defect_labels": [
+        {"type": "焊点缺陷", "severity": "critical", "bbox": [320, 1180, 42, 42]},
+        {"type": "异物", "severity": "minor", "bbox": [4200, 510, 35, 27]}
+      ],
+      "captured_at": "2026-03-02T11:08:00Z"
+    },
+    {
+      "image_id": "IMG_TEX_011902",
+      "image_url": "https://cdn.hkbde.fun/samples/industrial/textile_011902.jpg",
+      "product_category": "纺织品",
+      "resolution": "3072x3072",
+      "defect_labels": [
+        {"type": "污渍", "severity": "minor", "bbox": [800, 200, 150, 130]}
+      ],
+      "captured_at": "2026-03-18T07:42:00Z"
+    }
+  ],
+  "stats": {
+    "total_images": 1240000,
+    "total_annotations": 3870000,
+    "categories": 12,
+    "defect_types": 8,
+    "avg_defects_per_image": 3.12
+  }
+}

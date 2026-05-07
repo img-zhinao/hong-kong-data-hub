@@ -1,0 +1,38 @@
+{
+  "dataset": "香港跨境交通多模态数据集",
+  "industry": "交通运输",
+  "modality": "video",
+  "license": "CC-BY-NC 4.0",
+  "schema": {
+    "clip_id": "string",
+    "location": "enum [深圳湾口岸, 港珠澳大桥, 落马洲, 文锦渡, 香园围]",
+    "video_url": "string (mp4, 1080p, 30fps)",
+    "duration_sec": "number",
+    "weather": "enum [sunny, rainy, foggy, cloudy]",
+    "lidar_pcd_url": "string",
+    "objects": [
+      {"type": "vehicle/pedestrian/truck", "track_id": "int", "bbox": [x,y,w,h]}
+    ],
+    "traffic_flow_per_min": "int",
+    "captured_at": "ISO 8601"
+  },
+  "samples": [
+    {
+      "clip_id": "CLIP_HKZMB_004412",
+      "location": "港珠澳大桥",
+      "duration_sec": 60,
+      "weather": "cloudy",
+      "traffic_flow_per_min": 142,
+      "captured_at": "2026-04-01T08:30:00+08:00"
+    },
+    {
+      "clip_id": "CLIP_SZB_009821",
+      "location": "深圳湾口岸",
+      "duration_sec": 60,
+      "weather": "sunny",
+      "traffic_flow_per_min": 286,
+      "captured_at": "2026-04-02T17:15:00+08:00"
+    }
+  ],
+  "stats": {"total_clips": 58000, "total_hours": 967, "lidar_frames": 12400000}
+}

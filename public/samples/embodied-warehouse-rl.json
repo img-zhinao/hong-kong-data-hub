@@ -1,0 +1,51 @@
+{
+  "dataset": "仓储具身智能交互数据集",
+  "industry": "工业制造",
+  "modality": "embodied",
+  "license": "CC-BY 4.0",
+  "schema": {
+    "episode_id": "string",
+    "robot_type": "enum [双臂协作机器人, AGV, 四足, 人形]",
+    "task": "enum [拣选, 码垛, 搬运, 分拣, 装箱]",
+    "observation": {
+      "rgb": "image tensor [H,W,3]",
+      "depth": "image tensor [H,W]",
+      "joint_state": "float[7]",
+      "gripper": "float[1]"
+    },
+    "action": {
+      "delta_xyz": "float[3]",
+      "delta_rpy": "float[3]",
+      "gripper_cmd": "float[1]"
+    },
+    "reward": "float",
+    "success": "boolean",
+    "language_instruction": "string"
+  },
+  "samples": [
+    {
+      "episode_id": "EP_2026_00128",
+      "robot_type": "双臂协作机器人",
+      "task": "拣选",
+      "language_instruction": "把蓝色塑料盒放到第二层货架靠左位置",
+      "steps": 312,
+      "success": true,
+      "reward": 1.0
+    },
+    {
+      "episode_id": "EP_2026_00129",
+      "robot_type": "AGV",
+      "task": "搬运",
+      "language_instruction": "将托盘从A区运至B12装载位",
+      "steps": 547,
+      "success": true,
+      "reward": 0.92
+    }
+  ],
+  "stats": {
+    "total_episodes": 86000,
+    "total_hours": 4200,
+    "scenes": 45,
+    "objects": 1280
+  }
+}

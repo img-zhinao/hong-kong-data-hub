@@ -1,0 +1,34 @@
+{
+  "dataset": "中文临床电子病历语料",
+  "industry": "医疗健康",
+  "modality": "text",
+  "license": "Restricted - Research Use Only",
+  "privacy": "已脱敏 (符合GB/T 35273 个人信息安全规范 + HIPAA Safe Harbor)",
+  "schema": {
+    "record_id": "string (hashed)",
+    "department": "string",
+    "chief_complaint": "string",
+    "history_present_illness": "string",
+    "physical_exam": "string",
+    "diagnosis": [{"code": "ICD-10", "name": "string"}],
+    "medications": [{"name": "string", "dose": "string", "freq": "string"}],
+    "lab_results": [{"item": "string", "value": "number", "unit": "string", "ref": "string"}],
+    "ner_entities": [{"text": "string", "type": "DISEASE/SYMPTOM/DRUG/BODY/EXAM"}]
+  },
+  "samples": [
+    {
+      "record_id": "EMR_HASH_8f2a1b...",
+      "department": "心内科",
+      "chief_complaint": "反复胸闷气短3月余,加重1周",
+      "diagnosis": [{"code": "I25.103", "name": "稳定性心绞痛"}],
+      "medications": [
+        {"name": "阿司匹林肠溶片", "dose": "100mg", "freq": "qd"},
+        {"name": "阿托伐他汀钙", "dose": "20mg", "freq": "qn"}
+      ],
+      "lab_results": [
+        {"item": "LDL-C", "value": 3.42, "unit": "mmol/L", "ref": "<2.6"}
+      ]
+    }
+  ],
+  "stats": {"total_records": 4800000, "departments": 32, "avg_tokens_per_record": 612}
+}

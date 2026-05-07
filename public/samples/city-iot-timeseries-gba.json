@@ -1,0 +1,26 @@
+{
+  "dataset": "大湾区城市 IoT 时序集",
+  "industry": "城市治理",
+  "modality": "text",
+  "license": "CC-BY 4.0",
+  "schema": {
+    "sensor_id": "string",
+    "city": "enum [香港, 深圳, 广州, 珠海, 东莞, 佛山, 中山, 惠州, 江门, 肇庆, 澳门]",
+    "sensor_type": "enum [air_quality, noise, traffic, water_level, energy, parking]",
+    "lat": "float", "lng": "float",
+    "timestamp": "ISO 8601",
+    "metrics": "object (依传感器类型而定)"
+  },
+  "samples": [
+    {"sensor_id": "HK-AQ-0451", "city": "香港", "sensor_type": "air_quality",
+     "lat": 22.3193, "lng": 114.1694, "timestamp": "2026-05-01T09:00:00+08:00",
+     "metrics": {"pm25": 18, "pm10": 32, "o3": 56, "no2": 24, "aqi": 62}},
+    {"sensor_id": "SZ-TR-2210", "city": "深圳", "sensor_type": "traffic",
+     "lat": 22.5431, "lng": 114.0579, "timestamp": "2026-05-01T09:00:00+08:00",
+     "metrics": {"vehicles_per_min": 84, "avg_speed_kmh": 32.5, "congestion": 0.42}},
+    {"sensor_id": "GZ-EN-0099", "city": "广州", "sensor_type": "energy",
+     "lat": 23.1291, "lng": 113.2644, "timestamp": "2026-05-01T09:00:00+08:00",
+     "metrics": {"load_mw": 1283.4, "freq_hz": 50.01}}
+  ],
+  "stats": {"total_sensors": 128000, "cities": 11, "data_points": 9800000000, "freq": "1Hz~1min"}
+}
