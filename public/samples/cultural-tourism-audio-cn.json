@@ -1,0 +1,46 @@
+{
+  "dataset": "文化旅游多语种音频导览集",
+  "industry": "文化旅游",
+  "modality": "audio",
+  "license": "CC-BY 4.0",
+  "schema": {
+    "audio_id": "string",
+    "site": "string (景点名)",
+    "language": "enum [zh-CN, zh-HK, en, ja, ko, vi, fr, de, ar]",
+    "audio_url": "string (wav, 16kHz)",
+    "duration_sec": "number",
+    "transcript": "string",
+    "speaker_gender": "enum [M, F]",
+    "topic_tags": ["历史", "建筑", "美食", "民俗"]
+  },
+  "samples": [
+    {
+      "audio_id": "AUD_HK_VICTORIA_001",
+      "site": "维多利亚港",
+      "language": "zh-HK",
+      "duration_sec": 92,
+      "transcript": "维多利亚港位于香港岛与九龙半岛之间,是世界三大天然良港之一...",
+      "speaker_gender": "F",
+      "topic_tags": ["历史", "地理"]
+    },
+    {
+      "audio_id": "AUD_HK_VICTORIA_002",
+      "site": "Victoria Harbour",
+      "language": "en",
+      "duration_sec": 88,
+      "transcript": "Victoria Harbour, lying between Hong Kong Island and the Kowloon Peninsula...",
+      "speaker_gender": "M",
+      "topic_tags": ["history", "geography"]
+    },
+    {
+      "audio_id": "AUD_VN_HALONG_014",
+      "site": "Vịnh Hạ Long",
+      "language": "vi",
+      "duration_sec": 105,
+      "transcript": "Vịnh Hạ Long là một di sản thiên nhiên thế giới được UNESCO công nhận...",
+      "speaker_gender": "F",
+      "topic_tags": ["di sản", "thiên nhiên"]
+    }
+  ],
+  "stats": {"total_clips": 42000, "total_hours": 1180, "languages": 9, "sites": 860}
+}

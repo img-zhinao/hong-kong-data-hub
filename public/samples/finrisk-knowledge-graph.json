@@ -1,0 +1,24 @@
+{
+  "dataset": "金融风控知识图谱",
+  "industry": "金融服务",
+  "modality": "kg",
+  "license": "Commercial - Subscription Required",
+  "schema": {
+    "node_types": ["Company", "Person", "Account", "Transaction", "Industry", "Risk_Event", "Sanction_List"],
+    "edge_types": ["controls", "owns", "transacts_with", "guarantees", "related_party", "sanctioned_by", "blacklisted_at"],
+    "node": {"id": "string", "type": "string", "props": "object"},
+    "edge": {"src": "string", "dst": "string", "type": "string", "weight": "float", "ts": "ISO 8601"}
+  },
+  "samples": {
+    "nodes": [
+      {"id": "C_0001", "type": "Company", "props": {"name": "环宇贸易(深圳)有限公司", "industry": "进出口", "risk_score": 0.78}},
+      {"id": "P_0451", "type": "Person", "props": {"name_hash": "h_8a2c...", "role": "实控人"}},
+      {"id": "RE_2025_004", "type": "Risk_Event", "props": {"event": "司法冻结", "date": "2025-11-12", "amount_cny": 12800000}}
+    ],
+    "edges": [
+      {"src": "P_0451", "dst": "C_0001", "type": "controls", "weight": 0.65, "ts": "2024-03-01T00:00:00Z"},
+      {"src": "C_0001", "dst": "RE_2025_004", "type": "blacklisted_at", "weight": 1.0, "ts": "2025-11-12T00:00:00Z"}
+    ]
+  },
+  "stats": {"nodes": 38000000, "edges": 142000000, "risk_signals": 880000, "update_freq": "daily"}
+}
