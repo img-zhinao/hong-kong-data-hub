@@ -17,6 +17,7 @@ import { BusinessModelSection } from '@/components/tokenhub/BusinessModelSection
 import { BidirectionalFlowSection } from '@/components/tokenhub/BidirectionalFlowSection';
 import { SMEValueSection } from '@/components/tokenhub/SMEValueSection';
 import { ModelGatewaySection } from '@/components/tokenhub/ModelGatewaySection';
+import { UnifiedAccessLayerSection } from '@/components/tokenhub/UnifiedAccessLayerSection';
 import { HongKongAdvantageSection } from '@/components/tokenhub/HongKongAdvantageSection';
 import { ModelAccessForm } from '@/components/tokenhub/ModelAccessForm';
 import {
@@ -73,6 +74,8 @@ export default function TokenHubPage() {
       </section>
 
       <SMEValueSection />
+
+      <UnifiedAccessLayerSection />
 
       <ModelGatewaySection />
 
