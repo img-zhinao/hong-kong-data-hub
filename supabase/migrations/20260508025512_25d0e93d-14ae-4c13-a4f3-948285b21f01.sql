@@ -1,0 +1,2 @@
+ALTER FUNCTION public.append_business_domain_by_id(uuid, text) SET search_path = public;
+ALTER FUNCTION public.append_business_domain_by_id(uuid, text, timestamp with time zone) SET search_path = public;

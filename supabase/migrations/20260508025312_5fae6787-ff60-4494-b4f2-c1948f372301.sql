@@ -1,0 +1,1 @@
+CREATE POLICY "Admin only delete" ON public.articles FOR DELETE TO authenticated USING (public.is_admin());
