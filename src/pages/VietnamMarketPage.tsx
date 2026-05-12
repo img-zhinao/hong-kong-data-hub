@@ -217,42 +217,42 @@ export default function VietnamMarketPage() {
       <SEO title={seo.title} description={seo.desc} canonicalUrl="https://hkbde.fun/vietnam" />
 
       {/* Hero */}
-      <section className="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-background to-muted/20">
+      <section className="relative overflow-hidden py-12 md:py-16 lg:py-24 bg-gradient-to-b from-background to-muted/20">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 sm:w-96 sm:h-96 bg-gold/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 sm:w-80 sm:h-80 bg-primary/5 rounded-full blur-3xl" />
         </div>
-        <div className="container relative z-10 max-w-4xl text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold/30 bg-gold/5 text-gold text-sm font-medium">
+        <div className="container relative z-10 max-w-4xl text-center space-y-5 sm:space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-gold/30 bg-gold/5 text-gold text-xs sm:text-sm font-medium">
             {t3(lang, COPY.hero.badge)}
           </div>
-          <h1 className="text-3xl lg:text-5xl font-bold text-foreground leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-foreground leading-tight">
             {t3(lang, COPY.hero.title)}
           </h1>
-          <p className="text-base lg:text-lg text-muted-foreground leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed">
             {t3(lang, COPY.hero.desc)}
           </p>
-          <div className="flex flex-wrap gap-3 justify-center pt-2">
-            <Badge variant="outline" className="border-gold/40 text-gold">Hong Kong Compliance</Badge>
-            <Badge variant="outline" className="border-primary/40 text-primary">PDPL · Data Law · DTI · AI Law</Badge>
-            <Badge variant="outline">3 Languages 中 / EN / VI</Badge>
+          <div className="flex flex-wrap gap-2 sm:gap-3 justify-center pt-2">
+            <Badge variant="outline" className="border-gold/40 text-gold text-xs">Hong Kong Compliance</Badge>
+            <Badge variant="outline" className="border-primary/40 text-primary text-xs">PDPL · Data Law · DTI · AI Law</Badge>
+            <Badge variant="outline" className="text-xs">3 Languages 中 / EN / VI</Badge>
           </div>
         </div>
       </section>
 
       {/* Tabs */}
-      <section className="py-12 bg-background">
+      <section className="py-10 md:py-12 bg-background">
         <div className="container">
           <Tabs defaultValue="laws" className="w-full">
-            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-10">
-              <TabsTrigger value="laws">{t3(lang, COPY.tabs.laws)}</TabsTrigger>
-              <TabsTrigger value="products">{t3(lang, COPY.tabs.products)}</TabsTrigger>
-              <TabsTrigger value="consult">{t3(lang, COPY.tabs.consult)}</TabsTrigger>
+            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8 md:mb-10 h-auto">
+              <TabsTrigger value="laws" className="text-xs sm:text-sm py-2 whitespace-normal leading-tight">{t3(lang, COPY.tabs.laws)}</TabsTrigger>
+              <TabsTrigger value="products" className="text-xs sm:text-sm py-2 whitespace-normal leading-tight">{t3(lang, COPY.tabs.products)}</TabsTrigger>
+              <TabsTrigger value="consult" className="text-xs sm:text-sm py-2 whitespace-normal leading-tight">{t3(lang, COPY.tabs.consult)}</TabsTrigger>
             </TabsList>
 
             {/* LAWS */}
             <TabsContent value="laws">
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                 {LAWS.map((law) => {
                   const Icon = law.icon;
                   return (
@@ -291,7 +291,7 @@ export default function VietnamMarketPage() {
 
             {/* PRODUCTS */}
             <TabsContent value="products">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {PRODUCTS.map((p, i) => {
                   const Icon = p.icon;
                   return (
@@ -329,11 +329,11 @@ export default function VietnamMarketPage() {
 
             {/* CONSULTATION */}
             <TabsContent value="consult">
-              <Card className="p-6 lg:p-10 max-w-3xl mx-auto border-gold/20">
-                <h3 className="text-2xl font-bold text-foreground mb-2">
+              <Card className="p-5 sm:p-6 lg:p-10 max-w-3xl mx-auto border-gold/20">
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
                   {t3(lang, { zh: '预约越南合规专家咨询', en: 'Book Vietnam Compliance Consultation', vi: 'Đặt lịch tư vấn tuân thủ Việt Nam' })}
                 </h3>
-                <p className="text-sm text-muted-foreground mb-6">
+                <p className="text-xs sm:text-sm text-muted-foreground mb-6">
                   {t3(lang, {
                     zh: '我们将为您匹配持越南法律执照的合作律所，提供 PDPL / Data Law / DTI / AI Law 专项咨询。',
                     en: 'We will match you with our partner law firms licensed in Vietnam for PDPL / Data Law / DTI / AI Law advisory.',
