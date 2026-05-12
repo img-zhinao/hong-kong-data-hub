@@ -80,13 +80,13 @@ export default function TokenHubPage() {
       <ModelGatewaySection />
 
       {/* Datasets */}
-      <section id="datasets" className="container py-12 lg:py-16">
-        <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
+      <section id="datasets" className="container py-10 md:py-12 lg:py-16">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-6 gap-3">
           <div>
-            <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
-              Token 资产市场 <span className="text-gold text-lg">· 出海方向</span>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
+              Token 资产市场 <span className="text-gold text-base sm:text-lg">· 出海方向</span>
             </h2>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1">
               以下数据集已完成 Token 化，可经香港合规通道面向全球买家流转 · 共 {data?.totalCount || 0} 个，按行业 / 模态筛选
             </p>
           </div>
@@ -96,8 +96,8 @@ export default function TokenHubPage() {
         </div>
 
         {/* Filters */}
-        <div className="grid md:grid-cols-4 gap-3 mb-8">
-          <div className="md:col-span-2 relative">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div className="col-span-2 relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder="搜索数据集名称..."
@@ -172,12 +172,12 @@ export default function TokenHubPage() {
       <HongKongAdvantageSection />
 
       {/* Model Access Application */}
-      <section id="apply" className="container py-12 lg:py-16">
+      <section id="apply" className="container py-10 md:py-12 lg:py-16">
         <div className="text-center mb-8">
-          <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
-            模型接入申请 <span className="text-gold text-lg">· 入境方向</span>
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-bold text-foreground">
+            模型接入申请 <span className="text-gold text-base sm:text-lg">· 入境方向</span>
           </h2>
-          <p className="text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-2 max-w-2xl mx-auto">
             填写下方表单，香港 Token Hub 团队将在 1 个工作日内为您开通沙箱 API Key，
             统一接入 OpenAI / Claude / Gemini 等国际领先大模型。
           </p>

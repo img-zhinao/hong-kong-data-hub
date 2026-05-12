@@ -28,18 +28,18 @@ const res = await fetch(
 
 export function ModelGatewaySection() {
   return (
-    <section id="model-gateway" className="py-16 lg:py-20 bg-background">
+    <section id="model-gateway" className="py-12 md:py-16 lg:py-20 bg-background">
       <div className="container">
-        <div className="text-center mb-12 max-w-3xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+        <div className="text-center mb-10 md:mb-12 max-w-3xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3 sm:mb-4">
             国际大模型聚合网关
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             一个 API Key、一个 OpenAI 兼容接口，随时切换全球领先大模型。所有调用经由香港合规网关，统一 Token 计费与结算。
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
           {models.map((m) => (
             <Card key={m.name} className="p-4 text-center hover:border-gold/30 transition-colors">
               <div className="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center mx-auto mb-2">

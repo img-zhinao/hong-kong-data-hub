@@ -26,16 +26,16 @@ const items = [
 
 export function SMEValueSection() {
   return (
-    <section className="py-16 lg:py-20 bg-muted/20">
+    <section className="py-12 md:py-16 lg:py-20 bg-muted/20">
       <div className="container">
-        <div className="text-center mb-12 max-w-3xl mx-auto">
+        <div className="text-center mb-10 md:mb-12 max-w-3xl mx-auto">
           <div className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-medium mb-3 tracking-wider">
             FOR SME · 面向中小企业
           </div>
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3 sm:mb-4">
             为什么中小企业选择 Token Hub
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             一站式解决中小企业接入国际 AI 与数据资产出海的四大核心痛点。
           </p>
         </div>

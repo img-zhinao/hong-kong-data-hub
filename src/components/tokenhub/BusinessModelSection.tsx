@@ -10,24 +10,24 @@ const stages = [
 
 export function BusinessModelSection() {
   return (
-    <section id="business-model" className="py-16 lg:py-20 bg-muted/20">
+    <section id="business-model" className="py-12 md:py-16 lg:py-20 bg-muted/20">
       <div className="container">
-        <div className="text-center mb-12 max-w-3xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+        <div className="text-center mb-10 md:mb-12 max-w-3xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3 sm:mb-4">
             商业模式梯次跃升
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             响应国家数据局指引，Token Hub 支持从传统数据包销售向 API、模型化、全栈服务的渐进升级，
             构建以<span className="text-gold font-semibold">词元为基础、可量化、可定价</span>的数据集价值体系。
           </p>
-          <p className="text-sm text-muted-foreground mt-3">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-3">
             在「香港 Token 流转平台」定位下，<span className="text-gold">基础数据包销售</span>与
             <span className="text-gold"> API 调用</span>分别对应 Token 出海与全球大模型入境两条主线，
             后续可延伸至模型化解决方案与全栈服务。
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {stages.map((s, i) => (
             <Card key={i} className="p-6 text-center relative overflow-hidden">
               <div className="absolute top-2 right-3 text-5xl font-bold text-muted/30 select-none">
