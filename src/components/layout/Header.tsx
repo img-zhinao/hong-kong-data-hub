@@ -85,13 +85,13 @@ export function Header() {
 
       {/* Main Header */}
       <div className="bg-card border-b shadow-sm">
-        <div className="container flex items-center justify-between h-20">
+        <div className="container flex items-center justify-between h-16 lg:h-20 gap-2">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 group min-w-0">
             <img
               src={logo}
               alt="HKBDE Logo"
-              className="h-14 w-auto transition-transform duration-300 group-hover:scale-105"
+              className="h-10 sm:h-12 lg:h-14 w-auto flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
             />
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-foreground leading-tight">

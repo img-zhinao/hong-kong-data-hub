@@ -43,13 +43,13 @@ function TickerItemDisplay({ item }: { item: TickerItem }) {
   const changeColor = isPositive ? 'text-emerald-400' : 'text-red-400';
 
   return (
-    <div className="flex items-center gap-2 px-6 whitespace-nowrap">
-      <span className="text-slate-400 text-sm">{item.label}</span>
-      <span className={`font-mono ${item.isCore ? 'font-bold text-white' : 'text-slate-100'}`}>
+    <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 whitespace-nowrap">
+      <span className="text-slate-400 text-[11px] sm:text-sm">{item.label}</span>
+      <span className={`font-mono text-xs sm:text-base ${item.isCore ? 'font-bold text-white' : 'text-slate-100'}`}>
         {item.value}
       </span>
       {hasChange && (
-        <span className={`flex items-center gap-1 text-sm ${changeColor}`}>
+        <span className={`flex items-center gap-0.5 sm:gap-1 text-[11px] sm:text-sm ${changeColor}`}>
           {isPositive ? (
             <TrendingUp className="w-3.5 h-3.5" />
           ) : (
@@ -105,7 +105,7 @@ export function MarketTicker() {
   const duplicatedItems = [...tickerItems, ...tickerItems, ...tickerItems];
 
   return (
-    <div className="bg-slate-900 h-10 overflow-hidden relative group">
+    <div className="bg-slate-900 h-8 sm:h-10 overflow-hidden relative group">
       <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none" />
       
