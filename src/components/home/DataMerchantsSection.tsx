@@ -76,16 +76,16 @@ export function DataMerchantsSection() {
         </div>
 
         {/* CTA */}
-        <div className="mt-8 text-center">
-          <div className="inline-flex items-center gap-4 bg-gradient-gold rounded-xl px-8 py-4">
-            <div className="text-left">
+        <div className="mt-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 bg-gradient-gold rounded-xl px-5 sm:px-8 py-5 sm:py-4 text-center sm:text-left">
+            <div className="flex-1">
               <h3 className="font-bold text-primary-foreground">成为数商伙伴</h3>
-              <p className="text-sm text-primary-foreground/80">
+              <p className="text-xs sm:text-sm text-primary-foreground/80 mt-1">
                 加入香港大数据交易所生态，开启数据价值变现之旅
               </p>
             </div>
-            <Link to="/data-merchants/apply">
-              <Button variant="secondary" size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
+            <Link to="/data-merchants/apply" className="w-full sm:w-auto">
+              <Button variant="secondary" size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 w-full sm:w-auto">
                 立即入驻
               </Button>
             </Link>

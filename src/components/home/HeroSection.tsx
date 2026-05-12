@@ -52,7 +52,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative h-[400px] md:h-[500px] overflow-hidden bg-navy">
+    <section className="relative h-[360px] sm:h-[420px] md:h-[500px] overflow-hidden bg-navy">
       {/* Slides */}
       {heroSlides.map((slide, index) => (
         <div
@@ -66,28 +66,28 @@ export function HeroSection() {
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${slide.image})` }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/80 to-navy/40" />
+            <div className="absolute inset-0 bg-gradient-to-r from-navy/95 via-navy/85 to-navy/50" />
           </div>
 
           {/* Content */}
           <div className="container relative h-full flex items-center">
             <div className="max-w-2xl animate-slide-up">
-              <span className="inline-block px-3 py-1 bg-primary text-primary-foreground text-sm font-medium rounded mb-4">
+              <span className="inline-block px-2.5 py-1 bg-primary text-primary-foreground text-xs sm:text-sm font-medium rounded mb-3 sm:mb-4">
                 {slide.tag}
               </span>
-              <h2 className="text-2xl md:text-4xl font-bold text-primary-foreground mb-4 leading-tight">
+              <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-primary-foreground mb-3 sm:mb-4 leading-tight">
                 {slide.title}
               </h2>
-              <p className="text-primary-foreground/80 text-base md:text-lg mb-6 line-clamp-2">
+              <p className="text-primary-foreground/80 text-sm sm:text-base md:text-lg mb-5 sm:mb-6 line-clamp-3">
                 {slide.description}
               </p>
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                 <Link to={slide.link}>
-                  <Button variant="hero" size="lg">
+                  <Button variant="hero" size="lg" className="w-full sm:w-auto">
                     阅读详情
                   </Button>
                 </Link>
-                <span className="text-primary-foreground/60 text-sm">
+                <span className="text-primary-foreground/60 text-xs sm:text-sm">
                   {slide.date}
                 </span>
               </div>
@@ -96,16 +96,16 @@ export function HeroSection() {
         </div>
       ))}
 
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows - hidden on mobile */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground transition-colors"
+        className="hidden sm:block absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground transition-colors"
       >
         <ChevronLeft className="w-6 h-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground transition-colors"
+        className="hidden sm:block absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground transition-colors"
       >
         <ChevronRight className="w-6 h-6" />
       </button>

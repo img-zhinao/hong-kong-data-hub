@@ -39,7 +39,7 @@ export function NewsSection() {
               {loadingNews ? (
                 Array.from({ length: 3 }).map((_, i) => (
                   <div key={i} className="news-card flex gap-4 p-4">
-                    <Skeleton className="hidden sm:block w-40 h-28 rounded-lg" />
+                    <Skeleton className="hidden sm:block w-32 sm:w-40 h-24 sm:h-28 rounded-lg" />
                     <div className="flex-1 space-y-3">
                       <Skeleton className="h-5 w-20" />
                       <Skeleton className="h-6 w-full" />
@@ -57,7 +57,7 @@ export function NewsSection() {
                     style={{ opacity: 0, animationFillMode: 'forwards' }}
                   >
                     {news.cover_image_url && (
-                      <div className="hidden sm:block w-40 h-28 flex-shrink-0 overflow-hidden rounded-lg">
+                      <div className="hidden sm:block w-32 sm:w-40 h-24 sm:h-28 flex-shrink-0 overflow-hidden rounded-lg">
                         <img
                           src={news.cover_image_url}
                           alt={news.title}
