@@ -3,18 +3,18 @@ import { Card } from '@/components/ui/card';
 
 export function BidirectionalFlowSection() {
   return (
-    <section className="py-16 lg:py-20 bg-background">
+    <section className="py-12 md:py-16 lg:py-20 bg-background">
       <div className="container">
-        <div className="text-center mb-12 max-w-3xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+        <div className="text-center mb-10 md:mb-12 max-w-3xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3 sm:mb-4">
             Token 双向流转 · 一个香港枢纽
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             香港作为中立、合规、可结算的国际数据港，让 Token 资产与算力服务在两个方向上自由、安全地流动。
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-6 items-stretch">
+        <div className="grid lg:grid-cols-[1fr_auto_1fr] gap-5 md:gap-6 items-stretch">
           {/* 出海 */}
           <Card className="p-6 lg:p-8 border-gold/20 bg-gradient-to-br from-gold/5 to-transparent">
             <div className="flex items-center gap-3 mb-4">

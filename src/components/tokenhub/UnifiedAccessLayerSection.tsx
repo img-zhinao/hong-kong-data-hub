@@ -44,7 +44,7 @@ const compareRows = [
 
 export function UnifiedAccessLayerSection() {
   return (
-    <section id="unified-access" className="py-16 lg:py-24 bg-background relative overflow-hidden">
+    <section id="unified-access" className="py-12 md:py-16 lg:py-24 bg-background relative overflow-hidden">
       {/* subtle grid backdrop */}
       <div
         aria-hidden
@@ -59,23 +59,23 @@ export function UnifiedAccessLayerSection() {
 
       <div className="container relative">
         {/* Header */}
-        <div className="max-w-3xl mb-14">
-          <div className="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-gold/90 border border-gold/25 rounded-full px-3 py-1 mb-5">
+        <div className="max-w-3xl mb-10 md:mb-14">
+          <div className="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-gold/90 border border-gold/25 rounded-full px-3 py-1 mb-4 sm:mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
             ACCESS LAYER · v2
           </div>
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight mb-3 sm:mb-4">
             面向 AI Agent 与全球开发者的<br className="hidden lg:block" />
             <span className="text-gold">统一接入层</span>
           </h2>
-          <p className="text-muted-foreground leading-relaxed">
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
             新一代 Token Hub 不再只是 Token 列表或入口聚合，而是把模型、数据、支付、身份与合规收敛到一个可编程的接入层。
             一次接入，便可在多模型之间自由调度，让中小企业与 Agent 开发者以更低的摩擦获得稳定、合规、可结算的全球 AI 能力。
           </p>
         </div>
 
         {/* Capability cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 md:mb-16">
           {capabilities.map((c) => (
             <Card
               key={c.title}
@@ -113,14 +113,14 @@ export function UnifiedAccessLayerSection() {
         </div>
 
         {/* Compare module */}
-        <div className="grid lg:grid-cols-2 gap-px bg-border/60 rounded-xl overflow-hidden border border-border/60 mb-12">
+        <div className="grid md:grid-cols-2 gap-px bg-border/60 rounded-xl overflow-hidden border border-border/60 mb-10 md:mb-12">
           {/* Legacy */}
-          <div className="bg-card/40 p-6 lg:p-8">
+          <div className="bg-card/40 p-5 sm:p-6 lg:p-8">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs font-mono text-muted-foreground tracking-wider">LEGACY</span>
               <span className="h-px flex-1 bg-border" />
             </div>
-            <h3 className="text-lg font-semibold text-muted-foreground mb-6">
+            <h3 className="text-base sm:text-lg font-semibold text-muted-foreground mb-5 sm:mb-6">
               传统接入方式
             </h3>
             <ul className="space-y-3">
@@ -134,12 +134,12 @@ export function UnifiedAccessLayerSection() {
           </div>
 
           {/* Token Hub */}
-          <div className="bg-gradient-to-br from-gold/[0.04] to-transparent p-6 lg:p-8 relative">
+          <div className="bg-gradient-to-br from-gold/[0.04] to-transparent p-5 sm:p-6 lg:p-8 relative">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-xs font-mono text-gold tracking-wider">TOKEN HUB</span>
               <span className="h-px flex-1 bg-gold/20" />
             </div>
-            <h3 className="text-lg font-semibold text-foreground mb-6">
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-5 sm:mb-6">
               Token Hub 接入方式
             </h3>
             <ul className="space-y-3">
@@ -154,7 +154,7 @@ export function UnifiedAccessLayerSection() {
         </div>
 
         {/* CTA */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 py-5 rounded-lg border border-border/60 bg-card/40">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 px-5 sm:px-6 py-5 rounded-lg border border-border/60 bg-card/40">
           <div>
             <div className="text-sm font-semibold text-foreground mb-0.5">
               申请沙箱 API Key,体验统一接入层
@@ -163,11 +163,11 @@ export function UnifiedAccessLayerSection() {
               首批面向中小企业与 Agent 开发者灰度开放 · 1 个工作日内开通
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" asChild>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button variant="outline" size="sm" asChild className="w-full sm:w-auto">
               <a href="#model-gateway">查看接口文档</a>
             </Button>
-            <Button variant="gold" size="sm" asChild>
+            <Button variant="gold" size="sm" asChild className="w-full sm:w-auto">
               <a href="#apply" className="gap-1.5">
                 立即申请 <ArrowRight className="w-3.5 h-3.5" />
               </a>

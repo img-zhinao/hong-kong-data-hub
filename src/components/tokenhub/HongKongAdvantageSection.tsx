@@ -26,13 +26,13 @@ const advantages = [
 
 export function HongKongAdvantageSection() {
   return (
-    <section className="py-16 lg:py-20 bg-muted/20">
+    <section className="py-12 md:py-16 lg:py-20 bg-muted/20">
       <div className="container">
-        <div className="text-center mb-12 max-w-3xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+        <div className="text-center mb-10 md:mb-12 max-w-3xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3 sm:mb-4">
             为什么是<span className="text-gold">香港</span>
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             香港的独特制度优势，使其成为 Token 跨境流转、AI 服务双向接入的最佳枢纽。
           </p>
         </div>
