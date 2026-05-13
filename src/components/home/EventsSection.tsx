@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useEvents } from '@/hooks/useEvents';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 export function EventsSection() {
   const { data: events, isLoading } = useEvents({ limit: 3 });
