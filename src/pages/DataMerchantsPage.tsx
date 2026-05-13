@@ -119,7 +119,11 @@ export default function DataMerchantsPage() {
                         <header className="flex items-start gap-4 mb-4">
                           <figure className="relative">
                             <img
-                              src={merchant.logo_url || 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=200&h=200&fit=crop'}
+                              {...getResponsiveImage(
+                                merchant.logo_url || 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=200&h=200&fit=crop',
+                                '64px',
+                                [64, 128, 192]
+                              )}
                               alt=""
                               loading="lazy"
                               decoding="async"
