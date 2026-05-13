@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useDataMerchants } from '@/hooks/useDataMerchants';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SEO } from '@/components/SEO';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 const categories = ['全部', '金融数据', '医疗健康', '物流运输', '智能制造', '能源环保', '文化旅游'];
 
