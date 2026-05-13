@@ -50,6 +50,10 @@ export function InsightsSection() {
                   <img
                     src={insight.author_avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'}
                     alt={insight.author_name}
+                    loading="lazy"
+                    decoding="async"
+                    width={48}
+                    height={48}
                     className="w-12 h-12 rounded-full object-cover"
                   />
                   <div>

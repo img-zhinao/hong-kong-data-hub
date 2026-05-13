@@ -278,8 +278,11 @@ function NewsCard({ news, index }: NewsCardProps) {
               <img
                 src={news.cover_image_url}
                 alt=""
-                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 loading="lazy"
+                decoding="async"
+                width={600}
+                height={400}
+                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
               />
             </figure>
           )}

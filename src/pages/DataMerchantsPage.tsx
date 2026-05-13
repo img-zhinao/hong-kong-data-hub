@@ -120,8 +120,11 @@ export default function DataMerchantsPage() {
                             <img
                               src={merchant.logo_url || 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=200&h=200&fit=crop'}
                               alt=""
-                              className="w-16 h-16 rounded-xl object-cover"
                               loading="lazy"
+                              decoding="async"
+                              width={64}
+                              height={64}
+                              className="w-16 h-16 rounded-xl object-cover"
                             />
                             {merchant.verification_status && (
                               <Shield className="absolute -right-1 -bottom-1 w-5 h-5 text-green-500 bg-card rounded-full p-0.5" aria-label="已认证" />

@@ -126,8 +126,11 @@ export default function AboutPage() {
                     <img
                       src={member.avatar}
                       alt={`${member.name}的照片`}
-                      className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
                       loading="lazy"
+                      decoding="async"
+                      width={128}
+                      height={128}
+                      className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
                     />
                   </figure>
                   <h3 className="font-semibold text-lg">{member.name}</h3>

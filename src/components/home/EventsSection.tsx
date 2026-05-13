@@ -44,6 +44,10 @@ export function EventsSection() {
                   <img
                     src={event.cover_image_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop'}
                     alt={event.title}
+                    loading="lazy"
+                    decoding="async"
+                    width={600}
+                    height={400}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent" />

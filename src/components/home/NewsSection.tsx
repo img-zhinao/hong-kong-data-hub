@@ -61,6 +61,10 @@ export function NewsSection() {
                         <img
                           src={news.cover_image_url}
                           alt={news.title}
+                          loading="lazy"
+                          decoding="async"
+                          width={160}
+                          height={112}
                           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                         />
                       </div>
