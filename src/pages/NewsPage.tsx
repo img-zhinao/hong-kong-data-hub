@@ -8,6 +8,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useArticles, useArticleSubCategories, type Article } from '@/hooks/useArticles';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 import { SEO } from '@/components/SEO';
 import {
   Pagination,
