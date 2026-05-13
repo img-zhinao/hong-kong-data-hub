@@ -7,6 +7,7 @@ import { useInsights, type Insight } from '@/hooks/useInsights';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SEO } from '@/components/SEO';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 const topics = ['全部', '数据要素市场化', 'AI与数据', '数据资产化', '跨境数据流通', '隐私计算'];
 
