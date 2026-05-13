@@ -3,6 +3,7 @@ import { ArrowRight, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useInsights } from '@/hooks/useInsights';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 export function InsightsSection() {
   const { data: insights, isLoading } = useInsights({ limit: 3 });
