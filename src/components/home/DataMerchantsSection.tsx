@@ -3,6 +3,7 @@ import { ArrowRight, Shield, Star, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useDataMerchants } from '@/hooks/useDataMerchants';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 export function DataMerchantsSection() {
   const { data: merchants, isLoading } = useDataMerchants({ limit: 6 });
