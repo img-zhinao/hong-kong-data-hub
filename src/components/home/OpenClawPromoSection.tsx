@@ -49,7 +49,11 @@ export function OpenClawPromoSection() {
             <img
               src={heroImg}
               alt="OpenClaw Mac Mini AI数字员工军团工作站"
-              className="rounded-2xl border border-white/10 shadow-2xl w-full object-cover"
+              loading="lazy"
+              decoding="async"
+              width={1200}
+              height={800}
+              className="rounded-2xl border border-white/10 shadow-2xl w-full h-auto object-cover aspect-[3/2]"
             />
             <div className="absolute -inset-2 rounded-3xl border border-gold/20 pointer-events-none" />
           </div>

@@ -46,6 +46,10 @@ export function DataMerchantsSection() {
                   <img
                     src={merchant.logo_url || 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop'}
                     alt={merchant.name}
+                    loading="lazy"
+                    decoding="async"
+                    width={64}
+                    height={64}
                     className="w-16 h-16 rounded-xl object-cover mx-auto"
                   />
                   {merchant.verification_status && (

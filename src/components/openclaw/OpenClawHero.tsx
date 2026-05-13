@@ -44,7 +44,11 @@ export function OpenClawHero() {
             <img
               src={heroImg}
               alt="OpenClaw Agentic AI 资产交易平台"
-              className="rounded-2xl border border-white/10 shadow-2xl w-full object-cover"
+              decoding="async"
+              fetchPriority="high"
+              width={1200}
+              height={800}
+              className="rounded-2xl border border-white/10 shadow-2xl w-full h-auto object-cover aspect-[3/2]"
             />
             <div className="absolute -inset-2 rounded-3xl border border-gold/20 animate-pulse-glow pointer-events-none" />
           </div>

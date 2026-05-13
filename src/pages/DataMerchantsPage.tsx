@@ -120,6 +120,10 @@ export default function DataMerchantsPage() {
                             <img
                               src={merchant.logo_url || 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=200&h=200&fit=crop'}
                               alt=""
+                              loading="lazy"
+                              decoding="async"
+                              width={64}
+                              height={64}
                               className="w-16 h-16 rounded-xl object-cover"
                               loading="lazy"
                             />

@@ -216,7 +216,11 @@ export default function ArticleDetailPage() {
               <img
                 src={article.cover_image_url}
                 alt={article.title}
-                className="w-full h-auto object-cover"
+                loading="lazy"
+                decoding="async"
+                width={1200}
+                height={675}
+                className="w-full h-auto object-cover aspect-video"
                 loading="lazy"
               />
             </figure>
