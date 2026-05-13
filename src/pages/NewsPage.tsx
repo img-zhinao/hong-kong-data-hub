@@ -8,6 +8,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useArticles, useArticleSubCategories, type Article } from '@/hooks/useArticles';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 import { SEO } from '@/components/SEO';
 import {
   Pagination,
@@ -276,7 +277,11 @@ function NewsCard({ news, index }: NewsCardProps) {
           {news.cover_image_url && (
             <figure className="hidden sm:block w-40 h-28 flex-shrink-0 overflow-hidden rounded-lg">
               <img
-                src={news.cover_image_url}
+                {...getResponsiveImage(
+                  news.cover_image_url,
+                  '(max-width: 640px) 0px, 160px',
+                  [160, 320, 480]
+                )}
                 alt=""
                 loading="lazy"
                 decoding="async"

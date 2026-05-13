@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useArticles } from '@/hooks/useArticles';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 export function NewsSection() {
   const { data: latestNewsData, isLoading: loadingNews } = useArticles({ 
@@ -59,7 +60,11 @@ export function NewsSection() {
                     {news.cover_image_url && (
                       <div className="hidden sm:block w-32 sm:w-40 h-24 sm:h-28 flex-shrink-0 overflow-hidden rounded-lg">
                         <img
-                          src={news.cover_image_url}
+                          {...getResponsiveImage(
+                            news.cover_image_url,
+                            '(max-width: 640px) 0px, 160px',
+                            [160, 320, 480]
+                          )}
                           alt={news.title}
                           loading="lazy"
                           decoding="async"

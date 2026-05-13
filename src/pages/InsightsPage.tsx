@@ -7,6 +7,7 @@ import { useInsights, type Insight } from '@/hooks/useInsights';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SEO } from '@/components/SEO';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 const topics = ['全部', '数据要素市场化', 'AI与数据', '数据资产化', '跨境数据流通', '隐私计算'];
 
@@ -134,7 +135,11 @@ function InsightCard({ insight, index }: InsightCardProps) {
           <header className="flex items-center gap-4 mb-4">
             <figure>
               <img
-                src={insight.author_avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'}
+                {...getResponsiveImage(
+                  insight.author_avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
+                  '64px',
+                  [64, 128, 192]
+                )}
                 alt=""
                 loading="lazy"
                 decoding="async"

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useEvents } from '@/hooks/useEvents';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 export function EventsSection() {
   const { data: events, isLoading } = useEvents({ limit: 3 });
@@ -42,7 +43,10 @@ export function EventsSection() {
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={event.cover_image_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop'}
+                    {...getResponsiveImage(
+                      event.cover_image_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop',
+                      '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                    )}
                     alt={event.title}
                     loading="lazy"
                     decoding="async"

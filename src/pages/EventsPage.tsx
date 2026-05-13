@@ -7,6 +7,7 @@ import { useEvents, type Event } from '@/hooks/useEvents';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SEO } from '@/components/SEO';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 export default function EventsPage() {
   const { data: upcomingEvents, isLoading: loadingUpcoming } = useEvents({ status: 'upcoming' });
@@ -125,7 +126,10 @@ function EventCard({ event, index }: EventCardProps) {
         >
           <figure className="relative md:w-80 h-48 md:h-auto flex-shrink-0">
             <img
-              src={event.cover_image_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=400&fit=crop'}
+              {...getResponsiveImage(
+                event.cover_image_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=400&fit=crop',
+                '(max-width: 768px) 100vw, 320px'
+              )}
               alt=""
               loading="lazy"
               decoding="async"

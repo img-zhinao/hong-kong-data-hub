@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SEO } from '@/components/SEO';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -214,7 +215,10 @@ export default function ArticleDetailPage() {
           {article.cover_image_url && (
             <figure className="mb-8 rounded-xl overflow-hidden">
               <img
-                src={article.cover_image_url}
+                {...getResponsiveImage(
+                  article.cover_image_url,
+                  '(max-width: 768px) 100vw, 800px'
+                )}
                 alt={article.title}
                 loading="lazy"
                 decoding="async"

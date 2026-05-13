@@ -3,6 +3,7 @@ import { ArrowRight, Shield, Star, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useDataMerchants } from '@/hooks/useDataMerchants';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 export function DataMerchantsSection() {
   const { data: merchants, isLoading } = useDataMerchants({ limit: 6 });
@@ -44,7 +45,11 @@ export function DataMerchantsSection() {
               >
                 <div className="relative inline-block mb-3">
                   <img
-                    src={merchant.logo_url || 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop'}
+                    {...getResponsiveImage(
+                      merchant.logo_url || 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop',
+                      '64px',
+                      [64, 128, 192]
+                    )}
                     alt={merchant.name}
                     loading="lazy"
                     decoding="async"
