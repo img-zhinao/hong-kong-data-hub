@@ -136,8 +136,11 @@ function InsightCard({ insight, index }: InsightCardProps) {
               <img
                 src={insight.author_avatar_url || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face'}
                 alt=""
-                className="w-16 h-16 rounded-full object-cover"
                 loading="lazy"
+                decoding="async"
+                width={64}
+                height={64}
+                className="w-16 h-16 rounded-full object-cover"
               />
             </figure>
             <div>

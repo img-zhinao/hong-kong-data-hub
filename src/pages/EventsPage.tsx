@@ -127,8 +127,11 @@ function EventCard({ event, index }: EventCardProps) {
             <img
               src={event.cover_image_url || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=400&fit=crop'}
               alt=""
-              className="w-full h-full object-cover"
               loading="lazy"
+              decoding="async"
+              width={800}
+              height={400}
+              className="w-full h-full object-cover"
             />
             <span className={`absolute top-3 left-3 px-3 py-1 text-xs font-medium rounded-full ${
               event.status === 'upcoming' 
