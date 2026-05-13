@@ -7,6 +7,7 @@ import { useEvents, type Event } from '@/hooks/useEvents';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SEO } from '@/components/SEO';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 export default function EventsPage() {
   const { data: upcomingEvents, isLoading: loadingUpcoming } = useEvents({ status: 'upcoming' });
