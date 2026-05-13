@@ -131,7 +131,6 @@ export default function AboutPage() {
                       width={128}
                       height={128}
                       className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
-                      loading="lazy"
                     />
                   </figure>
                   <h3 className="font-semibold text-lg">{member.name}</h3>

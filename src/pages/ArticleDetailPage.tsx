@@ -221,7 +221,6 @@ export default function ArticleDetailPage() {
                 width={1200}
                 height={675}
                 className="w-full h-auto object-cover aspect-video"
-                loading="lazy"
               />
             </figure>
           )}
