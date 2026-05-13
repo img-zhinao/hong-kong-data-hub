@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SEO } from '@/components/SEO';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 import {
   Breadcrumb,
   BreadcrumbItem,
