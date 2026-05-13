@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useArticles } from '@/hooks/useArticles';
 import { formatDate } from '@/lib/formatters';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getResponsiveImage } from '@/lib/responsiveImage';
 
 export function NewsSection() {
   const { data: latestNewsData, isLoading: loadingNews } = useArticles({ 
